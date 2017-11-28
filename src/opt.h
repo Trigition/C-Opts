@@ -3,6 +3,8 @@
 
 /*! \struct
  *  \brief This struct defines a commandline argument
+ *  This struct encapsulates program arguments. This can range
+ *  from positional arguments to positionless flags.
  */
 typedef struct {
     char *flag;
@@ -13,6 +15,12 @@ typedef struct {
     unsigned int opt_pos; // 0th pos considered to be positionless
 } opt;
 
+/*! \struct
+ *  \brief This struct defines a program action
+ *  This struct encapsulates program actions. Actions 
+ *  dictate different operations a program can perform.
+ *  Options are specific to a certain action and its subactions.
+ */
 typedef struct {
     char *action_name;
     char *action_desc;
@@ -21,6 +29,12 @@ typedef struct {
     unsigned int num_children;
 } action;
 
+/*! \struct
+ *  \brief This struct defines a program
+ *  This struct encapsulates programs. This struct is mainly for
+ *  tree root operations for traversal and compilation of the tree
+ *  into a C header file.
+ */
 typedef struct {
     char *program_desc;
     char *man_desc;
