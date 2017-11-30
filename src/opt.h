@@ -56,6 +56,8 @@ void free_action(action *program_action);
 void free_program_opt(program_opts *program);
 
 // 'Constructor' functions for creating arguments
+opt *allocate_opt();
+
 opt *new_flag(  char *flag_name,
                 char *flag_char,
                 char *help_description,
