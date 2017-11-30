@@ -75,14 +75,16 @@ opt *valued_flag(   char *flag_name,
                     char *help_description,
                     char *man_page_description);
 
-opt *new_action(char *action_name,
-                char *action_description,
-                opt **action_options);
+action *new_action( char *action_name,
+                    char *action_description,
+                    opt **action_options,
+                    unsigned int num_opts);
 
 program_opts *new_program(  char *program_description,
                             char *man_page_description,
                             char *program_version,
-                            action **program_actions);
+                            action **program_actions,
+                            unsigned int num_actions);
 
 // Functions for augmenting currently existing objects
 
