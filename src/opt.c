@@ -54,11 +54,16 @@ void free_action(action *program_action) {
         free_opt(program_action->action_opts[i]);
     }
 
+    // Free array
+    free(program_action->action_opts);
+
     // Do a depth first free of the current tree branch
     for (unsigned int i = 0; i < program_action->num_subactions; i++) {
         free_action(program_action->subactions[i]);
     }
 
+    //Free array
+    free(program_action->subactions);
     // All reference dependencies have been freed, free the root.
     free(program_action);
 }
