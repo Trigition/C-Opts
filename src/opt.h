@@ -9,7 +9,7 @@
  *  from positional arguments to positionless flags.
  */
 typedef struct {
-    char *flag;
+    char flag;
     char *long_flag;
     char *help_desc;
     char *man_desc;
@@ -60,7 +60,7 @@ void free_program_opt(program_opts *program);
 opt *allocate_opt();
 
 opt *new_flag(  char *flag_name,
-                char *flag_char,
+                char flag_char,
                 char *help_description,
                 char *man_page_description);
 
@@ -71,7 +71,7 @@ opt *new_argument(  char *arg_name,
                     unsigned int position);
 
 opt *valued_flag(   char *flag_name,
-                    char *flag_char,
+                    char flag_char,
                     char *value_name,
                     char *help_description,
                     char *man_page_description);

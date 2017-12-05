@@ -28,7 +28,6 @@ void free_pointer(void *occupied_memory) {
  * must be manually updated to reflect the free.
  */
 void free_opt(opt *option) {
-    free_pointer(option->flag);
     free_pointer(option->long_flag);
     free_pointer(option->help_desc);
     free_pointer(option->man_desc);
