@@ -21,6 +21,21 @@ opt *allocate_opt() {
     return new_opt;
 }
 
+char *copy_string(char *src) {
+    size_t src_length = strlen(src);
+    
+    if (src_length > MAX_STR_LEN) {
+        // Source string length is too long
+        printf("Error, source string at %p exceeded max string length of %d\n", src, MAX_STR_LEN);
+        return NULL;
+    }
+
+    // String length is valid
+    char *new_string = (char *) malloc(sizeof(char) * src_length + 1); // Allow another byte for null terminator
+    strncpy(new_string, src, src_length);
+    return new_string;
+}
+
 opt *new_flag(  char *flag_name,
                 char *flag_char,
                 char *help_description,
@@ -28,10 +43,10 @@ opt *new_flag(  char *flag_name,
 
     opt *new_opt = allocate_opt();
 
-    new_opt->long_flag = flag_name;
-    new_opt->flag = flag_char;
-    new_opt->help_desc = help_description;
-    new_opt->man_desc = man_page_description;
+    new_opt->long_flag = copy_string(flag_name);
+    new_opt->flag = copy_string(flag_char);
+    new_opt->help_desc = copy_string(help_description);
+    new_opt->man_desc = copy_string(man_page_description);
 
     return new_opt;
 }
@@ -44,10 +59,14 @@ opt *new_argument(  char *arg_name,
 
     opt *new_opt = allocate_opt();
 
-    new_opt->long_flag = arg_name;
-    new_opt->value_name = value_name;
-    new_opt->help_desc = help_description;
-    new_opt->man_desc = man_page_description;
+    strncpy(new_opt->long_flag, arg_name, strlen(arg_name));
+    strncpy(new_opt->value_name, value_name, strlen(value_name));
+    strncpy(new_opt->help_desc, help_description, strlen(help_description));
+    strncpy(new_opt->man_desc, man_page_description, strlen(man_page_description));
+
+    new_opt->long_flag = copy_string(arg_name);
+    new_opt->value_name = copy_string(value_name);
+
     new_opt->opt_pos = position;
 
     return new_opt;
@@ -59,11 +78,18 @@ opt *valued_flag(   char *flag_name,
                     char *help_description,
                     char *man_page_description) {
     opt *new_opt = allocate_opt();
-    new_opt->long_flag = flag_name;
-    new_opt->flag = flag_name;
-    new_opt->value_name = value_name;
-    new_opt->help_desc = help_description;
-    new_opt->man_desc = man_page_description;
+
+    //new_opt->long_flag = flag_name;
+    //new_opt->flag = flag_name;
+    //new_opt->value_name = value_name;
+    //new_opt->help_desc = help_description;
+    //new_opt->man_desc = man_page_description;
+
+    strncpy(new_opt->long_flag, flag_name, strlen(flag_name));
+    strncpy(new_opt->flag, flag_char, 1);
+    strncpy(new_opt->value_name, value_name, strlen(value_name));
+    strncpy(new_opt->help_desc, help_description, strlen(help_description));
+    strncpy(new_opt->man_desc, man_page_description, strlen(man_page_description));
 
     return new_opt;
 }
@@ -77,9 +103,12 @@ action *new_action( char *action_name,
         printf("Error in allocating memory for action: %s\n", action_name);
         return NULL;
     }
-    new_action->action_name = action_name;
-    new_action->action_desc = action_description;
+
     new_action->action_opts = action_options;
+    
+    strncpy(new_action->action_name, action_name, strlen(action_name));
+    strncpy(new_action->action_desc, action_description, strlen(action_description));
+    
     new_action->subactions = NULL;
     new_action->num_flags = num_opts;
     new_action->num_subactions = 0;
@@ -100,9 +129,10 @@ program_opts *new_program(  char *program_description,
         return NULL;
     }
 
-    new_program->program_desc = program_description;
-    new_program->man_desc = man_page_description;
-    new_program->program_version = program_version;
+    strncpy(new_program->program_desc, program_description, strlen(program_description));
+    strncpy(new_program->man_desc, man_page_description, strlen(man_page_description));
+    strncpy(new_program->program_version, program_version, strlen(program_version));
+
     new_program->actions = program_actions; //TODO Default to 'main' action if none
     new_program->num_actions = num_actions;
 

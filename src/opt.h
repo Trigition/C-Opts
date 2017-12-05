@@ -1,8 +1,7 @@
 #ifndef __OPT_H_
 #define __OPT_H_
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "commons/commons.h"
 
 /*! \struct
  *  @brief This struct defines a commandline argument
@@ -49,6 +48,8 @@ typedef struct {
 } program_opts;
 
 // Begin Function Definitions
+
+char *copy_string(char *src);
 
 // Describe free functions for easy cleanup
 void free_opt(opt *option);
