@@ -32,7 +32,7 @@ void free_action(action *program_action) {
 
 action *new_action( char *action_name,
                     char *action_description,
-                    struct opt **action_options,
+                    opt **action_options,
                     unsigned int num_opts) {
     action *new_action = (action *) malloc(sizeof(action));
     if (new_action == NULL) {

@@ -13,7 +13,7 @@
 typedef struct action {
     char *action_name;
     char *action_desc;
-    struct opt **action_opts;
+    opt **action_opts;
     struct action **subactions;
     unsigned int num_flags;
     unsigned int num_subactions;
@@ -23,6 +23,6 @@ void free_action(action *program_action);
 
 action *new_action( char *action_name,
                     char *action_description,
-                    struct opt **action_options,
+                    opt **action_options,
                     unsigned int num_opts);
 #endif

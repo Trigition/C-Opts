@@ -2,7 +2,6 @@
 #define __OPT_H_
 
 #include "commons/commons.h"
-#include "action.h"
 
 /*! \struct
  *  @brief This struct defines a commandline argument

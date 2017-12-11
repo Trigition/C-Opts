@@ -9,4 +9,7 @@
 // Define program limits
 #define MAX_STR_LEN 1024 * 20
 
+// Define common functions
+void free_pointer(void *occupied_memory);
+
 #endif

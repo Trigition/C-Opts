@@ -2,16 +2,6 @@
 
 // Cleanup functions
 /**
- * @brief This function frees any pointer.
- * @param occupied_memory A generic pointer.
- * This function frees any kind of pointer if it actually points
- * to a valid memory address.
- */
-void free_pointer(void *occupied_memory) {
-    if (occupied_memory != NULL) free(occupied_memory);
-}
-
-/**
  * @brief This function frees any \ref opt .
  * @param option A pointer to an \ref opt
  * This function completely frees an \ref Any member

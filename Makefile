@@ -1,7 +1,8 @@
 CC=gcc
 CFLAGS = -g -Wall
 
-CSRC = $(wildcard src/*.c)
+CSRC = $(wildcard src/*.c) \
+	   $(wildcard src/commons/*.c)
 COBJ = $(CSRC:.c=.o)
 CDEP = $(COBJ:.o=.d)
 
