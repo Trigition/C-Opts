@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <time.h>
 #include "opt.h"
+#include "action.h"
+#include "program.h"
 
 void logger(const char *tag, const char *message);
 
