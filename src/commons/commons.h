@@ -11,5 +11,6 @@
 
 // Define common functions
 void free_pointer(void *occupied_memory);
+char *copy_string(char *src);
 
 #endif

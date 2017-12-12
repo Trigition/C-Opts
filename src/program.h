@@ -11,11 +11,11 @@
  *  into a C header file.
  */
 typedef struct {
+    unsigned int num_actions;
     char *program_desc;
     char *man_desc;
     char *program_version;
     struct action **actions;
-    unsigned int num_actions;
 } program_opts;
 
 void free_program_opt(program_opts *program);

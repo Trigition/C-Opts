@@ -20,8 +20,6 @@ typedef struct {
 
 // Begin Function Definitions
 
-char *copy_string(char *src);
-
 // Describe free functions for easy cleanup
 void free_opt(opt *option);
 

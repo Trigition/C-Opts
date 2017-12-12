@@ -54,7 +54,7 @@ void build_and_destroy_program() {
     logger(__FUNCTION__, "Allocating Actions");
     action **actions = make_lots_of_actions(10);
     logger(__FUNCTION__, "Allocating program");
-    program_opts *program = new_program("Test program",
+    program_opts *program = new_program("A Generated test program",
                                         "Test program man page",
                                         "0.0.1", 
                                         actions,
