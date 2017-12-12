@@ -5,6 +5,7 @@ int main(int argc, char **argv) {
     build_and_destroy_arg();
     build_and_destroy_valued_flag();
     build_and_destroy_action();
+    build_and_destroy_program();
     return 0;
 }
 
@@ -50,7 +51,17 @@ void build_and_destroy_action() {
 }
 
 void build_and_destroy_program() {
-
+    logger(__FUNCTION__, "Allocating Actions");
+    action **actions = make_lots_of_actions(10);
+    logger(__FUNCTION__, "Allocating program");
+    program_opts *program = new_program("Test program",
+                                        "Test program man page",
+                                        "0.0.1", 
+                                        actions,
+                                        10);
+    logger(__FUNCTION__, "Freeing program");
+    free_program_opt(program);
+    logger(__FUNCTION__, "Program test passed");
 }
 
 opt **make_lots_of_flags(unsigned int num) {
@@ -63,4 +74,14 @@ opt **make_lots_of_flags(unsigned int num) {
         flags[i] = new_flag(flag_name, flag_char, "Help Desc", "Man Page Desc");
     }
     return flags;
+}
+
+action **make_lots_of_actions(unsigned int num) {
+    char action_name[100];
+    action **actions = malloc(sizeof(action *) * num);
+    for (unsigned int i = 0; i < num; i++) {
+        snprintf(action_name, 100, "Action %u", i);
+        actions[i] = new_action(action_name, "Help Desc", make_lots_of_flags(200), 200);
+    }
+    return actions;
 }
