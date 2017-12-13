@@ -10,6 +10,13 @@ void free_pointer(void *occupied_memory) {
     if (occupied_memory != NULL) free(occupied_memory);
 }
 
+/**
+ * A function to help in the copy of a string. Using strncpy
+ * it avoids buffer overflows. A max length of MAX_STR_LEN (see commons)
+ * any string longer than this value will not be copied.
+ * @param src A pointer to the source string
+ * @return Returns a pointer to the copy. NULL if an error occured.
+ */
 char *copy_string(char *src) {
     size_t src_length = strlen(src) + 1;
     

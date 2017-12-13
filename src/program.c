@@ -23,6 +23,17 @@ void free_program_opt(program_opts *program) {
     free(program);
 }
 
+/**
+ * @brief This function allocates a new program with specified data.
+ * @param program_description A description of the program to be used
+ * in help print-outs.
+ * @param man_page_description A description that is used for man pages.
+ * @param program_version The current version of the program.
+ * @param program_actions An array of actions. //TODO If no actions are
+ * present, the default action MAIN will be used.
+ * @param num_actions The number of actions being passed. //TODO If no actions are
+ * passed this value is igored.
+ */
 program_opts *new_program(  char *program_description,
                             char *man_page_description,
                             char *program_version,

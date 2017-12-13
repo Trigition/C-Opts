@@ -18,6 +18,14 @@ void free_opt(opt *option) {
     free(option);
 }
 
+/**
+ * @brief This function allocates an opt.
+ * This function allocates memory for an opt struct.
+ * Members of this struct are initialized to 0 or NULL
+ * depending on their representative types.
+ * @return This function returns a pointer to the allocated
+ * opt. It must be freed manually.
+ */
 opt *allocate_opt() {
     opt *new_opt = (opt *) malloc(sizeof(opt));
     
@@ -39,6 +47,22 @@ opt *allocate_opt() {
     return new_opt;
 }
 
+/**
+ * @brief This allocates an opt struct as a flag.
+ * @param flag_name This is the name for the flag. The longhand flag will
+ * use this name e.g --FLAG_NAME. As so it cannot contain '-'. 
+ * Referencing this flag will require use of its name e.g. 
+ * args->action->FLAG_NAME. The name must be unique in the scope of 
+ * its action and super actions.
+ * @param flag_char This is the shorthand specifier for the flag. It is
+ * used for only creating shorthand specifiers e.g. '-v' for --verbose.
+ * Like flag_name, this character must be unique in the scope of its
+ * action and super actions.
+ *
+ * This functions allocates memory for an opt struct and specifies data
+ * for the opt to represent a flag.
+ * @return Returns the allocated opt.
+ */
 opt *new_flag(  char *flag_name,
                 char flag_char,
                 char *help_description,
@@ -54,6 +78,19 @@ opt *new_flag(  char *flag_name,
     return new_opt;
 }
 
+/**
+ *  @brief This function allocates an opt struct to be a positional argument.
+ *  @param arg_name This is the name for the argument. Referencing the value
+ *  for the argument will require the use of its name: e.g args->action->arg_name.
+ *  The name must be unique in the scope of its action.
+ *  @param value_name This name for the value is used for help and man page print outs.
+ *  @param help_description The help print-out description for this argument.
+ *  @param man_page_description The man page description for this argument.
+ *  @param position The position, relative to the position of its parent action, the argument
+ *  should reside in. Conflicting/missing positions will throw an error upon
+ *  argument parser compilation.
+ *  @return Returns the allocated opt.
+ */
 opt *new_argument(  char *arg_name,
                     char *value_name,
                     char *help_description,
@@ -72,6 +109,22 @@ opt *new_argument(  char *arg_name,
     return new_opt;
 }
 
+/**
+ * @brief This function allocates a positionless valued argument.
+ * @param flag_name This is the name for the flag. The longhand flag will
+ * use this name e.g --FLAG_NAME. As so it cannot contain '-'. 
+ * Referencing this flag will require use of its name e.g. 
+ * args->action->FLAG_NAME. The name must be unique in the scope of 
+ * its action and super actions.
+ * @param flag_char This is the shorthand specifier for the flag. It is
+ * used for only creating shorthand specifiers e.g. '-v' for --verbose.
+ * Like flag_name, this character must be unique in the scope of its
+ * action and super actions.
+ * @param value_name This name for the value is used for help and man page print outs.
+ * @param help_description The help print-out description for this argument.
+ * @param man_page_description The man page description for this argument.
+ * @return Returns the allocated opt.
+ */
 opt *valued_flag(   char *flag_name,
                     char flag_char,
                     char *value_name,
@@ -88,6 +141,13 @@ opt *valued_flag(   char *flag_name,
     return new_opt;
 }
 
+/**
+ * @brief This function assigns a parser to an opt struct for typechecking and loading.
+ * @param dest_opt The opt to assign a function to.
+ * @param parser The parsing function. It must return a void pointer / NULL upon failure.
+ * @param type The type of data that is returned upon a successful parse.
+ * @return Returns the modified opt.
+ */
 opt *assign_parser_function(opt *dest_opt, void * (*parser) (char *), argtype type) {
     dest_opt->parser = parser;
     dest_opt->opt_type = type;
@@ -95,6 +155,13 @@ opt *assign_parser_function(opt *dest_opt, void * (*parser) (char *), argtype ty
     return dest_opt;
 }
 
+/**
+ * @brief A shorthand function to assigning a custom parser. The argtype of the opt
+ * is automatically ARG_CUSTOM.
+ * @param dest_opt The opt to assign a function to.
+ * @param parser The parsing function. It must returna void pointer / NULL upon failure.
+ * @return Returns the modified opt.
+ */
 opt *assign_cust_parser_function(opt *dest_opt, void * (*parser) (char *)) {
     dest_opt->parser = parser;
     dest_opt->opt_type = ARG_CUSTOM;

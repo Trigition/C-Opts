@@ -1,5 +1,8 @@
 #include "tester.h"
 
+/**
+ * @brief Main runtime for main
+ */
 int main(int argc, char **argv) {
     build_and_destroy_flag();
     build_and_destroy_arg();

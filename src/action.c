@@ -30,6 +30,16 @@ void free_action(action *program_action) {
     free(program_action);
 }
 
+/**
+ * @brief This function allocates a new action with specified data.
+ * @param action_name This name is used for help print outs as well
+ * as referencing e.g args->ACTION_NAME->foo. The name must be unique
+ * to its sibling and parent actions.
+ * @param action_description The help print-out description for the action.
+ * @param action_opts An array of opts to be assigned to the action.
+ * @param num_opts The number of opts in the passed array.
+ * @return Returns the allocated action or NULL upon failed allocation.
+ */
 action *new_action( char *action_name,
                     char *action_description,
                     opt **action_options,
