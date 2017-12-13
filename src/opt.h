@@ -15,7 +15,9 @@ typedef struct {
     char *man_desc;
     char *val;
     char *value_name;
-    unsigned int opt_pos; // 0th pos considered to be positionless
+    unsigned int opt_pos; // 1th pos considered to be positionless
+    argtype opt_type;
+    void * (*parser)(char *);
 } opt;
 
 // Begin Function Definitions
@@ -44,5 +46,5 @@ opt *valued_flag(   char *flag_name,
                     char *man_page_description);
 
 // Functions for augmenting currently existing objects
-
+void assign_parser_function(void * (*parser) (char *));
 #endif
