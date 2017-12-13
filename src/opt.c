@@ -87,3 +87,17 @@ opt *valued_flag(   char *flag_name,
 
     return new_opt;
 }
+
+opt *assign_parser_function(opt *dest_opt, void * (*parser) (char *), argtype type) {
+    dest_opt->parser = parser;
+    dest_opt->opt_type = type;
+
+    return dest_opt;
+}
+
+opt *assign_cust_parser_function(opt *dest_opt, void * (*parser) (char *)) {
+    dest_opt->parser = parser;
+    dest_opt->opt_type = ARG_CUSTOM;
+
+    return dest_opt;
+}

@@ -28,3 +28,59 @@ char *copy_string(char *src) {
     }
     return strncpy(new_string, src, src_length);
 }
+
+void *parse_integer(char *arg_str) {
+    // Use standard libraries to parse integers
+    long long *val = malloc(sizeof(long long));
+    //const char *errstr;
+
+    //*val = strtonum(arg_str, LLONG_MIN, LLONG_MAX, &errstr);
+    //if (errstr != NULL) {
+    //    free(val);
+    //    return NULL;
+    //} else {
+    //    return val;
+    //}
+
+    // Setup error checking
+    errno = 0;
+    *val = strtol(arg_str, NULL, 10);
+    if (errno != 0) {
+        // Error in parsing string for integer
+        free(val);
+        return NULL;
+    }
+    return val;
+}
+
+void *parse_float(char *arg_str) {
+    float *val = malloc(sizeof(float));
+    
+    errno = 0;
+    *val = strtof(arg_str, NULL);
+    if (errno != 0) {
+        // Error in parsing float
+        free(val);
+        return NULL;
+    } else {
+        return val;
+    }
+}
+
+void *parse_string(char *arg_str) {
+    char *str_copy = copy_string(arg_str);
+    return str_copy;
+}
+
+void *parse_file(char *arg_str) {
+    if (access( arg_str, F_OK) != -1) {
+        return arg_str;
+    } else {
+        return NULL;
+    }
+}
+
+void *parse_ipv4(char *arg_str) {
+    // TODO Tokenize ipv4 string
+    return NULL;
+}

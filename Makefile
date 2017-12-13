@@ -12,7 +12,7 @@ tester: $(COBJ)
 -include $(CDEP)
 
 $.d: %.c
-	$(CC) $(CFLAGS) $< -MM -MT $(@:.d=.o) >$@
+	$(CC) $(CFLAGS) $< -MM -MT $(@:.d=.o) >$@ -lm
 
 .PHONY: clean
 clean:

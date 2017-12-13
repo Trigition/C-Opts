@@ -46,5 +46,6 @@ opt *valued_flag(   char *flag_name,
                     char *man_page_description);
 
 // Functions for augmenting currently existing objects
-void assign_parser_function(void * (*parser) (char *));
+opt *assign_parser_function(opt *dest_opt, void * (*parser) (char *), argtype type);
+opt *assign_cust_parser_function(opt *dest_opt, void * (*parser) (char *));
 #endif
