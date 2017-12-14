@@ -188,7 +188,7 @@ char *compile_parse_function(opt *arg) {
     char *source = arg->parser();
     uint8 function_len = strlen(function_name) + strlen(source) + 50;
     char *function = malloc(function_len * sizeof(char));
-
+    function[0] = '\0';
     strcat(function, function_name);
     strcat(function, "(char *arg_str) {\n");
     strcat(function, source);
