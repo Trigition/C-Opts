@@ -62,3 +62,10 @@ action *new_action( char *action_name,
     return new_action;
 }
 
+char *compile_header(action *cur_action) {
+    return NULL;
+}
+
+compiled_function *compile_action(action *root_action) {
+    return NULL;
+}

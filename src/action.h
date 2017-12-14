@@ -25,4 +25,7 @@ action *new_action( char *action_name,
                     char *action_description,
                     opt **action_options,
                     unsigned int num_opts);
+
+char *compile_header(action *cur_action);
+compiled_function *compile_action(action *cur_action);
 #endif
