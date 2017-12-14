@@ -43,12 +43,12 @@ char *copy_string(char *src);
 char *combine_strings(char *prefix, char *suffix);
 
 // Define primitive parser generators for C-Opts
-char *compile_parse_integer(char *arg_str);
-char *compile_parse_float(char *arg_str);
-char *compile_parse_string(char *arg_str);
-char *compile_parse_file(char *arg_str);
-char *compile_parse_ipv4(char *arg_str);
-char *compile_parse_ipv6(char *arg_str);
-char *compile_parse_mac_addr(char *arg_str);
+char *compile_parse_integer();
+char *compile_parse_float();
+char *compile_parse_string();
+char *compile_parse_file();
+char *compile_parse_ipv4();
+char *compile_parse_ipv6();
+char *compile_parse_mac_addr();
 
 #endif

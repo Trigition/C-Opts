@@ -20,7 +20,7 @@ typedef struct {
     char *value_name;
     unsigned int opt_pos; // 1th pos considered to be positionless
     argtype opt_type;
-    void * (*parser)(char *);
+    char * (*parser)();
 } opt;
 
 // Begin Function Definitions
@@ -49,8 +49,8 @@ opt *valued_flag(   char *flag_name,
                     char *man_page_description);
 
 // Functions for augmenting currently existing objects
-opt *assign_parser_function(opt *dest_opt, void * (*parser) (char *), argtype type);
-opt *assign_cust_parser_function(opt *dest_opt, void * (*parser) (char *));
+opt *assign_parser_function(opt *dest_opt, char * (*parser) (), argtype type);
+opt *assign_cust_parser_function(opt *dest_opt, char * (*parser) ());
 
 // Compilation functions
 char *make_filename(opt *arg, const char *ext);

@@ -44,6 +44,10 @@ opt *allocate_opt() {
 
     new_opt->opt_pos = 0; // Flags are set to positionless at default
 
+    // All opts by default parse for strings
+    new_opt->parser = &compile_parse_string;
+    new_opt->opt_type = ARG_STRING;
+
     return new_opt;
 }
 
@@ -148,7 +152,7 @@ opt *valued_flag(   char *flag_name,
  * @param type The type of data that is returned upon a successful parse.
  * @return Returns the modified opt.
  */
-opt *assign_parser_function(opt *dest_opt, void * (*parser) (char *), argtype type) {
+opt *assign_parser_function(opt *dest_opt, char * (*parser) (), argtype type) {
     dest_opt->parser = parser;
     dest_opt->opt_type = type;
 
@@ -162,7 +166,7 @@ opt *assign_parser_function(opt *dest_opt, void * (*parser) (char *), argtype ty
  * @param parser The parsing function. It must returna void pointer / NULL upon failure.
  * @return Returns the modified opt.
  */
-opt *assign_cust_parser_function(opt *dest_opt, void * (*parser) (char *)) {
+opt *assign_cust_parser_function(opt *dest_opt, char * (*parser) ()) {
     dest_opt->parser = parser;
     dest_opt->opt_type = ARG_CUSTOM;
 
