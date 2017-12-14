@@ -200,6 +200,8 @@ char *compile_function_declaration(opt *arg) {
     char *function_name = combine_strings(arg->long_flag, OPT_FUNCTION_SUFFIX);
     char *function_suffix = "(char *arg_str);\n";
     char *function_declaration = combine_strings(function_name, function_suffix);
+
+    free(function_name);
     return function_declaration;
 }
 
