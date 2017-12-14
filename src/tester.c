@@ -9,6 +9,8 @@ int main(int argc, char **argv) {
     build_and_destroy_valued_flag();
     build_and_destroy_action();
     build_and_destroy_program();
+
+    build_and_compile_flag();
     return 0;
 }
 
@@ -65,6 +67,17 @@ void build_and_destroy_program() {
     logger(__FUNCTION__, "Freeing program");
     free_program_opt(program);
     logger(__FUNCTION__, "Program test passed");
+}
+
+void build_and_compile_flag() {
+    logger(__FUNCTION__, "Allocating Flag");
+    opt *flag = new_flag("TESTFLAG", 'f', "Test Flag Description", "Manly Page");
+    logger(__FUNCTION__, "Compiling Flag...");
+    compiled_function *flag_functions = compile_opt(flag);
+    logger(__FUNCTION__, "Compiled flag, freeing memory");
+    free(flag);
+    free_compiled_function(flag_functions);
+    logger(__FUNCTION__, "Passed");
 }
 
 opt **make_lots_of_flags(unsigned int num) {

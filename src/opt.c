@@ -185,8 +185,8 @@ char *make_filename(opt *arg, const char *ext) {
 char *compile_parse_function(opt *arg) {
     // Do boiler plate setup
     char *function_name = combine_strings(arg->long_flag, OPT_FUNCTION_SUFFIX);
-    char *source = arg->parser(NULL);
-    uint8 function_len = strlen(function_name) + strlen(source) + 25;
+    char *source = arg->parser();
+    uint8 function_len = strlen(function_name) + strlen(source) + 50;
     char *function = malloc(function_len * sizeof(char));
 
     strcat(function, function_name);
@@ -204,14 +204,12 @@ char *compile_function_declaration(opt *arg) {
     char *function_name = combine_strings(arg->long_flag, OPT_FUNCTION_SUFFIX);
     char *function_suffix = "(char *arg_str);\n";
     char *function_declaration = combine_strings(function_name, function_suffix);
-
     free(function_name);
     return function_declaration;
 }
 
-
 compiled_function *compile_opt(opt *arg) {
-    compiled_function *compiled_opt = malloc(sizeof(compiled_function));
+    compiled_function *compiled_opt = (compiled_function *) malloc(sizeof(compiled_function));
     compiled_opt->function_declaration = compile_function_declaration(arg);
     compiled_opt->function_source = compile_parse_function(arg);
     return compiled_opt;

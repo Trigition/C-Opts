@@ -39,6 +39,7 @@ typedef struct {
 
 // Define common functions
 void free_pointer(void *occupied_memory);
+void free_compiled_function(compiled_function *func);
 char *copy_string(char *src);
 char *combine_strings(char *prefix, char *suffix);
 

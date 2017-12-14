@@ -10,6 +10,12 @@ void free_pointer(void *occupied_memory) {
     if (occupied_memory != NULL) free(occupied_memory);
 }
 
+void free_compiled_function(compiled_function *func) {
+    free(func->function_declaration);
+    free(func->function_source);
+    free(func);
+}
+
 /**
  * A function to help in the copy of a string. Using strncpy
  * it avoids buffer overflows. A max length of MAX_STR_LEN (see commons)
@@ -44,7 +50,8 @@ char *combine_strings(char *prefix, char *suffix) {
         return NULL;
     }
     char *buf = malloc(total_size * sizeof(char));
-    buf = copy_string(prefix);
+    buf[0] = '\0';
+    buf = strcat(buf, prefix);
     buf = strcat(buf, suffix);
     return buf;
 }

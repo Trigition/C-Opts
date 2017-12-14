@@ -13,6 +13,7 @@ void build_and_destroy_arg();
 void build_and_destroy_valued_flag();
 void build_and_destroy_action();
 void build_and_destroy_program();
+void build_and_compile_flag();
 
 opt **make_lots_of_flags(unsigned int num);
 opt **make_lots_of_args(unsigned int num);
