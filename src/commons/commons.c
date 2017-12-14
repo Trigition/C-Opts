@@ -36,58 +36,68 @@ char *copy_string(char *src) {
     return strncpy(new_string, src, src_length);
 }
 
-void *parse_integer(char *arg_str) {
-    // Use standard libraries to parse integers
-    long long *val = malloc(sizeof(long long));
-    //const char *errstr;
-
-    //*val = strtonum(arg_str, LLONG_MIN, LLONG_MAX, &errstr);
-    //if (errstr != NULL) {
-    //    free(val);
-    //    return NULL;
-    //} else {
-    //    return val;
-    //}
-
-    // Setup error checking
-    errno = 0;
-    *val = strtol(arg_str, NULL, 10);
-    if (errno != 0) {
-        // Error in parsing string for integer
-        free(val);
+char *combine_strings(char *prefix, char *suffix) {
+    uint8 total_size = strlen(prefix) + strlen(suffix) + 1;
+    if (total_size > MAX_STR_LEN) {
+        printf("Error, combined string length beyond maximum allowed length: %d\n",
+                MAX_STR_LEN);
         return NULL;
     }
-    return val;
+    char *buf = malloc(total_size * sizeof(char));
+    buf = copy_string(prefix);
+    buf = strcat(buf, suffix);
+    return buf;
 }
 
-void *parse_float(char *arg_str) {
-    float *val = malloc(sizeof(float));
-    
-    errno = 0;
-    *val = strtof(arg_str, NULL);
-    if (errno != 0) {
-        // Error in parsing float
-        free(val);
-        return NULL;
-    } else {
-        return val;
-    }
+char *compile_parse_integer(char *arg_str) {
+    char *func = \
+    "// Use standard libraries to parse integers\
+    long long *val = malloc(sizeof(long long));\
+    errno = 0;\
+    *val = strtol(arg_str, NULL, 10);\
+    if (errno != 0) {\
+        // Error in parsing string for integer\
+        free(val);\
+        return NULL;\
+    }\
+    return val;";
+    return copy_string(func);
 }
 
-void *parse_string(char *arg_str) {
-    char *str_copy = copy_string(arg_str);
-    return str_copy;
+char *compile_parse_float(char *arg_str) {
+    char *func = \
+    "float *val = malloc(sizeof(float));\
+    \
+    errno = 0;\
+    *val = strtof(arg_str, NULL);\
+    if (errno != 0) {\
+        // Error in parsing float\
+        free(val);\
+        return NULL;\
+    } else {\
+        return val;\
+    }";
+    return copy_string(func);
 }
 
-void *parse_file(char *arg_str) {
-    if (access( arg_str, F_OK) != -1) {
-        return arg_str;
-    } else {
-        return NULL;
-    }
+char *compile_parse_string(char *arg_str) {
+    char *func = \
+    "char *str_copy = copy_string(arg_str);\
+    return str_copy;";
+    return copy_string(func);
 }
 
-void *parse_ipv4(char *arg_str) {
+char *compile_parse_file(char *arg_str) {
+    char *func = \
+    "if (access( arg_str, F_OK) != -1) {\
+        return arg_str;\
+    } else {\
+        return NULL;\
+    }";
+    return func;
+}
+
+char *compile_parse_ipv4(char *arg_str) {
     // TODO Tokenize ipv4 string
     return NULL;
 }

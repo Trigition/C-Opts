@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdarg.h>
 
 // Define program limits
 #define MAX_STR_LEN 1024 * 20
@@ -30,14 +31,15 @@ typedef enum {
 // Define common functions
 void free_pointer(void *occupied_memory);
 char *copy_string(char *src);
+char *combine_strings(char *prefix, char *suffix);
 
-// Define primitive parsers for C-Opts
-void *parse_integer(char *arg_str);
-void *parse_float(char *arg_str);
-void *parse_string(char *arg_str);
-void *parse_file(char *arg_str);
-void *parse_ipv4(char *arg_str);
-void *parse_ipv6(char *arg_str);
-void *parse_mac_addr(char *arg_str);
+// Define primitive parser generators for C-Opts
+char *compile_parse_integer(char *arg_str);
+char *compile_parse_float(char *arg_str);
+char *compile_parse_string(char *arg_str);
+char *compile_parse_file(char *arg_str);
+char *compile_parse_ipv4(char *arg_str);
+char *compile_parse_ipv6(char *arg_str);
+char *compile_parse_mac_addr(char *arg_str);
 
 #endif

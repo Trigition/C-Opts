@@ -3,6 +3,9 @@
 
 #include "commons/commons.h"
 
+#define OPT_FUNCTION_SUFFIX "_parser"
+#define OPT_FUNCTION_SUF_LEN strlen(OPT_FUNCTION_SUFFIX)
+
 /*! \struct
  *  @brief This struct defines a commandline argument
  *  This struct encapsulates program arguments. This can range
@@ -48,4 +51,8 @@ opt *valued_flag(   char *flag_name,
 // Functions for augmenting currently existing objects
 opt *assign_parser_function(opt *dest_opt, void * (*parser) (char *), argtype type);
 opt *assign_cust_parser_function(opt *dest_opt, void * (*parser) (char *));
+
+// Compilation functions
+char *compile_opt(opt *arg);
+char *compile_source(opt *arg);
 #endif

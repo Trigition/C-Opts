@@ -168,3 +168,39 @@ opt *assign_cust_parser_function(opt *dest_opt, void * (*parser) (char *)) {
 
     return dest_opt;
 }
+
+char *make_filename(opt *arg, const char *ext) {
+    char *opt_name = arg->long_flag;
+    char *filename = (char *) malloc(strlen(opt_name) * sizeof(char) + 
+                                     strlen(ext) * sizeof(char));
+    filename = copy_string(opt_name);
+    filename = strcat(filename, ext);
+    return filename;
+}
+
+char *compile_parse_function(opt *arg) {
+    // Do boiler plate setup
+    char *function_name = combine_strings(arg->long_flag, OPT_FUNCTION_SUFFIX);
+    char *source = arg->parser(NULL);
+    uint8 function_len = strlen(function_name) + strlen(source) + 10;
+    char *function = malloc(function_len * sizeof(char));
+
+    strcat(function, function_name);
+    strcat(function, " {\n");
+    strcat(function, source);
+    strcat(function, "\n}\n");
+
+    free(function_name);
+    free(source);
+    return function;
+}
+
+char *compile_header(opt *arg) {
+    
+    return NULL;
+}
+
+char *compile_source(opt *arg) {
+    //char *opt_name = arg->long_flag;
+    return NULL;
+}
