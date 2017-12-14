@@ -75,7 +75,7 @@ void build_and_compile_flag() {
     logger(__FUNCTION__, "Compiling Flag...");
     compiled_function *flag_functions = compile_opt(flag);
     logger(__FUNCTION__, "Compiled flag, freeing memory");
-    free(flag);
+    free_opt(flag);
     free_compiled_function(flag_functions);
     logger(__FUNCTION__, "Passed");
 }
