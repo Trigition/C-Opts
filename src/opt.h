@@ -53,6 +53,8 @@ opt *assign_parser_function(opt *dest_opt, void * (*parser) (char *), argtype ty
 opt *assign_cust_parser_function(opt *dest_opt, void * (*parser) (char *));
 
 // Compilation functions
-char *compile_opt(opt *arg);
-char *compile_source(opt *arg);
+char *make_filename(opt *arg, const char *ext);
+char *compile_parse_function(opt *arg);
+char *compile_function_declaration(opt *arg);
+compiled_function *compile_opt(opt *arg);
 #endif

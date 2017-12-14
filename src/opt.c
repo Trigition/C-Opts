@@ -182,11 +182,11 @@ char *compile_parse_function(opt *arg) {
     // Do boiler plate setup
     char *function_name = combine_strings(arg->long_flag, OPT_FUNCTION_SUFFIX);
     char *source = arg->parser(NULL);
-    uint8 function_len = strlen(function_name) + strlen(source) + 10;
+    uint8 function_len = strlen(function_name) + strlen(source) + 25;
     char *function = malloc(function_len * sizeof(char));
 
     strcat(function, function_name);
-    strcat(function, " {\n");
+    strcat(function, "(char *arg_str) {\n");
     strcat(function, source);
     strcat(function, "\n}\n");
 
@@ -195,12 +195,18 @@ char *compile_parse_function(opt *arg) {
     return function;
 }
 
-char *compile_header(opt *arg) {
-    
-    return NULL;
+char *compile_function_declaration(opt *arg) {
+    // Do boiler plate setup
+    char *function_name = combine_strings(arg->long_flag, OPT_FUNCTION_SUFFIX);
+    char *function_suffix = "(char *arg_str);\n";
+    char *function_declaration = combine_strings(function_name, function_suffix);
+    return function_declaration;
 }
 
-char *compile_source(opt *arg) {
-    //char *opt_name = arg->long_flag;
-    return NULL;
+
+compiled_function *compile_opt(opt *arg) {
+    compiled_function *compiled_opt = malloc(sizeof(compiled_function));
+    compiled_opt->function_declaration = compile_function_declaration(arg);
+    compiled_opt->function_source = compile_parse_function(arg);
+    return compiled_opt;
 }

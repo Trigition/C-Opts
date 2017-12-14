@@ -14,6 +14,10 @@
 // Define program limits
 #define MAX_STR_LEN 1024 * 20
 
+// Define common function suffixes
+#define HELP_SUFFIX "_help"
+#define MAN_PAGE_SUFFIX "_man_page"
+
 typedef unsigned char uchar;
 typedef unsigned int uint8;
 
@@ -27,6 +31,11 @@ typedef enum {
    ARG_MAC_ADDR,
    ARG_CUSTOM
 } argtype;
+
+typedef struct {
+    char *function_declaration;
+    char *function_source;
+} compiled_function;
 
 // Define common functions
 void free_pointer(void *occupied_memory);

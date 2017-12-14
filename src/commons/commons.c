@@ -49,7 +49,7 @@ char *combine_strings(char *prefix, char *suffix) {
     return buf;
 }
 
-char *compile_parse_integer(char *arg_str) {
+char *compile_parse_integer() {
     char *func = \
     "// Use standard libraries to parse integers\
     long long *val = malloc(sizeof(long long));\
@@ -64,7 +64,7 @@ char *compile_parse_integer(char *arg_str) {
     return copy_string(func);
 }
 
-char *compile_parse_float(char *arg_str) {
+char *compile_parse_float() {
     char *func = \
     "float *val = malloc(sizeof(float));\
     \
@@ -80,14 +80,14 @@ char *compile_parse_float(char *arg_str) {
     return copy_string(func);
 }
 
-char *compile_parse_string(char *arg_str) {
+char *compile_parse_string() {
     char *func = \
     "char *str_copy = copy_string(arg_str);\
     return str_copy;";
     return copy_string(func);
 }
 
-char *compile_parse_file(char *arg_str) {
+char *compile_parse_file() {
     char *func = \
     "if (access( arg_str, F_OK) != -1) {\
         return arg_str;\
@@ -97,7 +97,7 @@ char *compile_parse_file(char *arg_str) {
     return func;
 }
 
-char *compile_parse_ipv4(char *arg_str) {
+char *compile_parse_ipv4() {
     // TODO Tokenize ipv4 string
     return NULL;
 }
