@@ -41,14 +41,16 @@ void insert_wfree(dll *list,
 void __insert(dll *list, element *e, unsigned int index);
 
 // Element Removal
-element *pop(dll *list);
-element *pull(dll *list);
-element *remove_element(dll *list, unsigned int index);
+void *pop(dll *list);
+void *pull(dll *list);
+void *remove_element(dll *list, unsigned int index);
+element *__remove_element(dll *list, unsigned int index);
 
 // View elements
-element *view_first(dll *list);
-element *view_last(dll *list);
-element *view_at(dll *list, unsigned int index);
+void *view_first(dll *list);
+void *view_last(dll *list);
+void *view_at(dll *list, unsigned int index);
+element *__view_at(dll *list, unsigned int index);
 
 // Join
 dll *concat(dll *dest, dll *src);
