@@ -33,6 +33,14 @@ element *new_element(void *data) {
     return data_element;
 }
 
+/**
+ * @brief This function allocates a new element 
+ * with a custom free function for its data.
+ * @param data The data to be encapsulated.
+ * @param free_func A free function for the data. Must take
+ * the data as a void pointer.
+ * @return The allocated element.
+ */
 element *new_element_wfree(void *data, void (*free_func) (void *)) {
     container *data_container = new_container(data, free_func);
     element *data_element = (element *) malloc(sizeof(element));
@@ -83,18 +91,33 @@ void soft_delete_list(dll *list) {
     free(list);
 }
 
+/**
+ * @brief This function puts data to the front of the list.
+ * @param data The data to be placed (it is encapsulated within
+ * a list element).
+ */
 void push(dll *list, void *data) {
     element *new_head = new_element(data);
 
     __push(list, new_head);
 }
 
+/**
+ * @brief This function puts data to the front of the list with a custom
+ * free function.
+ * @param data The data to be encapsulated.
+ * @param free_func The free function for the data.
+ */
 void push_wfree(dll *list, void *data, void (*free_func) (void *)) {
     element *new_head = new_element_wfree(data, free_func);
 
     __push(list, new_head);
 }
 
+/**
+ * @brief This function pushes an element to the front of the list.
+ * @param list The list to be altered.
+ */
 void __push(dll *list, element *new_head) {
     element *old_head = list->head;
     
@@ -172,22 +195,22 @@ element *__remove_element(dll *list, unsigned int index) {
     if (index >= list->len) {
         return NULL;
     }
-    if (prev_element == NULL && next_element == NULL) {
+    if (prev_element == list->tail && next_element == list->head) {
         // Only element in list
         list->len--;
         list->head = NULL;
         list->tail = NULL;
         return element_to_remove;
-    } else if (prev_element == NULL) {
+    } else if (prev_element == list->head) {
         // Head of list
         list->head = next_element;
-        next_element->prev = NULL;
+        next_element->prev = list->head->prev;
         list->len--;
         return element_to_remove;
-    } else if (next_element == NULL) {
+    } else if (next_element == list->tail) {
         // Tail of list
         list->tail = prev_element;
-        prev_element->next = NULL;
+        prev_element->next = list->tail->next;
         return element_to_remove;
     } else {
         // Somewhere in the middle of the list
@@ -248,4 +271,13 @@ element *__view_at(dll *list, unsigned int index) {
     }
     // e should now reference the wanted element
     return e;
+}
+
+dll *concat(dll *dest, dll *src) {
+    dest->tail->next = src->head;
+    src->head->prev = dest->tail;
+    dest->tail = src->tail;
+    dest->len += src->len;
+
+    return dest;
 }
