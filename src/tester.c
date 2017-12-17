@@ -4,6 +4,8 @@
  * @brief Main runtime for main
  */
 int main(int argc, char **argv) {
+    build_and_destroy_list();
+
     build_and_destroy_flag();
     build_and_destroy_arg();
     build_and_destroy_valued_flag();
@@ -19,6 +21,43 @@ void logger(const char *tag, const char *message) {
     //time(&now);
     //printf("%s [%s]: %s\n", ctime(&now), tag, message);
     printf("[%s]: %s\n", tag, message);
+}
+
+void build_and_destroy_list() {
+    int x = 1;
+    int y = 2;
+    int z = 3;
+    logger(__FUNCTION__, "Allocating list");
+    dll *list = new_list();
+    logger(__FUNCTION__, "Adding to list");
+    push(list, &x);
+    if (list->len == 1) {
+        logger(__FUNCTION__, "List length correct");
+    } else {
+        logger(__FUNCTION__, "ERROR list length incorrect");
+    }
+
+    if (*(int *) view_first(list) == x) {
+        logger(__FUNCTION__, "List contents correct");
+    } else {
+        logger(__FUNCTION__, "ERROR list length incorrect");
+    }
+
+    logger(__FUNCTION__, "Appending to list");
+    append(list, &y);
+    if (list->len == 2) {
+        logger(__FUNCTION__, "List length correct");
+    } else {
+        logger(__FUNCTION__, "List length incorrect");
+    }
+
+    if (*(int *) view_last(list) == y) {
+        logger(__FUNCTION__, "List contents correct");
+    } else {
+        logger(__FUNCTION__, "List contents incorrect");
+    }
+
+    soft_delete_list(list);
 }
 
 void build_and_destroy_flag() {

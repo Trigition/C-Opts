@@ -85,6 +85,7 @@ void soft_delete_list(dll *list) {
     element *prev_element = list->head;
     for (unsigned int i = 0; i < list->len; i++) {
         cur_element = cur_element->next;
+        free(prev_element->member);
         free(prev_element);
         prev_element = cur_element;
     }
@@ -120,9 +121,13 @@ void push_wfree(dll *list, void *data, void (*free_func) (void *)) {
  */
 void __push(dll *list, element *new_head) {
     element *old_head = list->head;
-    
-    old_head->prev = new_head;
-    new_head->next = old_head;
+    if (old_head != NULL) {
+        old_head->prev = new_head;
+        new_head->next = old_head;
+    } else {
+        // List was empty
+        list->tail = new_head;
+    }
     list->head = new_head;
     list->len++;
 }
@@ -141,9 +146,12 @@ void append_wfree(dll *list, void *data, void (*free_func) (void *)) {
 
 void __append(dll *list, element *new_tail) {
     element *old_tail = list->tail;
-
-    old_tail->next = new_tail;
-    new_tail->prev = old_tail;
+    if(old_tail != NULL) {
+        old_tail->next = new_tail;
+        new_tail->prev = old_tail;
+    } else {
+        list->head = new_tail;
+    }
     list->tail = new_tail;
     list->len++;
 }
