@@ -29,7 +29,7 @@ void build_and_destroy_list() {
     int z = 3;
     logger(__FUNCTION__, "Allocating list");
     dll *list = new_list();
-    logger(__FUNCTION__, "Adding to list");
+    logger(__FUNCTION__, "Testing push");
     push(list, &x);
     if (list->len == 1) {
         logger(__FUNCTION__, "List length correct");
@@ -43,7 +43,7 @@ void build_and_destroy_list() {
         logger(__FUNCTION__, "ERROR list length incorrect");
     }
 
-    logger(__FUNCTION__, "Appending to list");
+    logger(__FUNCTION__, "Testing append");
     append(list, &y);
     if (list->len == 2) {
         logger(__FUNCTION__, "List length correct");
@@ -55,6 +55,14 @@ void build_and_destroy_list() {
         logger(__FUNCTION__, "List contents correct");
     } else {
         logger(__FUNCTION__, "List contents incorrect");
+    }
+
+    logger(__FUNCTION__, "Testing insert");
+    insert(list, &z, 1);
+    if (*(int *) view_at(list, 1) == z) {
+        logger(__FUNCTION__, "Insertion correct");
+    } else {
+        logger(__FUNCTION__, "ERROR list insertion contents incorrect");
     }
 
     soft_delete_list(list);
