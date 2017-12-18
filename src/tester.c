@@ -5,6 +5,7 @@
  */
 int main(int argc, char **argv) {
     build_and_destroy_list();
+    merge_lists();
 
     build_and_destroy_flag();
     build_and_destroy_arg();
@@ -66,6 +67,31 @@ void build_and_destroy_list() {
     }
 
     soft_delete_list(list);
+}
+
+void merge_lists() {
+    int x[] = {1,2,3,4,5};
+    int y[] = {6,7,8,9,10};
+    dll *list1 = list_from_ints(x, 5);
+    dll *list2 = list_from_ints(y, 5);
+
+    logger(__FUNCTION__, "Testing list merge");
+    list1 = concat(list1, list2);
+
+    if (list1->len == 10) {
+        logger(__FUNCTION__, "Merge destination has correct size");
+    } else {
+        logger(__FUNCTION__, "ERROR Merge destination has incorrect size");
+    }
+
+    if (list2->len == 5) {
+        logger(__FUNCTION__, "Merge source has correct size");
+    } else {
+        logger(__FUNCTION__, "ERROR merge source size was clobbered");
+    }
+
+    soft_delete_list(list1);
+    free(list2);
 }
 
 void build_and_destroy_flag() {

@@ -52,6 +52,16 @@ element *new_element_wfree(void *data, void (*free_func) (void *)) {
     return data_element;
 }
 
+dll *list_from_ints(int *array, unsigned int len) {
+    dll *list = new_list();
+
+    for (unsigned int i = 0; i < len; i++) {
+        append(list, &array[i]);
+    }
+
+    return list;
+}
+
 /**
  * @brief This function frees an element and its data
  */

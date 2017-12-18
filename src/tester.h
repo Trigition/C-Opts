@@ -11,6 +11,7 @@ void logger(const char *tag, const char *message);
 
 // Tests for datastructures
 void build_and_destroy_list();
+void merge_lists();
 
 // Tests for main project
 void build_and_destroy_flag();

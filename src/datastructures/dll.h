@@ -20,6 +20,9 @@ dll *new_list();
 element *new_element(void *data);
 element *new_element_wfree(void *data, void (*free_func) (void *));
 
+// Primitive factories for list generation
+dll *list_from_ints(int *array, unsigned int len);
+
 void free_element(element *e);
 void delete_list(dll *list);
 void soft_delete_list(dll *list);
