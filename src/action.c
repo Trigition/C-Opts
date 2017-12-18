@@ -9,22 +9,25 @@
  * references to memory belonging to the subtree will
  * need to be updated.
  */
-void free_action(action *program_action) {
+void free_action(void *target_action) {
+    action *program_action = (action *) target_action;
     free_pointer(program_action->action_name);
     free_pointer(program_action->action_desc);
     
-    for (unsigned int i = 0; i < program_action->num_flags; i++) {
-        free_opt(program_action->action_opts[i]);
-    }
+    //for (uint8 i = 0; i < program_action->num_flags; i++) {
+    //    free_opt(program_action->action_opts[i]);
+    //}
 
-    free(program_action->action_opts);
+    //free(program_action->action_opts);
+    delete_list(program_action->action_opts);
 
     // Do a depth first free of the current tree branch
-    for (unsigned int i = 0; i < program_action->num_subactions; i++) {
-        free_action(program_action->subactions[i]);
-    }
+    //for (uint8 i = 0; i < program_action->num_subactions; i++) {
+    //    free_action(program_action->subactions[i]);
+    //}
 
-    free(program_action->subactions);
+    //free(program_action->subactions);
+    delete_list(program_action->subactions);
 
     // All reference dependencies have been freed, free the root.
     free(program_action);
@@ -41,25 +44,36 @@ void free_action(action *program_action) {
  * @return Returns the allocated action or NULL upon failed allocation.
  */
 action *new_action( char *action_name,
-                    char *action_description,
-                    opt **action_options,
-                    unsigned int num_opts) {
+                    char *action_description) {
+    
     action *new_action = (action *) malloc(sizeof(action));
+    
     if (new_action == NULL) {
         printf("Error in allocating memory for action: %s\n", action_name);
         return NULL;
     }
 
-    new_action->action_opts = action_options;
-    
+    new_action->action_opts = new_list();
+    new_action->subactions = new_list();
+
     new_action->action_name = copy_string(action_name);
     new_action->action_desc = copy_string(action_description);
 
-    new_action->subactions = NULL;
-    new_action->num_flags = num_opts;
-    new_action->num_subactions = 0;
-
     return new_action;
+}
+
+void assign_opts(action *dest_action, opt **action_options, uint8 num_opts) {
+    for (uint8 i = 0; i < num_opts; i++) {
+        add_opt(dest_action, action_options[i]);
+    }
+}
+
+void add_opt(action *dest_action, opt *option) {
+    append_wfree(dest_action->action_opts, option, &free_opt);
+}
+
+void assign_subaction(action *dest_action, action *subaction) {
+    append_wfree(dest_action->subactions, subaction, &free_action);
 }
 
 char *compile_header(action *cur_action) {

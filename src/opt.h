@@ -26,7 +26,7 @@ typedef struct {
 // Begin Function Definitions
 
 // Describe free functions for easy cleanup
-void free_opt(opt *option);
+void free_opt(void *target_option);
 
 // 'Constructor' functions for creating arguments
 opt *allocate_opt();

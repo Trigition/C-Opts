@@ -122,7 +122,9 @@ void build_and_destroy_action() {
     logger(__FUNCTION__, "Allocating Args");
     opt **flags = make_lots_of_flags(200);
     logger(__FUNCTION__, "Allocating Action");
-    action *act = new_action("Action!", "Help desc", flags, 200);
+    //action *act = new_action("Action!", "Help desc", flags, 200);
+    action *act = new_action("Action!", "Help desc");
+    assign_opts(act, flags, 200);
     logger(__FUNCTION__, "Freeing Action");
     free_action(act);
     logger(__FUNCTION__, "Action test passed");
@@ -170,7 +172,9 @@ action **make_lots_of_actions(unsigned int num) {
     action **actions = malloc(sizeof(action *) * num);
     for (unsigned int i = 0; i < num; i++) {
         snprintf(action_name, 100, "Action %u", i);
-        actions[i] = new_action(action_name, "Help Desc", make_lots_of_flags(200), 200);
+        //actions[i] = new_action(action_name, "Help Desc", make_lots_of_flags(200), 200);
+        actions[i] = new_action(action_name, "Help Desc");
+        assign_opts(actions[i], make_lots_of_flags(200), 200);
     }
     return actions;
 }

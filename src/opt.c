@@ -8,7 +8,8 @@
  * of the struct is also freed with it. Any outside reference
  * must be manually updated to reflect the free.
  */
-void free_opt(opt *option) {
+void free_opt(void *target_option) {
+    opt *option = (opt *) target_option;
     free_pointer(option->long_flag);
     free_pointer(option->help_desc);
     free_pointer(option->man_desc);
