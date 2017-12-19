@@ -14,19 +14,7 @@ void free_action(void *target_action) {
     free_pointer(program_action->action_name);
     free_pointer(program_action->action_desc);
     
-    //for (uint8 i = 0; i < program_action->num_flags; i++) {
-    //    free_opt(program_action->action_opts[i]);
-    //}
-
-    //free(program_action->action_opts);
     delete_list(program_action->action_opts);
-
-    // Do a depth first free of the current tree branch
-    //for (uint8 i = 0; i < program_action->num_subactions; i++) {
-    //    free_action(program_action->subactions[i]);
-    //}
-
-    //free(program_action->subactions);
     delete_list(program_action->subactions);
 
     // All reference dependencies have been freed, free the root.
