@@ -291,6 +291,7 @@ element *__view_at(dll *list, unsigned int index) {
     return e;
 }
 
+//TODO Update number of references for source
 dll *concat(dll *dest, dll *src) {
     dest->tail->next = src->head;
     src->head->prev = dest->tail;
@@ -298,4 +299,31 @@ dll *concat(dll *dest, dll *src) {
     dest->len += src->len;
 
     return dest;
+}
+
+dll *copy_lists(dll *src) {
+    dll *copy = new_list();
+    element *cur_element = src->head;
+    for (unsigned int i = 0; i < src->len; i++) {
+        append_wfree(copy, cur_element->member->data, cur_element->member->free_func);
+        cur_element->member->references++;
+        cur_element = cur_element->next;
+    }
+    return copy;
+}
+
+dll *deep_copy(dll *src) {
+    dll *copy = new_list();
+    element *cur_element = src->head;
+    void *data = NULL;
+
+    for (unsigned int i = 0; i < src->len; i++) {
+        size_t data_size = sizeof(*cur_element->member->data);
+        data = malloc(sizeof(data_size));
+        memcpy(data, cur_element->member->data, data_size);
+        append_wfree(copy, data, cur_element->member->free_func);
+        cur_element = cur_element->next;
+    }
+
+    return copy;
 }
