@@ -174,6 +174,12 @@ opt *assign_cust_parser_function(opt *dest_opt, char * (*parser) ()) {
     return dest_opt;
 }
 
+/**
+ * @brief This function creates a filename for the target opt.
+ * @param arg The opt to create a filename for.
+ * @param ext The extension for the filename.
+ * @return The filename as a string.
+ */
 char *make_filename(opt *arg, const char *ext) {
     char *opt_name = arg->long_flag;
     char *filename = (char *) malloc(strlen(opt_name) * sizeof(char) + 
@@ -183,23 +189,39 @@ char *make_filename(opt *arg, const char *ext) {
     return filename;
 }
 
-char *compile_parse_function(opt *arg) {
+/**
+ * @brief This funcition creates C code for the target opt.
+ * @param arg The opt to compile.
+ */
+dll *compile_parse_function(opt *arg) {
     // Do boiler plate setup
+    dll *function = new_list();
     char *function_name = combine_strings(arg->long_flag, OPT_FUNCTION_SUFFIX);
     char *source = arg->parser();
-    uint8 function_len = strlen(function_name) + strlen(source) + 50;
-    char *function = malloc(function_len * sizeof(char));
-    function[0] = '\0';
-    strcat(function, function_name);
-    strcat(function, "(char *arg_str) {\n");
-    strcat(function, source);
-    strcat(function, "\n}\n");
 
-    free(function_name);
-    free(source);
+    append(function, function_name);
+    append(function, copy_string("(char &arg_str) {\n"));
+    append(function, source);
+    append(function, copy_string("\n}\n"));
+
+    //uint8 function_len = strlen(function_name) + strlen(source) + 50;
+    //char *function = malloc(function_len * sizeof(char));
+    //function[0] = '\0';
+    //strcat(function, function_name);
+    //strcat(function, "(char *arg_str) {\n");
+    //strcat(function, source);
+    //strcat(function, "\n}\n");
+
+    //free(function_name);
+    //free(source);
     return function;
 }
 
+/**
+ * @brief This function creates a function declaration for an opt.
+ * @param arg The opt being compiled.
+ * @return A string representing the function declaration (in C).
+ */
 char *compile_function_declaration(opt *arg) {
     // Do boiler plate setup
     char *function_name = combine_strings(arg->long_flag, OPT_FUNCTION_SUFFIX);
@@ -209,6 +231,11 @@ char *compile_function_declaration(opt *arg) {
     return function_declaration;
 }
 
+/**
+ * @brief This function compiles an opt.
+ * @param arg The opt being compiled.
+ * @return A struct holding an opt's function source and declaration in C code.
+ */
 compiled_function *compile_opt(opt *arg) {
     compiled_function *compiled_opt = (compiled_function *) malloc(sizeof(compiled_function));
     compiled_opt->function_declaration = compile_function_declaration(arg);

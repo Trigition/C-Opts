@@ -10,6 +10,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdarg.h>
+#include "../datastructures/dll.h"
 
 // Define program limits
 #define MAX_STR_LEN 1024 * 20
@@ -34,7 +35,7 @@ typedef enum {
 
 typedef struct {
     char *function_declaration;
-    char *function_source;
+    dll *function_source;
 } compiled_function;
 
 // Define common functions

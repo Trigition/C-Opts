@@ -65,6 +65,12 @@ void assign_subaction(action *dest_action, action *subaction) {
 }
 
 char *compile_header(action *cur_action) {
+    dll *opt_headers = new_list();
+    
+    compiled_function *cur_function;
+    for (unsigned int i = 0; i < cur_action->action_opts->len; i++) {
+        
+    }
     return NULL;
 }
 

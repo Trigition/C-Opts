@@ -54,7 +54,7 @@ opt *assign_cust_parser_function(opt *dest_opt, char * (*parser) ());
 
 // Compilation functions
 char *make_filename(opt *arg, const char *ext);
-char *compile_parse_function(opt *arg);
+dll *compile_parse_function(opt *arg);
 char *compile_function_declaration(opt *arg);
 compiled_function *compile_opt(opt *arg);
 #endif
