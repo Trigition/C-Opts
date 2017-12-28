@@ -60,5 +60,12 @@ dll *concat(dll *dest, dll *src);
 dll *shuffle(dll *dest, dll *src);
 dll *merge_union(dll *list1, dll *list2);
 
+// Copy Lists
+dll *copy_list(dll *src);
+dll *deep_copy(dll *src);
+
+// Functions on list
+void apply_to_list(dll *list, void (*operation) (void *));
+
 long diff(dll *list1, dll *list2, long (*compar) (void *, void *));
 #endif

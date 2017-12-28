@@ -52,6 +52,11 @@ element *new_element_wfree(void *data, void (*free_func) (void *)) {
     return data_element;
 }
 
+/**
+ * @brief This function creates a list from an array of ints
+ * @param array This is the array of ints
+ * @param len The length of the array to copy
+ */
 dll *list_from_ints(int *array, unsigned int len) {
     dll *list = new_list();
 
@@ -142,18 +147,35 @@ void __push(dll *list, element *new_head) {
     list->len++;
 }
 
+/**
+ * @brief This function places data at the end of a list
+ * @param list The destination list.
+ * @param data The data to be added.
+ */
 void append(dll *list, void *data) {
     element *new_tail = new_element(data);
 
     __append(list, new_tail);
 }
 
+/**
+ * @brief This function places data at the end of a list with
+ * a custom free function.
+ * @param list The destination list.
+ * @param data The data to be added.
+ * @param free_func The free function. It must take a void pointer an input.
+ */
 void append_wfree(dll *list, void *data, void (*free_func) (void *)) {
     element *new_tail = new_element_wfree(data, free_func);
 
     __append(list, new_tail);
 }
 
+/**
+ * @brief An internal function to place dll elements on a list.
+ * @param list The destination list.
+ * @param new_tail The dll element to be placed at the end of the list.
+ */
 void __append(dll *list, element *new_tail) {
     element *old_tail = list->tail;
     if(old_tail != NULL) {
@@ -166,18 +188,37 @@ void __append(dll *list, element *new_tail) {
     list->len++;
 }
 
+/**
+ * @brief This function inserts data somewhere within the list.
+ * @param list The destination list.
+ * @param data The data to be placed.
+ * @param index Where the data should be placed.
+ */
 void insert(dll *list, void *data, unsigned int index) {
     element *e = new_element(data);
 
     __insert(list, e, index);
 }
 
+/**
+ * @brief This function inserts data somewhere within a list with a custom free function.
+ * @param list The destination list.
+ * @param data The data to be placed.
+ * @param index Where the data should be placed.
+ * @param free_func A function to free the data. Must take a void pointer as input.
+ *
+ */
 void insert_wfree(dll *list, void *data, unsigned int index, void (*free_func) (void *)) {
     element *e = new_element_wfree(data, free_func);
 
     __insert(list, e, index);
 }
 
+/**
+ * @brief An internal function to place dll elements somewhere within a list.
+ * @param e The element to be inserted.
+ * @param index Where the element should be inserted at.
+ */
 void __insert(dll *list, element *e, unsigned int index) {
     // Check bounds of index specification
     if (index == 0) {
@@ -204,6 +245,12 @@ void __insert(dll *list, element *e, unsigned int index) {
     list->len++;
 }
 
+/**
+ * @brief This internal function removes element at a specific index.
+ * @param list The source list.
+ * @param index The nth element to remove.
+ * @return The removed element.
+ */
 element *__remove_element(dll *list, unsigned int index) {
     element *element_to_remove = __view_at(list, index);
     element *prev_element = element_to_remove->prev;
@@ -242,18 +289,35 @@ element *__remove_element(dll *list, unsigned int index) {
     }
 }
 
+/**
+ * @brief This function views the first element of a list.
+ * @param list The source list
+ * @return A void pointer to the data at the front of a list.
+ */
 void *view_first(dll *list) {
     element *e = __view_at(list, 0);
 
     return e->member->data;
 }
 
+/**
+ * @brief This function views the last element of a list.
+ * @param list The source list.
+ * @return A void pointer to the data at the back of a list.
+ */
 void *view_last(dll *list) {
     element *e = __view_at(list, list->len - 1);
 
     return e->member->data;
 }
 
+/**
+ * @brief This function views the data at a specific index.
+ * @param list The source list.
+ * @param index The position of the desired data.
+ * @return A void pointer to the data at the index. NULL if no
+ * such position exists.
+ */
 void *view_at(dll *list, unsigned int index) {
     element *e = __view_at(list, index);
 
@@ -264,6 +328,13 @@ void *view_at(dll *list, unsigned int index) {
     }
 }
 
+/**
+ * @brief An internal function to view elements at an index.
+ * @param list The source list.
+ * @param index The position of the desired element.
+ * @return An element pointer for use in view_first, view_last,
+ * and view_at.
+ */
 element *__view_at(dll *list, unsigned int index) {
     // Check for least expensive way to traverse list
     unsigned int midpoint = list->len / 2;
@@ -291,6 +362,16 @@ element *__view_at(dll *list, unsigned int index) {
     return e;
 }
 
+/**
+ * @brief This function appends one list to
+ * another.
+ * @param dest The destination list. This list
+ * will be altered to contain the source list.
+ * @param src The list to be appended. This list
+ * will remain untouched.
+ * @return A pointer to the destination.
+ */
+//TODO Update number of references for source
 dll *concat(dll *dest, dll *src) {
     dest->tail->next = src->head;
     src->head->prev = dest->tail;
@@ -298,4 +379,61 @@ dll *concat(dll *dest, dll *src) {
     dest->len += src->len;
 
     return dest;
+}
+
+/**
+ * @brief This function will copy a list's elements into
+ * a new list. This is a shallow copy.
+ * @param src The list to be copied.
+ * @return A reference to the new list. It's data will be pointers
+ * to the source's data. Any changes in the source or destination will be
+ * refleced in both.
+ */
+dll *copy_lists(dll *src) {
+    dll *copy = new_list();
+    element *cur_element = src->head;
+    for (unsigned int i = 0; i < src->len; i++) {
+        append_wfree(copy, cur_element->member->data, cur_element->member->free_func);
+        cur_element->member->references++;
+        cur_element = cur_element->next;
+    }
+    return copy;
+}
+
+/**
+ * @brief This function deeply copies a list, meaning all data
+ * is duplicated in memory.
+ * @param src The list to be copied
+ * @return A reference to the new list. All data has been duplicated.
+ * Any changes in the source or copy will not be reflected in the other.
+ */
+dll *deep_copy(dll *src) {
+    dll *copy = new_list();
+    element *cur_element = src->head;
+    void *data = NULL;
+
+    for (unsigned int i = 0; i < src->len; i++) {
+        size_t data_size = sizeof(*cur_element->member->data);
+        data = malloc(sizeof(data_size));
+        memcpy(data, cur_element->member->data, data_size);
+        append_wfree(copy, data, cur_element->member->free_func);
+        cur_element = cur_element->next;
+    }
+
+    return copy;
+}
+
+/**
+ * @brief This function applies another function on a list.
+ * @param list The target list to operate on.
+ * @param operation The operation function. It must take in a 
+ * void pointer as a parameter.
+ */
+void apply_to_list(dll *list, void (*operation) (void *)) {
+    element *cur_element = list->head;
+    for (unsigned int i = 0; i < list->len; i++) {
+        // Perform operation on data
+        operation(cur_element->member->data);
+        cur_element = cur_element->next;
+    }
 }
