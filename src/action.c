@@ -82,19 +82,13 @@ void assign_subaction(action *dest_action, action *subaction) {
 }
 
 /**
- * @brief This function compiles function declarations of the action and
- * its subactions and opts.
- * @param target_action The action to compile.
- * @return A list of strings containing C code function declarations.
+ * @brief This function compiles the header for the parse function of the current action.
+ * @param cur_action The target action to compile.
+ * @return The action's parse function header as a string.
  */
-dll *compile_header(action *target_action) {
-    dll *opt_headers = new_list();
-    
-    //compiled_function *cur_function;
-    for (unsigned int i = 0; i < target_action->action_opts->len; i++) {
-        
-    }
-    return NULL;
+char *compile_parse_header(action *cur_action) {
+    char *function_name = combine_strings(cur_action->action_name, "_action_parser(char *arg_str);");
+    return function_name;
 }
 
 /**
@@ -104,17 +98,22 @@ dll *compile_header(action *target_action) {
  * to parse the action and its possible subactions/arguments.
  */
 dll *compile_action(action *root_action) {
+    
     // Recursively compile the leaf nodes of the tree
     // with the current action as the root.
+    dll *compiled_action = new_list();
     if (root_action->subactions->len > 0) {
         action *cur_subaction;
         dll *compiled_functions;
         for (unsigned int i = 0; i < root_action->subactions->len; i++) {
             cur_subaction = view_at(root_action->subactions, i);
             compiled_functions = compile_action(cur_subaction);
-            //@TODO Append functions to return
+            
+            // Append compiled subactions to function list
+            concat(compiled_action, compiled_functions);
         }
     }
+
     // Compile action arguments
     if (root_action->action_opts->len > 0) {
         opt *cur_opt;
@@ -122,16 +121,21 @@ dll *compile_action(action *root_action) {
         for (unsigned int i = 0; i < root_action->action_opts->len; i++) {
             cur_opt = view_at(root_action->action_opts, i);
             append(compiled_functions, compile_opt(cur_opt));
-            //@TODO Append functions to return
         }
+
+        // Append compiled opts to function list
+        concat(compiled_action, compiled_functions);
     }
-    return NULL;
+
+    // Put current action parser at top of the list
+    push(compiled_action, compile_action_parser(root_action));
+    return compiled_action;
 }
 
 /**
  * @brief This function compiles the parser function for an argument.
  */
-dll *compile_action_parser(action *cur_action) {
+compiled_function *compile_action_parser(action *cur_action) {
     dll *function = new_list();
     char *function_name = combine_strings(cur_action->action_name, "_action_parser");
     append(function, copy_string("bool "));
@@ -144,5 +148,10 @@ dll *compile_action_parser(action *cur_action) {
     append(function, copy_string("return strcmp(arg_str, arg_string) == 0;\n"));
     // End function code block
     append(function, copy_string("\n}\n"));
-    return function;
+
+    // Create compiled_function
+    compiled_function *action_function = (compiled_function *) malloc(sizeof(compiled_function));
+    action_function->function_declaration = compile_parse_header(cur_action);
+    action_function->function_source = function;
+    return action_function;
 }

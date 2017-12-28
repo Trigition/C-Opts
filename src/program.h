@@ -11,11 +11,10 @@
  *  into a C header file.
  */
 typedef struct {
-    unsigned int num_actions;
     char *program_desc;
     char *man_desc;
     char *program_version;
-    struct action **actions;
+    dll *actions;
 } program_opts;
 
 void free_program_opt(program_opts *program);
@@ -23,6 +22,7 @@ void free_program_opt(program_opts *program);
 program_opts *new_program(  char *program_description,
                             char *man_page_description,
                             char *program_version,
-                            struct action **program_actions,
-                            unsigned int num_actions);
+                            dll *program_actions);
+
+int compile_program(program_opts *target_program);
 #endif

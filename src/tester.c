@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
     build_and_destroy_arg();
     build_and_destroy_valued_flag();
     build_and_destroy_action();
-    build_and_destroy_program();
+    //build_and_destroy_program();
 
     build_and_compile_flag();
     return 0;
@@ -137,8 +137,7 @@ void build_and_destroy_program() {
     program_opts *program = new_program("A Generated test program",
                                         "Test program man page",
                                         "0.0.1", 
-                                        actions,
-                                        10);
+                                        actions);
     logger(__FUNCTION__, "Freeing program");
     free_program_opt(program);
     logger(__FUNCTION__, "Program test passed");

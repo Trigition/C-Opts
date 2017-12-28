@@ -10,11 +10,7 @@
  */
 void free_program_opt(program_opts *program) {
     // Free all program actions
-    for (unsigned int i = 0; i < program->num_actions; i++) {
-
-        free_action(program->actions[i]);
-    }
-    free(program->actions);
+    delete_list(program->actions);
 
     free_pointer(program->program_desc);
     free_pointer(program->man_desc);
@@ -37,8 +33,7 @@ void free_program_opt(program_opts *program) {
 program_opts *new_program(  char *program_description,
                             char *man_page_description,
                             char *program_version,
-                            action **program_actions,
-                            unsigned int num_actions) {
+                            dll *program_actions) {
     program_opts *new_program = (program_opts *) malloc(sizeof(program_opts));
     
     // Check for any allocation error
@@ -48,11 +43,20 @@ program_opts *new_program(  char *program_description,
     }
 
     new_program->actions = program_actions; //TODO Default to 'main' action if none
-    new_program->num_actions = num_actions;
 
     new_program->program_desc = copy_string(program_description);
     new_program->man_desc = copy_string(man_page_description);
     new_program->program_version = copy_string(program_version);
  
     return new_program;
+}
+
+/**
+ * @brief This function compiles a program and writes all source
+ * code to the appropriate file.
+ * @return Returns 0 upon successful compilation
+ * @TODO Error codes for erroneus input.
+ */
+int compile_program(program_opts *target_program) {
+    return 1;
 }
