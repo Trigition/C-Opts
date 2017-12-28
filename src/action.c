@@ -50,30 +50,99 @@ action *new_action( char *action_name,
     return new_action;
 }
 
+/**
+ * @brief This function assigns opts to an action.
+ * @TODO This should operate on a list of opts.
+ * @TODO Remove double pointer passing
+ */
 void assign_opts(action *dest_action, opt **action_options, uint8 num_opts) {
     for (uint8 i = 0; i < num_opts; i++) {
         add_opt(dest_action, action_options[i]);
     }
 }
 
+/**
+ * @brief This function assigns an opt to an action.
+ * @param dest_action The action to assign an opt to.
+ * @param option The option being assigned.
+ */
 void add_opt(action *dest_action, opt *option) {
     append_wfree(dest_action->action_opts, option, &free_opt);
 }
 
+/**
+ * @brief This function assigns sub actions to an action.
+ * @param dest_action The action to assign a subaction.
+ * @param subaction The action being assigned as a subaction.
+ * @TODO Program should check if a cyclic is being introduced and
+ * prevent such behavior.
+ */
 void assign_subaction(action *dest_action, action *subaction) {
     append_wfree(dest_action->subactions, subaction, &free_action);
 }
 
-char *compile_header(action *cur_action) {
+/**
+ * @brief This function compiles function declarations of the action and
+ * its subactions and opts.
+ * @param target_action The action to compile.
+ * @return A list of strings containing C code function declarations.
+ */
+dll *compile_header(action *target_action) {
     dll *opt_headers = new_list();
     
-    compiled_function *cur_function;
-    for (unsigned int i = 0; i < cur_action->action_opts->len; i++) {
+    //compiled_function *cur_function;
+    for (unsigned int i = 0; i < target_action->action_opts->len; i++) {
         
     }
     return NULL;
 }
 
-compiled_function *compile_action(action *root_action) {
+/**
+ * @brief This function compiles the action and its subactions and opts.
+ * @param root_action The action to compile.
+ * @return A list of compiled_functions representing all necessary C code
+ * to parse the action and its possible subactions/arguments.
+ */
+dll *compile_action(action *root_action) {
+    // Recursively compile the leaf nodes of the tree
+    // with the current action as the root.
+    if (root_action->subactions->len > 0) {
+        action *cur_subaction;
+        dll *compiled_functions;
+        for (unsigned int i = 0; i < root_action->subactions->len; i++) {
+            cur_subaction = view_at(root_action->subactions, i);
+            compiled_functions = compile_action(cur_subaction);
+            //@TODO Append functions to return
+        }
+    }
+    // Compile action arguments
+    if (root_action->action_opts->len > 0) {
+        opt *cur_opt;
+        dll *compiled_functions = new_list();
+        for (unsigned int i = 0; i < root_action->action_opts->len; i++) {
+            cur_opt = view_at(root_action->action_opts, i);
+            append(compiled_functions, compile_opt(cur_opt));
+            //@TODO Append functions to return
+        }
+    }
     return NULL;
+}
+
+/**
+ * @brief This function compiles the parser function for an argument.
+ */
+dll *compile_action_parser(action *cur_action) {
+    dll *function = new_list();
+    char *function_name = combine_strings(cur_action->action_name, "_action_parser");
+    append(function, copy_string("bool "));
+    append(function, function_name);
+    append(function, copy_string("(char *arg_string) {\n"));
+    // Function code block
+    append(function, copy_string("char *arg_name = \""));
+    append(function, cur_action->action_name);
+    append(function, copy_string("\";\n"));
+    append(function, copy_string("return strcmp(arg_str, arg_string) == 0;\n"));
+    // End function code block
+    append(function, copy_string("\n}\n"));
+    return function;
 }

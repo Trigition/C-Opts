@@ -26,6 +26,9 @@ action *new_action( char *action_name,
 void assign_opts(action *dest_action, opt **action_options, uint8 num_opts);
 void assign_subactions(action *dest_action, action **subactions, uint8 num_actions);
 void add_opt(action *dest_action, opt *option);
-char *compile_header(action *cur_action);
-compiled_function *compile_action(action *cur_action);
+
+dll *compile_header(action *cur_action);
+dll *compile_action(action *cur_action);
+dll *compile_action_parser(action *cur_action);
+
 #endif
