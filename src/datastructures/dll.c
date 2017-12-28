@@ -422,3 +422,18 @@ dll *deep_copy(dll *src) {
 
     return copy;
 }
+
+/**
+ * @brief This function applies another function on a list.
+ * @param list The target list to operate on.
+ * @param operation The operation function. It must take in a 
+ * void pointer as a parameter.
+ */
+void apply_to_list(dll *list, void (*operation) (void *)) {
+    element *cur_element = list->head;
+    for (unsigned int i = 0; i < list->len; i++) {
+        // Perform operation on data
+        operation(cur_element->member->data);
+        cur_element = cur_element->next;
+    }
+}
