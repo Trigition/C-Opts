@@ -32,8 +32,7 @@ void free_program_opt(program_opts *program) {
  */
 program_opts *new_program(  char *program_description,
                             char *man_page_description,
-                            char *program_version,
-                            dll *program_actions) {
+                            char *program_version) {
     program_opts *new_program = (program_opts *) malloc(sizeof(program_opts));
     
     // Check for any allocation error
@@ -42,13 +41,39 @@ program_opts *new_program(  char *program_description,
         return NULL;
     }
 
-    new_program->actions = program_actions; //TODO Default to 'main' action if none
+    new_program->global_opts = new_list();
+    new_program->actions = new_list();
 
     new_program->program_desc = copy_string(program_description);
     new_program->man_desc = copy_string(man_page_description);
     new_program->program_version = copy_string(program_version);
  
     return new_program;
+}
+
+/**
+ * @brief This function assigns a new global argument.
+ * @param target_program The program to have the new argument.
+ * @param global_opt The argument.
+ */
+void assign_global_opt(program_opts *target_program, opt *global_opt) {
+    // TODO Check to see if new opt is in conflict with any other
+    // global or subaction opt.
+    append(target_program->global_opts, global_opt);
+}
+
+void assign_action(program_opts *target_program, action *src_action) {
+    // TODO Check to see if action is in conflict with any current
+    // action
+    append(target_program->actions, src_action);
+}
+
+void assign_actions(program_opts *target_program, dll *src_actions) {
+    if (target_program->actions != NULL) {
+        delete_list(target_program->actions);
+    }
+
+    target_program->actions = src_actions;
 }
 
 /**

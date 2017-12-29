@@ -136,8 +136,7 @@ void build_and_destroy_program() {
     logger(__FUNCTION__, "Allocating program");
     program_opts *program = new_program("A Generated test program",
                                         "Test program man page",
-                                        "0.0.1", 
-                                        actions);
+                                        "0.0.1");
     logger(__FUNCTION__, "Freeing program");
     free_program_opt(program);
     logger(__FUNCTION__, "Program test passed");
