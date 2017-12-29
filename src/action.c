@@ -55,10 +55,12 @@ action *new_action( char *action_name,
  * @TODO This should operate on a list of opts.
  * @TODO Remove double pointer passing
  */
-void assign_opts(action *dest_action, opt **action_options, uint8 num_opts) {
-    for (uint8 i = 0; i < num_opts; i++) {
-        add_opt(dest_action, action_options[i]);
+void assign_opts(action *dest_action, dll *action_options) {
+    if (dest_action->action_opts != NULL) {
+        delete_list(dest_action->action_opts);
     }
+
+    dest_action->action_opts = action_options;
 }
 
 /**

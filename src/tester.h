@@ -22,10 +22,10 @@ void build_and_destroy_program();
 void build_and_compile_flag();
 
 
-opt **make_lots_of_flags(unsigned int num);
-opt **make_lots_of_args(unsigned int num);
-opt **make_lots_of_valued_flags(unsigned int num);
-action **make_lots_of_actions(unsigned int num);
+dll *make_lots_of_flags(unsigned int num);
+dll *make_lots_of_args(unsigned int num);
+dll *make_lots_of_valued_flags(unsigned int num);
+dll *make_lots_of_actions(unsigned int num);
 program_opts **make_lots_of_programs(unsigned int num);
 
 #endif

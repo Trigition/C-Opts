@@ -23,7 +23,7 @@ void free_action(void *target_action);
 action *new_action( char *action_name,
                     char *action_description);
 
-void assign_opts(action *dest_action, opt **action_options, uint8 num_opts);
+void assign_opts(action *dest_action, dll *action_options);
 void assign_subactions(action *dest_action, action **subactions, uint8 num_actions);
 void add_opt(action *dest_action, opt *option);
 

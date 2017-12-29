@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
     build_and_destroy_arg();
     build_and_destroy_valued_flag();
     build_and_destroy_action();
-    //build_and_destroy_program();
+    build_and_destroy_program();
 
     build_and_compile_flag();
     return 0;
@@ -120,11 +120,11 @@ void build_and_destroy_valued_flag() {
 
 void build_and_destroy_action() {
     logger(__FUNCTION__, "Allocating Args");
-    opt **flags = make_lots_of_flags(200);
+    dll *flags = make_lots_of_flags(200);
     logger(__FUNCTION__, "Allocating Action");
     //action *act = new_action("Action!", "Help desc", flags, 200);
     action *act = new_action("Action!", "Help desc");
-    assign_opts(act, flags, 200);
+    assign_opts(act, flags);
     logger(__FUNCTION__, "Freeing Action");
     free_action(act);
     logger(__FUNCTION__, "Action test passed");
@@ -132,11 +132,12 @@ void build_and_destroy_action() {
 
 void build_and_destroy_program() {
     logger(__FUNCTION__, "Allocating Actions");
-    action **actions = make_lots_of_actions(10);
+    dll *actions = make_lots_of_actions(10);
     logger(__FUNCTION__, "Allocating program");
     program_opts *program = new_program("A Generated test program",
                                         "Test program man page",
                                         "0.0.1");
+    assign_actions(program, actions);
     logger(__FUNCTION__, "Freeing program");
     free_program_opt(program);
     logger(__FUNCTION__, "Program test passed");
@@ -153,26 +154,32 @@ void build_and_compile_flag() {
     logger(__FUNCTION__, "Passed");
 }
 
-opt **make_lots_of_flags(unsigned int num) {
+dll *make_lots_of_flags(unsigned int num) {
     char flag_name[100];
     char flag_char;
-    opt **flags = malloc(sizeof(opt *) * num);
+    opt *cur_flag;
+    dll *flags = new_list();
+    //opt **flags = malloc(sizeof(opt *) * num);
     for (unsigned int i = 0; i < num; i++) {
         flag_char = i % 256;
         snprintf(flag_name, 100, "Flag %u", i);
-        flags[i] = new_flag(flag_name, flag_char, "Help Desc", "Man Page Desc");
+        cur_flag = new_flag(flag_name, flag_char, "Help Desc", "Man Page Desc");
+        append_wfree(flags, cur_flag, &free_opt);
     }
     return flags;
 }
 
-action **make_lots_of_actions(unsigned int num) {
+dll *make_lots_of_actions(unsigned int num) {
     char action_name[100];
-    action **actions = malloc(sizeof(action *) * num);
+    action *cur_action;
+    dll *actions  = new_list();
+    //action **actions = malloc(sizeof(action *) * num);
     for (unsigned int i = 0; i < num; i++) {
         snprintf(action_name, 100, "Action %u", i);
         //actions[i] = new_action(action_name, "Help Desc", make_lots_of_flags(200), 200);
-        actions[i] = new_action(action_name, "Help Desc");
-        assign_opts(actions[i], make_lots_of_flags(200), 200);
+        cur_action = new_action(action_name, "Help Desc");
+        assign_opts(cur_action, make_lots_of_flags(200));
+        append_wfree(actions, cur_action, &free_action);
     }
     return actions;
 }

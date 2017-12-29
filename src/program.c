@@ -59,13 +59,13 @@ program_opts *new_program(  char *program_description,
 void assign_global_opt(program_opts *target_program, opt *global_opt) {
     // TODO Check to see if new opt is in conflict with any other
     // global or subaction opt.
-    append(target_program->global_opts, global_opt);
+    append_wfree(target_program->global_opts, global_opt, &free_opt);
 }
 
 void assign_action(program_opts *target_program, action *src_action) {
     // TODO Check to see if action is in conflict with any current
     // action
-    append(target_program->actions, src_action);
+    append_wfree(target_program->actions, src_action, &free_action);
 }
 
 void assign_actions(program_opts *target_program, dll *src_actions) {
