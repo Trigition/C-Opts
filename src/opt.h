@@ -1,7 +1,7 @@
-#ifndef __OPT_H_
-#define __OPT_H_
+#pragma once
 
 #include "commons/commons.h"
+#include "commons/c_code.h"
 
 #define OPT_FUNCTION_SUFFIX "_parser"
 #define OPT_FUNCTION_SUF_LEN strlen(OPT_FUNCTION_SUFFIX)
@@ -57,4 +57,3 @@ char *make_filename(opt *arg, const char *ext);
 dll *compile_parse_function(opt *arg);
 char *compile_function_declaration(opt *arg);
 compiled_function *compile_opt(opt *arg);
-#endif

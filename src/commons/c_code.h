@@ -1,5 +1,4 @@
-#ifndef __C_CODE_H_
-#define __C_CODE_H_
+#pragma once
 
 #include "commons.h"
 
@@ -15,26 +14,73 @@ typedef enum {
     Lisp
 } indent_style;
 
-typedef struct {
-    indent_style style;
-    uchar spaces_per_indent;
-} formatting;
+// Begin Forward Declarations
+class Dispatch;
+class Parameter;
+class CodeBlock;
+class Function;
 
-typedef struct {
-    dll *code_lines;
-    uint8 depth; // For formatting purposes
-} code_block;
+extern class Program;
+extern class Action;
+extern class Argument;
+// Begin Definitions
+class Compileable {
+    public:
+        virtual void accept(Visitor *visitor) = 0;
+}
 
-typedef struct {
-    char *function_name;
-    char *return_type;
-    dll *function_args;
-    code_block *code;
-} c_function;
+class Visitor {
+    public:
+        virtual void dispatch(Parameter *parameter) = 0;
+        virtual void dispatch(CodeBlock *codeblock) = 0;
+        virtual void dispatch(Function *function) = 0;
 
-c_function *new_function(const char *name, const char *return_type);
-void add_param(c_function *function, const char *type, const char *name);
+        virtual void dispatch(Program *program) = 0;
+        virtual void dispatch(Action *action) = 0;
+        virtual void dispatch(Argument *argument) = 0;
+};
 
-void free_c_function(c_function *f);
-void free_code_block(code_block *b);
-#endif
+class Parameter : public Compileable {
+    private:
+        std::string type;
+        std::string var_name;
+
+    public:
+        Parameter(std::string type, std::string var_name);
+        Parameter(const char *type, const char *var_name);
+        ~Parameter();
+}
+
+class CodeBlock : public Compileable {
+    private:
+        uchar depth;
+        std::vector<std::string> code_lines;
+
+    public:
+        CodeBlock();
+        ~CodeBlock();
+
+        void add_line(std::string *line);
+        void add_line(const char *line);
+
+        // Visitor pattern
+        void accept(Visitor *visitor);
+};
+
+class Function : public Compileable {
+    private:
+        std::string name;
+        std::string return_type;
+        std::vector<Parameter *> input_params;
+        CodeBlock *function_code;
+
+    public:
+        Function(std::string name, std::string return_type);
+        Function(const char *name, const char *return_type);
+        ~Function();
+
+        void add_input_param(Parameter *param);
+        void add_code(CodeBlock *code);
+
+        void accept(Visitor *visitor);
+};

@@ -1,4 +1,4 @@
-CC=gcc
+CC=g++
 CFLAGS = -g -Wall
 
 CSRC = $(wildcard src/datastructures/*.c) \

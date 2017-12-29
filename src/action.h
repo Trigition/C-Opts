@@ -1,5 +1,4 @@
-#ifndef __ACTION_H_
-#define __ACTION_H_
+#pragma once
 
 #include "datastructures/dll.h"
 #include "commons/commons.h"
@@ -31,5 +30,3 @@ char *compile_parse_header(action *cur_action);
 
 dll *compile_action(action *cur_action);
 compiled_function *compile_action_parser(action *cur_action);
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef __PROGRAM_H_
-#define __PROGRAM_H_
+#pragma once
 
 #include "opt.h"
 #include "action.h"
@@ -18,6 +17,25 @@ typedef struct {
     dll *actions;
 } program_opts;
 
+class Program : public Compileable {
+    private:
+        std::string description;
+        std::string man_page;
+        std::string version;
+        std::vector<Argument> global_args;
+        std::vector<Action> actions;
+
+    public:
+        Program(std::string *description, std::string *man_page, std::string *version);
+        Program(const char *description, const char *man_page, const char *version);
+        ~Program();
+
+        void add_global_arg(Argument *arg);
+        void add_action(Action *action);
+
+        accept(Visitor *visitor);
+};
+
 void free_program_opt(program_opts *program);
 
 program_opts *new_program(  char *program_description,
@@ -28,4 +46,3 @@ void assign_global_opt(program_opts *target_program, opt *global_opt);
 void assign_action(program_opts *target_program, action *src_action);
 void assign_actions(program_opts *target_program, dll *src_actions);
 int compile_program(program_opts *target_program);
-#endif
