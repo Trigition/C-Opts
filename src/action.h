@@ -1,32 +1,16 @@
 #pragma once
 
-#include "datastructures/dll.h"
 #include "commons/commons.h"
-#include "opt.h"
+#include "argument.h"
 
-/*! \struct
- *  @brief This struct defines a program action
- *  This struct encapsulates program actions. Actions 
- *  dictate different operations a program can perform.
- *  Options are specific to a certain action and its subactions.
- */
-typedef struct action {
-    char *action_name;
-    char *action_desc;
-    dll  *action_opts;
-    dll  *subactions;
-} action;
+class Action : public Compileable {
+    private:
+        std::string *action_name;
+        std::string *action_desc;
+    public:
+        Action(std::string *action_name, std::string *action_desc);
+        Action(const char *action_name, const char *action_desc);
+        ~Action();
 
-void free_action(void *target_action);
-
-action *new_action( char *action_name,
-                    char *action_description);
-
-void assign_opts(action *dest_action, dll *action_options);
-void assign_subactions(action *dest_action, action **subactions, uint8 num_actions);
-void add_opt(action *dest_action, opt *option);
-
-char *compile_parse_header(action *cur_action);
-
-dll *compile_action(action *cur_action);
-compiled_function *compile_action_parser(action *cur_action);
+        void accept(Visitor *visitor);
+};

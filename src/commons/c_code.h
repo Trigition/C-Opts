@@ -20,14 +20,15 @@ class Parameter;
 class CodeBlock;
 class Function;
 
-extern class Program;
-extern class Action;
-extern class Argument;
+class Program;
+class Action;
+class Argument;
+class Visitor;
 // Begin Definitions
 class Compileable {
     public:
         virtual void accept(Visitor *visitor) = 0;
-}
+};
 
 class Visitor {
     public:
@@ -49,7 +50,7 @@ class Parameter : public Compileable {
         Parameter(std::string type, std::string var_name);
         Parameter(const char *type, const char *var_name);
         ~Parameter();
-}
+};
 
 class CodeBlock : public Compileable {
     private:

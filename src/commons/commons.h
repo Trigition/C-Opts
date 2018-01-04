@@ -1,16 +1,8 @@
-#ifndef __COMMONS_H_
-#define __COMMONS_H_
+#pragma once
 
-#include <errno.h>
-#include <limits.h>
-#include <math.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdarg.h>
-#include "../datastructures/dll.h"
+#include <iostream>
+#include <vector>
+#include <string>
 
 // Define program limits
 #define MAX_STR_LEN 1024 * 20
@@ -32,25 +24,3 @@ typedef enum {
    ARG_MAC_ADDR,
    ARG_CUSTOM
 } argtype;
-
-typedef struct {
-    char *function_declaration;
-    dll *function_source;
-} compiled_function;
-
-// Define common functions
-void free_pointer(void *occupied_memory);
-void free_compiled_function(compiled_function *func);
-char *copy_string(char *src);
-char *combine_strings(char *prefix, char *suffix);
-
-// Define primitive parser generators for C-Opts
-char *compile_parse_integer();
-char *compile_parse_float();
-char *compile_parse_string();
-char *compile_parse_file();
-char *compile_parse_ipv4();
-char *compile_parse_ipv6();
-char *compile_parse_mac_addr();
-
-#endif
