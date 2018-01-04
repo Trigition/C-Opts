@@ -1,20 +1,20 @@
 CC=g++
 CFLAGS = -g -Wall
+LDFLAGS = -L ../boost_1_66_0/
+CSRC = $(wildcard src/datastructures/*.cpp) \
+	   $(wildcard src/commons/*.cpp) \
+	   $(wildcard src/*.cpp)
 
-CSRC = $(wildcard src/datastructures/*.c) \
-	   $(wildcard src/commons/*.c) \
-	   $(wildcard src/*.c)
-
-COBJ = $(CSRC:.c=.o)
+COBJ = $(CSRC:.cpp=.o)
 CDEP = $(COBJ:.o=.d)
 
 tester: $(COBJ)
-	$(CC) -o $@ $^
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 -include $(CDEP)
 
 $.d: %.c
-	$(CC) $(CFLAGS) $< -MM -MT $(@:.d=.o) >$@ -lm
+	$(CC) $(CFLAGS) $< -MM -MT $(@:.d=.o) >$@ $(LDFLAGS)
 
 .PHONY: clean
 clean:
