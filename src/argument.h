@@ -68,3 +68,33 @@ class Argument : public Compileable {
 
         void accept(Visitor &visitor);
 };
+
+class Flag : public Argument {
+    public:
+        Flag(char flag_char,
+             std::string &flag_name,
+             std::string &help_desc,
+             std::string &man_page);
+        Flag(char flag_char,
+             const char &flag_name,
+             const char &help_desc,
+             const char &man_page);
+        ~Flag();
+};
+
+class ValuedFlag : public Flag {
+    public:
+        ValuedFlag(char flag_char,
+                   std::string &flag_name,
+                   std::string &help_desc,
+                   std::string &man_page,
+                   std::string &value_name,
+                   std::string &type);
+        ValuedFlag(char flag_char,
+                   const char &flag_name,
+                   const char &help_desc,
+                   const char &man_page,
+                   const char &value_name,
+                   const char &type);
+        ~ValuedFlag();
+};
