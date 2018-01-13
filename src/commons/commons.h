@@ -11,6 +11,8 @@
 #define HELP_SUFFIX "_help"
 #define MAN_PAGE_SUFFIX "_man_page"
 
+#define NO_VAL "__NO__VALUE__"
+
 typedef unsigned char uchar;
 typedef unsigned int uint8;
 

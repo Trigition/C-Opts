@@ -1,5 +1,9 @@
 #include "argument.h"
 
+Argument::Argument() {
+
+}
+
 Argument::Argument(char flag_char,
                    std::string &flag_name,
                    std::string &help_desc,
@@ -16,11 +20,11 @@ Argument::Argument(char flag_char,
 }
 
 Argument::Argument(char flag_char,
-                   const char &flag_name,
-                   const char &help_desc,
-                   const char &man_page,
-                   const char &value_name,
-                   const char &type,
+                   const char* const &flag_name,
+                   const char* const &help_desc,
+                   const char* const &man_page,
+                   const char* const &value_name,
+                   const char* const &type,
                    unsigned int pos) {
     this->flag_name = flag_name;
     this->help_desc = help_desc;
