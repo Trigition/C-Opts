@@ -1,4 +1,4 @@
-#include "c_code.h"
+#include "C_Code.h"
 
 Function::Function(std::string &name, std::string &return_type) {
     this->name = name;
@@ -41,6 +41,24 @@ void Function::add_codeline(std::string &code) {
 void Function::add_codeline(const char &code) {
     this->ensure_codeblock_exists();
     this->function_code->add_line(code);
+}
+
+std::string& Function::gen_function_header() {
+    std::string new_header = "";
+    new_header = this->name;
+    new_header += "(";
+ 
+    for (unsigned int i = 0; i < this->input_params.size() - 1; i++) {
+        new_header += this->input_params[i]->get_definition();
+        new_header += ", ";
+    }
+
+    new_header += this->input_params[this->input_params.size() - 1]->get_definition();
+    new_header += ")";
+
+    this->header = new_header;
+
+    return this->header;
 }
 
 void Function::accept(Visitor &visitor) {

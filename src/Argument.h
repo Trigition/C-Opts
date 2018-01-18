@@ -1,7 +1,7 @@
 #pragma once
 
-#include "commons/commons.h"
-#include "commons/c_code.h"
+#include "commons/Commons.h"
+#include "commons/C_Code.h"
 
 class Argument : public Compileable {
     private:
@@ -67,6 +67,7 @@ class Argument : public Compileable {
         std::string& get_type() { return this->type; };
         unsigned int get_position() { return this->pos; };
 
+        std::string make_header();
         void accept(Visitor &visitor);
 };
 

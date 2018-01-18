@@ -1,4 +1,4 @@
-#include "program.h"
+#include "Program.h"
 Program::Program(std::string &new_description, std::string &new_man_page, std::string &new_version) {
     this->description = new_description;
     this->man_page = new_man_page;

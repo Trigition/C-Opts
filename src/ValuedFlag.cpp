@@ -1,4 +1,4 @@
-#include "argument.h"
+#include "Argument.h"
 
 ValuedFlag::ValuedFlag(char flag_char,
                        std::string &flag_name,

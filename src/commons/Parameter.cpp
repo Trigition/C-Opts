@@ -1,4 +1,4 @@
-#include "c_code.h"
+#include "C_Code.h"
 
 Parameter::Parameter(std::string &type, std::string &var_name) {
     this->type = type;

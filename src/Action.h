@@ -1,7 +1,7 @@
 #pragma once
 
-#include "commons/commons.h"
-#include "argument.h"
+#include "commons/Commons.h"
+#include "Argument.h"
 
 class Action : public Compileable {
     private:
@@ -16,6 +16,10 @@ class Action : public Compileable {
 
         void add_argument(Argument &argument);
         void add_subaction(Action &subaction);
+
+        // Getters
+        std::vector<Argument*> &get_arguments() { return this->action_arguments; };
+        std::vector<Action*> &get_subactions() { return this->subactions; };
 
         void accept(Visitor &visitor);
 };

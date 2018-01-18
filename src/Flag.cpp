@@ -1,4 +1,4 @@
-#include "argument.h"
+#include "Argument.h"
 
 Flag::Flag(char flag_char,
            std::string &flag_name,

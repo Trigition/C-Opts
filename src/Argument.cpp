@@ -1,4 +1,4 @@
-#include "argument.h"
+#include "Argument.h"
 
 Argument::Argument() {
 
@@ -35,14 +35,12 @@ Argument::Argument(char flag_char,
 }
 
 Argument::~Argument() {
-    //delete this->flag_name;
-    //delete this->help_desc;
-    //delete this->man_page;
-    //delete this->value_name;
-    //delete this->type;
+
 }
 
-
+std::string Argument::make_header() {
+    
+}
 
 void Argument::accept(Visitor &visitor) {
     visitor.dispatch(this);
