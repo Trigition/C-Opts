@@ -4,7 +4,13 @@
 #include "../Program.h"
 
 Compiler::Compiler() {
-
+    this->action_context = nullptr;
+#ifdef DEBUG_MODE
+    this->debug_mode = false;
+#else
+    this->debug_mode = true;
+#endif
+    this->verbose_mode = false;
 }
 
 Compiler::~Compiler() {
@@ -39,13 +45,36 @@ void Compiler::dispatch(Action *action) {
     // Visiting new action
     this->action_context = action;
     // Compile opts and subactions
-    for (Argument *arg : action->action_arguments) {
+    for (Argument *arg : action->get_arguments()) {
+        this->debug_log("Visiting "        +
+                        action->get_name() +
+                        "'s argument"      +
+                        arg->get_flag_name());
+
         arg->accept(*this);
     }
-    for (Action *subaction : action->subactions) {
+
+    for (Action *subaction : action->get_subactions()) {
+        this->debug_log("Visiting "         +
+                        action->get_name()  +
+                        "'s subaction: "    +
+                        subaction->get_name());
         subaction->accept(*this);
     }
+}
 
 void Compiler::dispatch(Argument *argument) {
 
+}
+
+void Compiler::debug_log(std::string mesg) {
+#ifdef DEBUG_MODE
+    std::cerr << mesg << "\n";
+#endif
+}
+
+void Compiler::debug_log(const char * const &mesg) {
+#ifdef DEBUG_MODE
+    std::cerr << mesg << "\n";
+#endif
 }

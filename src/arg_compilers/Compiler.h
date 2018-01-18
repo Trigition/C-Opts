@@ -4,6 +4,8 @@
 class Compiler : public Visitor {
     private:
         Action *action_context;
+        bool debug_mode;
+        bool verbose_mode;
 
     public:
         Compiler();
@@ -16,4 +18,7 @@ class Compiler : public Visitor {
         void dispatch(Program *program);
         void dispatch(Action *action);
         void dispatch(Argument *argument);
+
+        void debug_log(std::string mesg);
+        void debug_log(const char * const &mesg);
 };

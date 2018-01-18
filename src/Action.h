@@ -18,6 +18,8 @@ class Action : public Compileable {
         void add_subaction(Action &subaction);
 
         // Getters
+        std::string &get_name() { return this->action_name; };
+        std::string &get_desc() { return this->action_desc; };
         std::vector<Argument*> &get_arguments() { return this->action_arguments; };
         std::vector<Action*> &get_subactions() { return this->subactions; };
 

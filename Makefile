@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS = -g -Wall
-CSRC = $(wildcard src/datastructures/*.cpp) \
+CSRC = $(wildcard src/arg_compilers/*.cpp) \
 	   $(wildcard src/commons/*.cpp) \
 	   $(wildcard src/*.cpp)
 
