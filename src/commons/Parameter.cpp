@@ -5,7 +5,7 @@ Parameter::Parameter(std::string &type, std::string &var_name) {
     this->var_name = var_name;
 }
 
-Parameter::Parameter(const char &type, const char &var_name) {
+Parameter::Parameter(c_str &type, c_str &var_name) {
     this->type = type;
     this->var_name = var_name;
 }

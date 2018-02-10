@@ -12,6 +12,7 @@ class Argument : public Compileable {
         std::string value_name;
         std::string type;
         unsigned int pos;
+
     public:
         Argument();
         Argument(char flag_char,
@@ -22,11 +23,11 @@ class Argument : public Compileable {
                  std::string &type,
                  unsigned int pos);
         Argument(char flag_char,
-                 const char* const &flag_name,
-                 const char* const &help_desc,
-                 const char* const &man_page,
-                 const char* const &value_name,
-                 const char* const &type,
+                 c_str &flag_name,
+                 c_str &help_desc,
+                 c_str &man_page,
+                 c_str &value_name,
+                 c_str &type,
                  unsigned int pos);
         ~Argument();
 
@@ -34,27 +35,27 @@ class Argument : public Compileable {
         void set_char(char flag_char) { this->flag_char = flag_char; };
 
         void set_name(std::string &flag_name) { this->flag_name = flag_name; };
-        void set_name(const char* const &flag_name) { this->flag_name = flag_name; };
+        void set_name(c_str &flag_name) { this->flag_name = flag_name; };
 
         void set_help_desc(std::string &help_desc) {
             this->help_desc = help_desc;
         };
-        void set_help_desc(const char* const &help_desc) {
+        void set_help_desc(c_str &help_desc) {
             this->help_desc = help_desc;
         };
 
         void set_man_page(std::string &man_page) { this->man_page = man_page; };
-        void set_man_page(const char* const &man_page) { this->man_page = man_page; };
+        void set_man_page(c_str &man_page) { this->man_page = man_page; };
 
         void set_value_name(std::string &value_name) {
             this->value_name = value_name;
         };
-        void set_value_name(const char* const &value_name) {
+        void set_value_name(c_str &value_name) {
             this->value_name = value_name;   
         };
 
         void set_type(std::string &type) { this->type = type; };
-        void set_type(const char* const &type) { this->type = type; };
+        void set_type(c_str &type) { this->type = type; };
 
         void set_position(unsigned int pos) { this->pos = pos; };
 
@@ -78,9 +79,9 @@ class Flag : public Argument {
              std::string &help_desc,
              std::string &man_page);
         Flag(char flag_char,
-             const char* const &flag_name,
-             const char* const &help_desc,
-             const char* const &man_page);
+             c_str &flag_name,
+             c_str &help_desc,
+             c_str &man_page);
         ~Flag();
 };
 
@@ -93,10 +94,10 @@ class ValuedFlag : public Argument {
                    std::string &value_name,
                    std::string &type);
         ValuedFlag(char flag_char,
-                   const char* const &flag_name,
-                   const char* const &help_desc,
-                   const char* const &man_page,
-                   const char* const &value_name,
-                   const char* const &type);
+                   c_str &flag_name,
+                   c_str &help_desc,
+                   c_str &man_page,
+                   c_str &value_name,
+                   c_str &type);
         ~ValuedFlag();
 };

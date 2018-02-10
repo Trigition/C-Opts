@@ -52,7 +52,7 @@ class Parameter : public Compileable {
 
     public:
         Parameter(std::string &type, std::string &var_name);
-        Parameter(const char &type, const char &var_name);
+        Parameter(c_str &type, c_str &var_name);
         ~Parameter();
 
         bool is_same_type(Parameter &compar);
@@ -60,10 +60,10 @@ class Parameter : public Compileable {
 
         //Setters
         void set_type(std::string &type) { this->type = type; };
-        void set_type(const char &type) { this->type = type; };
+        void set_type(c_str &type) { this->type = type; };
 
         void set_var_name(std::string &var_name) { this->var_name = var_name; };
-        void set_var_name(const char &var_name) { this->var_name = var_name; };
+        void set_var_name(c_str &var_name) { this->var_name = var_name; };
 
         // Getters
         std::string& get_type() { return this->type; };
@@ -84,14 +84,14 @@ class CodeBlock : public Compileable {
         ~CodeBlock();
 
         void add_line(std::string &line);
-        void add_line(const char &line);
+        void add_line(c_str &line);
 
         // Setters
         void set_depth(uchar depth) { this->depth = depth; };
         void set_statement_delimiter(std::string &delim) {
             this->statement_delimiter = delim;
         };
-        void set_statement_delimiter(const char * const &delim) {
+        void set_statement_delimiter(c_str &delim) {
             this->statement_delimiter = delim;
         }
 
@@ -116,13 +116,13 @@ class Function : public Compileable {
 
     public:
         Function(std::string &name, std::string &return_type);
-        Function(const char &name, const char &return_type);
+        Function(c_str &name, c_str  &return_type);
         ~Function();
 
-        void add_input_param(Parameter &param);
+        void add_input_param(Parameter *param);
         void set_code_block(CodeBlock &code);
         void add_codeline(std::string &code);
-        void add_codeline(const char &code);
+        void add_codeline(c_str &code);
 
         std::string &gen_function_header();
         std::vector<std::string *> &get_code();

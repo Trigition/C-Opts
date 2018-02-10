@@ -5,6 +5,14 @@ Program::Program(std::string &new_description, std::string &new_man_page, std::s
     this->version = new_version;
 }
 
+Program::Program(char const * const &new_description,
+                 char const * const &new_man_page,
+                 char const * const &new_version) {
+    this->description = new_description;
+    this->man_page = new_man_page;
+    this->version = new_version;
+}
+
 Program::~Program() {
     //delete this->description;
     //delete this->man_page;

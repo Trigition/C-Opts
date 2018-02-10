@@ -52,6 +52,11 @@ void Compiler::dispatch(Action *action) {
                         arg->get_flag_name());
 
         arg->accept(*this);
+        // Check to see if there are any name collions
+        if (this->current_args[action] == arg->get_flag_name()) {
+            // Collision
+            std::cerr << "Duplicate flag: " << arg->get_flag_name() << "!\n";
+        }
     }
 
     for (Action *subaction : action->get_subactions()) {
@@ -64,7 +69,7 @@ void Compiler::dispatch(Action *action) {
 }
 
 void Compiler::dispatch(Argument *argument) {
-
+    this->debug_log("Compiling argument: " + argument->get_flag_name());
 }
 
 void Compiler::debug_log(std::string mesg) {

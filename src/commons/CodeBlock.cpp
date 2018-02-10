@@ -15,8 +15,8 @@ void CodeBlock::add_line(std::string &line) {
     this->code_lines.push_back(new std::string(line.c_str()));
 }
 
-void CodeBlock::add_line(const char &line) {
-    this->code_lines.push_back(new std::string(&line));
+void CodeBlock::add_line(c_str &line) {
+    this->code_lines.push_back(new std::string(line));
 }
 
 std::string* CodeBlock::get_code() {

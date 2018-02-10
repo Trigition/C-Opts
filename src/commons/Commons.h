@@ -13,8 +13,11 @@
 
 #define NO_VAL "__NO__VALUE__"
 
+#define DEBUG_MODE
+
 typedef unsigned char uchar;
 typedef unsigned int uint8;
+typedef const char * const c_str;
 
 typedef enum {
    ARG_INT,
