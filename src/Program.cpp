@@ -1,13 +1,19 @@
 #include "Program.h"
-Program::Program(std::string &new_description, std::string &new_man_page, std::string &new_version) {
+Program::Program(std::string &name,
+                 std::string &new_description,
+                 std::string &new_man_page,
+                 std::string &new_version) {
+    this->name = name;
     this->description = new_description;
     this->man_page = new_man_page;
     this->version = new_version;
 }
 
-Program::Program(char const * const &new_description,
-                 char const * const &new_man_page,
-                 char const * const &new_version) {
+Program::Program(c_str &name,
+                 c_str &new_description,
+                 c_str &new_man_page,
+                 c_str &new_version) {
+    this->name = name;
     this->description = new_description;
     this->man_page = new_man_page;
     this->version = new_version;
