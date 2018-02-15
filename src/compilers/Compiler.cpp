@@ -39,8 +39,14 @@ void Compiler::dispatch(Function *function) {
     // Generate definition code string
 }
 
+/**
+ * 
+ */
+void Compiler::create_switch() {
+}
+
 void Compiler::open_context(Action *action) {
-    
+
 }
 
 void Compiler::open_context(Program *program) {
@@ -48,7 +54,6 @@ void Compiler::open_context(Program *program) {
     std::string command = "mkdir -p " + this->arg_dir;
     int err = system(command.c_str());
     if (err == -1) {
-        std::cerr << err << '\n';
         std::cerr << "Unable to create parser source directory\nAborting...\n";
         exit(1);
     }
@@ -63,7 +68,9 @@ void Compiler::open_context(Program *program) {
 void Compiler::dispatch(Program *program) {
     // === Start of new program ===
     this->open_context(program);
-    
+    // Create switch for program args and actions
+    this->create_switch();
+    // Generate parsers for each argument and action
     for (Argument *arg : program->get_args()) {
         arg->accept(*this);
     }

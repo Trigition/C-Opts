@@ -14,11 +14,14 @@ class Compiler : public Visitor {
         std::ofstream src_file_out;
         std::ofstream hdr_file_out;
         std::string arg_dir;
+        std::vector<std::string*> header_buffer;
+        std::vector<std::string*> source_buffer;
         bool debug_mode;
         bool verbose_mode;
 
         std::map<Program*, Argument*> global_args;
         std::map<Action*, std::string> current_args;
+        void create_switch();
         void open_context(Action *action);
         void open_context(Program *program);
 
