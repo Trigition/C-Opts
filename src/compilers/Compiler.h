@@ -1,3 +1,15 @@
+/**
+ * @file Compiler.h
+ * @author William Fong
+ * @date 2018-02-15
+ * @version 0.0.1
+ *
+ * @brief This is the header file for the Compiler Class
+ * @section DESCRIPTION
+ *
+ * This header file puts definitions for the Compiler Class
+ * and its functions and members.
+ */
 #pragma once
 #include <map>
 #include <cstdlib>
@@ -7,20 +19,23 @@
 #include "../Argument.h"
 #include "../Action.h"
 
+/**
+ * @brief This class compiles the Program argument
+ */
 class Compiler : public Visitor {
     private:
-        Action *action_context;
-        Program *program_context;
-        std::ofstream src_file_out;
-        std::ofstream hdr_file_out;
-        std::string arg_dir;
-        std::vector<std::string*> header_buffer;
-        std::vector<std::string*> source_buffer;
+        Action *action_context; // The current top global action tree branch
+        Program *program_context; // The current program
+        std::ofstream src_file_out; // The current source file output
+        std::ofstream hdr_file_out; // The current header file output
+        std::string arg_dir; // The base argument directory for file output
+        std::vector<std::string*> header_buffer; // A buffer for header code
+        std::vector<std::string*> source_buffer; // A buffer for source code
         bool debug_mode;
         bool verbose_mode;
 
-        std::map<Program*, Argument*> global_args;
-        std::map<Action*, std::string> current_args;
+        std::map<Program*, Argument*> global_args; // Arguments for a Program
+        std::map<Action*, std::string> current_args; // Arguments for the current Action
         void create_switch();
         void open_context(Action *action);
         void open_context(Program *program);
@@ -39,5 +54,5 @@ class Compiler : public Visitor {
         void dispatch(Argument *argument);
 
         void debug_log(std::string mesg);
-        void debug_log(const char * const &mesg);
+        void debug_log(c_str &mesg);
 };

@@ -1,16 +1,33 @@
+/**
+ * @file Program.h
+ * @author William Fong
+ * @date 2018-02-15
+ * @version 0.0.1
+ *
+ * @brief This is the header for the Program Class
+ * @section DESCRIPTION
+ *
+ * This header file puts definitions for the Program Class
+ * and its functions and members.
+ */
 #pragma once
 
 #include "Argument.h"
 #include "Action.h"
 
+/**
+ * @brief This class encompases individual programs.
+ * Programs are separate executables that C-Opts generates
+ * argument parsers for.
+ */
 class Program : public Compileable {
     private:
-        std::string name;
-        std::string description;
-        std::string man_page;
-        std::string version;
-        std::vector<Argument*> global_args;
-        std::vector<Action*> actions;
+        std::string name; // The name of the program
+        std::string description; // The description of the program
+        std::string man_page; // The man page description
+        std::string version; // The version of the program
+        std::vector<Argument*> global_args; // Global arguments
+        std::vector<Action*> actions; // Main program actions
 
     public:
         Program(std::string &name,

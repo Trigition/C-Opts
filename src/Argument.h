@@ -1,17 +1,35 @@
+/**
+ * @file Argument.h
+ * @author William Fong
+ * @date 2018-02-15
+ * @version 0.0.1
+ *
+ * @brief This is the header file for the Argument Class
+ * @section DESCRIPTION
+ *
+ * This header file puts definitions for the Argument Class
+ * and its functions and members.
+ */
 #pragma once
 
 #include "commons/Commons.h"
 #include "commons/C_Code.h"
 
+/**
+ * @brief This function encompases program Arguments.
+ * Arguments are specific input parameters for a Program.
+ * e.g Verbosity flags, filenames, input strings, etc are
+ * specific Arguments which are passed in from the commandline.
+ */
 class Argument : public Compileable {
     private:
-        char flag_char;
-        std::string flag_name;
-        std::string help_desc;
-        std::string man_page;
-        std::string value_name;
-        std::string type;
-        unsigned int pos;
+        char flag_char; // A shorthand flag e.g '-v' for '--verbose'
+        std::string flag_name; // The flag name verbose for '--verbose'
+        std::string help_desc; // The argument description for help output
+        std::string man_page; // The manpage description for the argument
+        std::string value_name; // The value name for C code interfaces
+        std::string type; // The type of the argument parameter
+        unsigned int pos; // The nth position of the argument
 
     public:
         Argument();
@@ -72,6 +90,13 @@ class Argument : public Compileable {
         void accept(Visitor &visitor);
 };
 
+/**
+ * @brief This class represents positionless Arguments or 'flags'
+ * Flags are, in C-Opts, considered positionless flags. For example
+ * a verbosity flag '-v' or '--verbose' doesn't have a position requirement.
+ * It's equality valid to say $PROGRAM $ARG1 -v or $PROGRAM -v $ARG1. Both
+ * will have the same meaning.
+ */
 class Flag : public Argument {
     public:
         Flag(char flag_char,
@@ -85,6 +110,10 @@ class Flag : public Argument {
         ~Flag();
 };
 
+/**
+ * @brief ValuedFlags are positionless flags that have values
+ * assigned to them.
+ */
 class ValuedFlag : public Argument {
     public:
         ValuedFlag(char flag_char,
