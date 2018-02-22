@@ -5,7 +5,7 @@
  * @version 0.0.1
  *
  * @brief This file is the source code for the class Action
- * @section DESCRIPTIOn
+ * @section DESCRIPTION
  *
  * This source file contains all of the code implementation for Actions.
  */

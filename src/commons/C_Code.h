@@ -1,3 +1,12 @@
+/**
+ * @file C_Code.h
+ * @author William Fong
+ * @date 2018-02-19
+ * @version 0.0.1
+ *
+ * @TODO Split this file into separate header files for
+ * readability
+ */
 #pragma once
 
 #include "Commons.h"

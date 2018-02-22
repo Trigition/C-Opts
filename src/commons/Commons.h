@@ -1,5 +1,15 @@
+/**
+ * @file Commons.h
+ * @author William Fong
+ * @date 2018-02-19
+ * @version 0.0.1
+ *
+ * @brief This header contains type definitions and
+ * Macros which are used by other source files
+ */
 #pragma once
 
+// Include commonly used std libraries
 #include <iostream>
 #include <vector>
 #include <string>
@@ -13,6 +23,7 @@
 
 #define NO_VAL "__NO__VALUE__"
 
+// TODO Let this be defined at compile time
 #define DEBUG_MODE
 
 typedef unsigned char uchar;

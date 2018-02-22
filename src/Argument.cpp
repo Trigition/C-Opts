@@ -2,7 +2,7 @@
  * @file Argument.cpp
  * @author William Fong
  * @date 2018-02-16
- * @verion 0.0.1
+ * @version 0.0.1
  *
  * @brief This file is the source code for the class Argument
  * @section DESCRIPTION

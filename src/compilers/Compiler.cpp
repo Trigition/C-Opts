@@ -1,5 +1,20 @@
+/**
+ * @file Compiler.cpp
+ * @author William Fong
+ * @date 2018-02-19
+ * @version 0.0.1
+ *
+ * @brief This file is the source code for the Compiler class
+ * @section DESCRIPTION
+ * 
+ * This source file contains all of the source code implmentation for Compilers.
+ */
 #include "Compiler.h"
 
+/**
+ * @brief This is the main constructor for the Compiler class
+ * @param arg_dir The base directory to place source files in
+ */
 Compiler::Compiler(std::string &arg_dir) {
     this->action_context = nullptr;
     this->arg_dir = arg_dir;
@@ -11,6 +26,10 @@ Compiler::Compiler(std::string &arg_dir) {
     this->verbose_mode = false;
 }
 
+/**
+ * @brief This is the main constructor for the Compiler class
+ * @param arg_dir The base directory to place source files in
+ */
 Compiler::Compiler(c_str &arg_dir) {
     this->action_context = nullptr;
     this->arg_dir = arg_dir;
@@ -22,33 +41,68 @@ Compiler::Compiler(c_str &arg_dir) {
     this->verbose_mode = false;
 }
 
+/**
+ * The destructor for Compilers
+ */
 Compiler::~Compiler() {
 
 }
 
+/**
+ * @brief A visitation method for Parameters
+ */
 void Compiler::dispatch(Parameter *parameter) {
 
 }
 
+/**
+ * @brief A visitation method for CodeBlocks
+ */
 void Compiler::dispatch(CodeBlock *codeblock) {
 
 }
 
+/**
+ * @brief A visitation method for Functions
+ */
 void Compiler::dispatch(Function *function) {
     // Generate header string
     // Generate definition code string
 }
 
 /**
- * 
+ * @brief This function generates a switch parser for Arguments
+ * and Actions
+ * This function generates a switch statement to determine if a string
+ * is specifying an Action or an Argument in the current Action or Program
+ * context.
  */
 void Compiler::create_switch() {
 }
 
+/**
+ * @brief This method is called whenever a Compiler instance visits
+ * an Action.
+ * @param action A reference to the current Action
+ * This method is called whenever a Compiler instance visits an Action.
+ * Note that the Action may be a subaction and not necessarily a direct
+ * main action under a Program.
+ */
 void Compiler::open_context(Action *action) {
 
 }
 
+/** @brief This method is called whenever a Compiler instance visits
+ * a Program
+ * @param program A reference to the current Program
+ * This method is called whenever a Compiler instance visits a Program.
+ * Here is where the appropriate directory structure for the Program's
+ * argument parser is generated. Please note that if C-Opts does not have
+ * the right Permissions, this step will fail and C-Opts will exit with
+ * an error.
+ * @TODO Allow C-Opts to have a 'dry run' to see where the directories will
+ * be made.
+ */
 void Compiler::open_context(Program *program) {
     // Construct Program I/O src directory
     std::string command = "mkdir -p " + this->arg_dir;
