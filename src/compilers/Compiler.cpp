@@ -77,7 +77,21 @@ void Compiler::dispatch(Function *function) {
  * is specifying an Action or an Argument in the current Action or Program
  * context.
  */
-void Compiler::create_switch() {
+void Compiler::create_switch(
+        std::string &name,
+        std::vector<Argument*> &args,
+        std::vector<Action*> &actions) {
+    //TODO Generate switch statement
+    //TODO Arguments are placed before next action
+    std::string switch_return_type = "int";
+    Function *switcher = new Function(name, switch_return_type);
+    switcher->add_input_param(new Parameter("int", "argc"));
+    switcher->add_input_param(new Parameter("char **", "arg_str"));
+
+    // Add switch for current action arguments
+    
+
+    switcher->add_codeline("return 0");
 }
 
 /**
@@ -122,8 +136,12 @@ void Compiler::open_context(Program *program) {
 void Compiler::dispatch(Program *program) {
     // === Start of new program ===
     this->open_context(program);
+
+    // Create a struct holding global argument values
+    ArgStruct program_struct(program);
+    program_struct.accept(*this);
     // Create switch for program args and actions
-    this->create_switch();
+    // this->create_switch();
     // Generate parsers for each argument and action
     for (Argument *arg : program->get_args()) {
         arg->accept(*this);
@@ -137,6 +155,10 @@ void Compiler::dispatch(Program *program) {
 void Compiler::dispatch(Action *action) {
     // Visiting new action
     this->action_context = action;
+    // Generate Struct holding action argument values
+    ArgStruct action_opts(action);
+    action_opts.accept(*this);
+
     // Compile opts and subactions
     for (Argument *arg : action->get_arguments()) {
         this->debug_log("Visiting "        +
@@ -163,6 +185,12 @@ void Compiler::dispatch(Action *action) {
 
 void Compiler::dispatch(Argument *argument) {
     this->debug_log("Compiling argument: " + argument->get_flag_name());
+}
+
+void Compiler::dispatch(ArgStruct *arg_struct) {
+    std::string *opt_struct = arg_struct->create_typedef();
+    this->debug_log(*opt_struct);
+    this->header_buffer.push_back(opt_struct);
 }
 
 void Compiler::debug_log(std::string mesg) {

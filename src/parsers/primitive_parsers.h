@@ -1,5 +1,6 @@
 #pragma once
-#include "../commons/C_Code.h"
+#include "../commons/Function.h"
+#include "../commons/Parameter.h"
 
 class PrimitiveParsers {
     public:

@@ -14,7 +14,10 @@
 #include <map>
 #include <cstdlib>
 #include <fstream>
-#include "../commons/C_Code.h"
+#include "../commons/Parameter.h"
+#include "../commons/CodeBlock.h"
+#include "../commons/Function.h"
+#include "../commons/ArgStruct.h"
 #include "../Program.h"
 #include "../Argument.h"
 #include "../Action.h"
@@ -36,7 +39,9 @@ class Compiler : public Visitor {
 
         std::map<Program*, Argument*> global_args; // Arguments for a Program
         std::map<Action*, std::string> current_args; // Arguments for the current Action
-        void create_switch();
+        void create_switch(std::string &name,
+                std::vector<Argument*> &args,
+                std::vector<Action*> &actions);
         void open_context(Action *action);
         void open_context(Program *program);
 
@@ -52,6 +57,8 @@ class Compiler : public Visitor {
         void dispatch(Program *program);
         void dispatch(Action *action);
         void dispatch(Argument *argument);
+
+        void dispatch(ArgStruct *arg_struct);
 
         void debug_log(std::string mesg);
         void debug_log(c_str &mesg);

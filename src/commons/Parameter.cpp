@@ -9,7 +9,7 @@
  *
  * This source file contains all the implementation for Parameters
  */
-#include "C_Code.h"
+#include "Parameter.h"
 
 /**
  * @brief This is the constructor for the Parameter class
