@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include=".">
+      <UniqueIdentifier>{5cffff6d-9fbb-4650-871c-ca240d546c31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{6a5c7589-8efb-4971-8842-90599e53bb17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\compilers">
+      <UniqueIdentifier>{a3b50fc9-5942-458c-ba2f-50e22f4e88ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\parsers">
+      <UniqueIdentifier>{6a86e09d-2be3-4335-8229-913ded19db7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\commons">
+      <UniqueIdentifier>{4d1e8010-5196-4dc1-9e9b-8749f90cd23f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".\README.md" />
+    <None Include=".\Makefile" />
+    <None Include=".\LICENSE" />
+    <None Include=".\C-Opts.vcxproj.filters" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include=".\src\compilers\Compiler.cpp">
+      <Filter>src\compilers</Filter>
+    </ClCompile>
+    <ClCompile Include=".\src\parsers\primitive_parsers.cpp">
+      <Filter>src\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include=".\src\ValuedFlag.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include=".\src\Program.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include=".\src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include=".\src\Argument.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include=".\src\commons\ArgFile.cpp">
+      <Filter>src\commons</Filter>
+    </ClCompile>
+    <ClCompile Include=".\src\commons\Parameter.cpp">
+      <Filter>src\commons</Filter>
+    </ClCompile>
+    <ClCompile Include=".\src\commons\ArgStruct.cpp">
+      <Filter>src\commons</Filter>
+    </ClCompile>
+    <ClCompile Include=".\src\commons\Commons.cpp">
+      <Filter>src\commons</Filter>
+    </ClCompile>
+    <ClCompile Include=".\src\commons\Function.cpp">
+      <Filter>src\commons</Filter>
+    </ClCompile>
+    <ClCompile Include=".\src\commons\CodeBlock.cpp">
+      <Filter>src\commons</Filter>
+    </ClCompile>
+    <ClCompile Include=".\src\Action.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include=".\src\Flag.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include=".\src\Action.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include=".\src\compilers\Compiler.h">
+      <Filter>src\compilers</Filter>
+    </ClInclude>
+    <ClInclude Include=".\src\parsers\primitive_parsers.h">
+      <Filter>src\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include=".\src\main.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include=".\src\Program.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include=".\src\Argument.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include=".\src\commons\Commons.h">
+      <Filter>src\commons</Filter>
+    </ClInclude>
+    <ClInclude Include=".\src\commons\switch.h">
+      <Filter>src\commons</Filter>
+    </ClInclude>
+    <ClInclude Include=".\src\commons\ArgStruct.h">
+      <Filter>src\commons</Filter>
+    </ClInclude>
+    <ClInclude Include=".\src\commons\Parameter.h">
+      <Filter>src\commons</Filter>
+    </ClInclude>
+    <ClInclude Include=".\src\commons\C_Code.h">
+      <Filter>src\commons</Filter>
+    </ClInclude>
+    <ClInclude Include=".\src\commons\ArgFile.h">
+      <Filter>src\commons</Filter>
+    </ClInclude>
+    <ClInclude Include=".\src\commons\Function.h">
+      <Filter>src\commons</Filter>
+    </ClInclude>
+    <ClInclude Include=".\src\commons\CodeBlock.h">
+      <Filter>src\commons</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
