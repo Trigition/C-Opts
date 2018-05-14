@@ -42,6 +42,7 @@ class Visitor;
 class Compileable {
     public:
         virtual void accept(Visitor &visitor) = 0;
+        virtual std::string *compose_string() = 0;
 };
 
 // Abstract Visitor Class for Visitor Pattern

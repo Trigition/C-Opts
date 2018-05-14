@@ -60,6 +60,9 @@ class Compiler : public Visitor {
 
         void dispatch(ArgStruct *arg_struct);
 
+        void flush_header();
+        void flush_source();
+
         void debug_log(std::string mesg);
         void debug_log(c_str &mesg);
 };

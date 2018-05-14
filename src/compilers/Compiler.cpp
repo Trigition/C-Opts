@@ -6,7 +6,7 @@
  *
  * @brief This file is the source code for the Compiler class
  * @section DESCRIPTION
- * 
+ *
  * This source file contains all of the source code implmentation for Compilers.
  */
 #include "Compiler.h"
@@ -89,7 +89,7 @@ void Compiler::create_switch(
     switcher->add_input_param(new Parameter("char **", "arg_str"));
 
     // Add switch for current action arguments
-    
+
 
     switcher->add_codeline("return 0");
 }
@@ -103,7 +103,9 @@ void Compiler::create_switch(
  * main action under a Program.
  */
 void Compiler::open_context(Action *action) {
-
+    // Close current contexts
+    this->src_file_out.close();
+    this->hdr_file_out.close();
 }
 
 /** @brief This method is called whenever a Compiler instance visits
@@ -129,6 +131,10 @@ void Compiler::open_context(Program *program) {
     this->src_file_out.open(this->arg_dir + "/" + program->get_name() + "_args.c");
     this->hdr_file_out.open(this->arg_dir + "/" + program->get_name() + "_args.h");
 
+    // Have source file include its header file
+    std::string *header_dep = new std::string("#include \"" + program->get_name() + "_args.h" + "\"\n");
+    this->source_buffer.push_back(header_dep);
+
     // Set program context
     this->program_context = program;
 }
@@ -146,6 +152,11 @@ void Compiler::dispatch(Program *program) {
     for (Argument *arg : program->get_args()) {
         arg->accept(*this);
     }
+
+    // Before entering action namespaces. Flush all 
+    // header and source to file.
+    this->flush_header();
+    this->flush_source();
     for (Action *action : program->get_actions()) {
         // All top program actions get their own namespace
         action->accept(*this);
@@ -191,6 +202,20 @@ void Compiler::dispatch(ArgStruct *arg_struct) {
     std::string *opt_struct = arg_struct->create_typedef();
     this->debug_log(*opt_struct);
     this->header_buffer.push_back(opt_struct);
+}
+
+void Compiler::flush_header() {
+    for (std::string *str : this->header_buffer) {
+        this->hdr_file_out << *str;
+    }
+    this->header_buffer.clear();
+}
+
+void Compiler::flush_source() {
+    for (std::string *str : this->source_buffer) {
+      this->src_file_out << *str;
+    }
+    this->source_buffer.clear();
 }
 
 void Compiler::debug_log(std::string mesg) {
