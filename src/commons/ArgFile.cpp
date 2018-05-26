@@ -35,10 +35,6 @@ void ArgFile::make_directory() {
     }
 }
 
-ArgFile::~ArgFile() {
-
-}
-
 void ArgFile::addDependency(ArgFile *argfile) {
     this->dependencies.push_back(argfile);
 }
@@ -69,8 +65,8 @@ void HeaderFile::writeToFile() {
 
     // Add dependencies
     for (ArgFile *f : this->getDependencies()) {
-        std::string* dep = new std::string("#include \"" + f->getPath() + "\"");
-        buffer.push_back(dep);
+        std::string dep = "#include \"" + f->getPath() + "\"";
+        fileout << dep << '\n';
     }
 
     // Compile definitions
@@ -114,7 +110,7 @@ void SourceFile::writeToFile() {
 
     // Add dependencies
     for (ArgFile *f : this->getDependencies()) {
-        std::string dep = std::string("#include \"" + f->getPath() + "\"");
+        std::string dep = "#include \"" + f->getPath() + "\"";
         fileout << dep << '\n';
     }
 

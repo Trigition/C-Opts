@@ -45,9 +45,7 @@ Program::Program(c_str &name,
  * The main destructor for the Program class.
  */
 Program::~Program() {
-    //delete this->description;
-    //delete this->man_page;
-    //delete this->version;
+
 }
 
 /**

@@ -45,7 +45,9 @@ Compiler::Compiler(c_str &arg_dir) {
  * The destructor for Compilers
  */
 Compiler::~Compiler() {
-
+    for (ArgFile *argFile : this->files) {
+        delete argFile;
+    }
 }
 
 /**

@@ -65,6 +65,10 @@ Argument::Argument(char flag_char,
     this->pos = pos;
 }
 
+Argument::~Argument() {
+    delete this->parserFunction;
+}
+
 void Argument::createFunction() {
     std::string funcName = this->flag_name + "_arg_parser";
     Function* parserFunction = new Function(funcName, this->type);
@@ -72,13 +76,6 @@ void Argument::createFunction() {
 
     // TODO ADD PARSER HERE
     this->parserFunction = parserFunction;
-
-}
-
-/**
- * This is the destructor for the Argument class
- */
-Argument::~Argument() {
 
 }
 

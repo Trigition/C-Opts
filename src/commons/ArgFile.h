@@ -23,7 +23,7 @@ class ArgFile {
         ArgFile(std::string &name, std::string &dir);
         ArgFile(c_str &name, c_str &dir);
 
-        ~ArgFile();
+        virtual ~ArgFile() {};
 
         std::string &getName() { return this->name; };
         std::string &getDirectory() { return this->directory; };
@@ -44,6 +44,7 @@ class HeaderFile : public ArgFile {
     public:
         HeaderFile(std::string &name, std::string &dir);
         HeaderFile(c_str &name, c_str &dir);
+        ~HeaderFile() {};
 
         void addContent(Defineable *content);
         std::vector<Defineable *> &getContent() { return this->content; };
@@ -56,6 +57,7 @@ class SourceFile : public ArgFile {
     public:
         SourceFile(std::string &name, std::string &dir);
         SourceFile(c_str &name, c_str &dir);
+        ~SourceFile() {};
 
         void addContent(Compileable *content);
         std::vector<Compileable *> &getContent() { return this->content; };
