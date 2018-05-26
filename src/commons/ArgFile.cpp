@@ -2,15 +2,28 @@
 
 ArgFile::ArgFile(std::string &name, std::string &dir) {
     this->name = name;
-    this->directory = dir;
+
+    if (dir.back() != '/') {
+        this->directory = dir + '/';
+    } else {
+        this->directory = dir;
+    }
 
     this->make_directory();
+    this->localPath = name;
 }
 
 ArgFile::ArgFile(c_str &name, c_str &dir) {
     this->name = name;
-    this->directory = directory;
+
+    if (std::string(dir).back() != '/') {
+        this->directory = dir + '/';
+    } else {
+        this->directory = dir;
+    }
+
     this->make_directory();
+    this->localPath = name;
 }
 
 void ArgFile::make_directory() {
@@ -26,7 +39,96 @@ ArgFile::~ArgFile() {
 
 }
 
-void ArgFile::write_to_file() {
-    std::string path = this->directory + this->path;
-    this->fileout.open(path);
+void ArgFile::addDependency(ArgFile *argfile) {
+    this->dependencies.push_back(argfile);
+}
+
+// HEADER FILES
+HeaderFile::HeaderFile(std::string &name, std::string &dir) :
+    ArgFile(name, dir) {
+
+    this->setLocalPath(this->getName() + ".h");
+}
+
+HeaderFile::HeaderFile(c_str &name, c_str &dir) :
+    ArgFile(name, dir) {
+
+    this->setLocalPath(this->getName() + ".h");
+}
+
+void HeaderFile::addContent(Defineable *content) {
+    this->content.push_back(content);
+}
+
+void HeaderFile::writeToFile() {
+    std::vector<std::string *> buffer;
+
+    // Open output file
+    std::ofstream fileout;
+    fileout.open(this->getDirectory() + this->getPath());
+
+    // Add dependencies
+    for (ArgFile *f : this->getDependencies()) {
+        std::string* dep = new std::string("#include \"" + f->getPath() + "\"");
+        buffer.push_back(dep);
+    }
+
+    // Compile definitions
+    for (Defineable *d : this->getContent()) {
+        buffer.push_back(&d->getDefinition());
+    }
+
+    // Flush buffer to file
+    for (std::string* definition : buffer) {
+        fileout << *definition;
+        fileout << '\n';
+    }
+
+    // Cleanup
+    fileout.close();
+}
+
+// SOURCE FILES
+SourceFile::SourceFile(std::string &name, std::string &dir) :
+    ArgFile(name, dir) {
+
+    this->setLocalPath(this->getName() + ".c");
+}
+
+SourceFile::SourceFile(c_str &name, c_str &dir) :
+    ArgFile(name, dir) {
+
+    this->setLocalPath(this->getName() + ".c");
+}
+
+void SourceFile::addContent(Compileable *content) {
+    this->content.push_back(content);
+}
+
+void SourceFile::writeToFile() {
+    std::vector<std::string *> buffer;
+
+    // Open output file
+    std::ofstream fileout;
+    fileout.open(this->getDirectory() + this->getPath());
+
+    // Add dependencies
+    for (ArgFile *f : this->getDependencies()) {
+        std::string dep = std::string("#include \"" + f->getPath() + "\"");
+        fileout << dep << '\n';
+    }
+
+    // Compile definitions
+    for (Compileable *c : this->getContent()) {
+        buffer.push_back(&c->getSource());
+    }
+
+    // Flush buffer to file
+    for (std::string *source : buffer) {
+        fileout << *source;
+        fileout << '\n';
+    }
+
+    // Cleanup
+    fileout.close();
 }

@@ -66,8 +66,13 @@ void Compiler::dispatch(CodeBlock *codeblock) {
  * @brief A visitation method for Functions
  */
 void Compiler::dispatch(Function *function) {
-    // Generate header string
-    // Generate definition code string
+    // Compile function
+    // Place code and declarations into current context
+    HeaderFile *headerFile = this->header_map[this->currentContext];
+    SourceFile *sourceFile = this->source_map[this->currentContext];
+
+    headerFile->addContent(function);
+    sourceFile->addContent(function);
 }
 
 /**
@@ -103,9 +108,31 @@ void Compiler::create_switch(
  * main action under a Program.
  */
 void Compiler::open_context(Action *action) {
-    // Close current contexts
-    this->src_file_out.close();
-    this->hdr_file_out.close();
+    // Set context 
+    Action *prev_action = this->action_context;
+    this->action_context = action;
+    this->currentContext = action;
+
+    // Initialize source and header files
+    std::string header_path = action->get_name();
+    std::string source_path = action->get_name();
+    HeaderFile *header = new HeaderFile(header_path, this->arg_dir);
+    SourceFile *source = new SourceFile(source_path, this->arg_dir);
+    source->addDependency(header);
+
+    // Add dependencies
+    if (prev_action != nullptr) {
+        this->header_map[prev_action]->addDependency(header);
+    }
+
+    // Add mapping from current action to files
+    this->header_map.insert(header_pair(action, header));
+    this->source_map.insert(source_pair(action, source));
+
+    // Add files to list for bookkeeping
+    this->files.push_back(header);
+    this->files.push_back(source);
+
 }
 
 /** @brief This method is called whenever a Compiler instance visits
@@ -120,6 +147,10 @@ void Compiler::open_context(Action *action) {
  * be made.
  */
 void Compiler::open_context(Program *program) {
+    // Set Context
+    this->program_context = program;
+    this->currentContext = program;
+
     // Construct Program I/O src directory
     std::string command = "mkdir -p " + this->arg_dir;
     int err = system(command.c_str());
@@ -127,16 +158,20 @@ void Compiler::open_context(Program *program) {
         std::cerr << "Unable to create parser source directory\nAborting...\n";
         exit(1);
     }
-    // Construct arg switch and parse functions for global args
-    this->src_file_out.open(this->arg_dir + "/" + program->get_name() + "_args.c");
-    this->hdr_file_out.open(this->arg_dir + "/" + program->get_name() + "_args.h");
+    // Create files for program context
+    std::string header_path = program->get_name();
+    std::string source_path = program->get_name();
+    HeaderFile *header = new HeaderFile(header_path, this->arg_dir);
+    SourceFile *source = new SourceFile(source_path, this->arg_dir);
+    source->addDependency(header);
 
-    // Have source file include its header file
-    std::string *header_dep = new std::string("#include \"" + program->get_name() + "_args.h" + "\"\n");
-    this->source_buffer.push_back(header_dep);
+    // Keep track of files
+    this->header_map.insert(header_pair(program, header));
+    this->source_map.insert(source_pair(program, source));
 
-    // Set program context
-    this->program_context = program;
+    // Bookkeep files
+    this->files.push_back(header);
+    this->files.push_back(source);
 }
 
 void Compiler::dispatch(Program *program) {
@@ -146,21 +181,20 @@ void Compiler::dispatch(Program *program) {
     // Create a struct holding global argument values
     ArgStruct program_struct(program);
     program_struct.accept(*this);
+
     // Create switch for program args and actions
-    // this->create_switch();
     // Generate parsers for each argument and action
     for (Argument *arg : program->get_args()) {
         arg->accept(*this);
     }
 
-    // Before entering action namespaces. Flush all 
-    // header and source to file.
-    this->flush_header();
-    this->flush_source();
     for (Action *action : program->get_actions()) {
         // All top program actions get their own namespace
         action->accept(*this);
     }
+
+    // Finish and write to files
+    this->writeAllFiles();
 }
 
 void Compiler::dispatch(Action *action) {
@@ -196,13 +230,15 @@ void Compiler::dispatch(Action *action) {
 
 void Compiler::dispatch(Argument *argument) {
     this->debug_log("Compiling argument: " + argument->get_flag_name());
+    // Compile parser function for argument
+    argument->getFunction()->accept(*this);
 }
 
 void Compiler::dispatch(ArgStruct *arg_struct) {
-    std::string *opt_struct = arg_struct->create_typedef();
-    this->debug_log(*opt_struct);
-    this->header_buffer.push_back(opt_struct);
+    HeaderFile *header = this->header_map[this->currentContext];
+    header->addContent(arg_struct);
 }
+
 
 void Compiler::flush_header() {
     for (std::string *str : this->header_buffer) {
@@ -216,6 +252,17 @@ void Compiler::flush_source() {
       this->src_file_out << *str;
     }
     this->source_buffer.clear();
+}
+
+void Compiler::writeAllFiles() {
+    for (auto const& [key, header_file] : this->header_map) {
+        std::cout << "weee\n";
+        header_file->writeToFile();
+    }
+
+    for (auto const& [key, source_file] : this->source_map) {
+        source_file->writeToFile();
+    }
 }
 
 void Compiler::debug_log(std::string mesg) {

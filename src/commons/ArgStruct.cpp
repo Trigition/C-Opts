@@ -43,3 +43,14 @@ std::string* ArgStruct::create_typedef() {
 void ArgStruct::accept(Visitor &visitor) {
     visitor.dispatch(this);
 }
+
+void ArgStruct::composeDefinition() {
+    std::string definition = "typedef struct {\n";
+    for (Argument *arg : this->arguments) {
+        arg->composeDefinition();
+        definition += "\t" + arg->getDefinition() + ";\n";
+    }
+
+    definition += "} " + this->name + "_opts;";
+    this->setDefinition(definition);
+}

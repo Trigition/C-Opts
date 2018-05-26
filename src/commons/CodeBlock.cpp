@@ -70,7 +70,3 @@ std::string* CodeBlock::get_code() {
 
     return code;
 }
-
-void CodeBlock::accept(Visitor &visitor) {
-    visitor.dispatch(this);
-}

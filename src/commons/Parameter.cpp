@@ -17,8 +17,10 @@
  * @param var_name The variable name of the parameter
  */
 Parameter::Parameter(std::string &type, std::string &var_name) {
-    this->type = type;
+    this->setType(type);
     this->var_name = var_name;
+
+    this->setParamString();
 }
 
 /**
@@ -27,8 +29,10 @@ Parameter::Parameter(std::string &type, std::string &var_name) {
  * @param var_name The variable name of the parameter
  */
 Parameter::Parameter(c_str &type, c_str &var_name) {
-    this->type = type;
+    this->setType(type);
     this->var_name = var_name;
+
+    this->setParamString();
 }
 
 /**
@@ -38,13 +42,17 @@ Parameter::~Parameter() {
 
 }
 
+void Parameter::setParamString() {
+    this->paramString = this->getType() + " " +  this->get_var_name();
+}
+
 /**
  * @brief This function compares a parameter's type with another
  * @param compar A reference to another parameter instance
  * @return Returns true if both parameters are the same type.
  */
 bool Parameter::is_same_type(Parameter &compar) {
-    return this->type == compar.get_type();
+    return this->getType() == compar.getType();
 }
 
 /**
@@ -53,13 +61,15 @@ bool Parameter::is_same_type(Parameter &compar) {
  * @return Returns true if both parameters have the same name.
  */
 bool Parameter::is_same_name(Parameter &compar) {
-    return this->var_name == compar.get_type();
+    return this->var_name == compar.get_var_name();
 }
 
-/**
- * @brief This function accepts a Visitor class
- * @param visitor A reference to the Visitor
- */
-void Parameter::accept(Visitor &visitor) {
-    visitor.dispatch(this);
+void Parameter::set_var_name(std::string &var_name) {
+    this->var_name = var_name;
+    this->setParamString();
+}
+
+void Parameter::set_var_name(c_str &var_name) {
+    this->var_name = var_name;
+    this->setParamString();
 }

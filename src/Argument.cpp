@@ -11,12 +11,13 @@
  */
 #include "Argument.h"
 
-/**
- * @brief Default constructor for an Argument
- * TODO Remove
- */
 Argument::Argument() {
-
+    this->flag_name = "UNSET";
+    this->help_desc = "UNSET";
+    this->man_page = "UNSET";
+    this->value_name = "UNSET";
+    this->type = "UNSET";
+    this->pos = -1;
 }
 
 /**
@@ -50,11 +51,11 @@ Argument::Argument(char flag_char,
  * literals to be passed as parameters.
  */
 Argument::Argument(char flag_char,
-                   const char* const &flag_name,
-                   const char* const &help_desc,
-                   const char* const &man_page,
-                   const char* const &value_name,
-                   const char* const &type,
+                   c_str &flag_name,
+                   c_str &help_desc,
+                   c_str &man_page,
+                   c_str &value_name,
+                   c_str &type,
                    unsigned int pos) {
     this->flag_name = flag_name;
     this->help_desc = help_desc;
@@ -64,10 +65,29 @@ Argument::Argument(char flag_char,
     this->pos = pos;
 }
 
+void Argument::createFunction() {
+    std::string funcName = this->flag_name + "_arg_parser";
+    Function* parserFunction = new Function(funcName, this->type);
+    parserFunction->add_input_param(new Parameter("char *", "input"));
+
+    // TODO ADD PARSER HERE
+    this->parserFunction = parserFunction;
+
+}
+
 /**
  * This is the destructor for the Argument class
  */
 Argument::~Argument() {
+
+}
+
+void Argument::composeDefinition() {
+    std::string def = this->type + " " + this->get_flag_name();
+    this->setDefinition(def);  
+}
+
+void Argument::composeSource() {
 
 }
 
@@ -76,8 +96,8 @@ Argument::~Argument() {
  * required by the Argument.
  * TODO IMPLEMENT
  */
-std::string Argument::make_header() {
-    
+std::string *Argument::make_header() {
+    return new std::string("NO HEADER FOR " + this->flag_name + "\n");
 }
 
 /**
@@ -86,5 +106,6 @@ std::string Argument::make_header() {
  * @param visitor A reference to a Visitor class
  */
 void Argument::accept(Visitor &visitor) {
+    this->createFunction();
     visitor.dispatch(this);
 }

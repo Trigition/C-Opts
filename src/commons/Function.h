@@ -4,7 +4,9 @@
 #include "Parameter.h"
 #include "CodeBlock.h"
 
-class Function : public Compileable {
+
+class Function : public Compileable, TypedInterface {
+
     private:
         std::string name;
         std::string return_type;
@@ -24,8 +26,13 @@ class Function : public Compileable {
         void add_codeline(std::string &code);
         void add_codeline(c_str &code);
 
+        [[deprecated]]
         std::string &gen_function_header();
+        [[deprecated]]
         std::vector<std::string *> &get_code();
+
+        virtual void composeDefinition() override;
+        virtual void composeSource() override;
 
         void accept(Visitor &visitor);
 };

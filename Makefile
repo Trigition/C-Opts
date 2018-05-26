@@ -1,5 +1,5 @@
-CC=g++
-CFLAGS = -g -Wall 
+CC=g++ -std=c++17
+CFLAGS = -g -Wall
 CSRC = $(wildcard src/compilers/*.cpp) \
 	   $(wildcard src/parsers/*cpp) \
 	   $(wildcard src/commons/*.cpp) \

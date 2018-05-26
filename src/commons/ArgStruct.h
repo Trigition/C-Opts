@@ -13,7 +13,7 @@
 #include "../Action.h"
 #include "../Program.h"
 
-class ArgStruct : public Compileable {
+class ArgStruct : public Defineable {
     private:
         std::vector<Argument *> arguments;
         std::string name;
@@ -26,6 +26,9 @@ class ArgStruct : public Compileable {
         ~ArgStruct();
 
         void add_argument(Argument *arg);
+        [[deprecated]]
         std::string *create_typedef();
+
         void accept(Visitor &visitor); 
+        void composeDefinition();
 };

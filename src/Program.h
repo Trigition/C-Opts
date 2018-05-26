@@ -45,6 +45,13 @@ class Program : public Compileable {
         void add_action(Action &action);
 
         void accept(Visitor &visitor);
+        void composeDefinition() {
+
+        }
+
+        void composeSource() {
+
+        }
 
         // Setters
         void set_description(std::string &desc) { this->description = desc; };

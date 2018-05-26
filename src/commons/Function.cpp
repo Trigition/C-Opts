@@ -18,7 +18,8 @@
  */
 Function::Function(std::string &name, std::string &return_type) {
     this->name = name;
-    this->return_type = return_type;
+    //this->return_type = return_type;
+    this->setType(return_type);
     this->function_code = nullptr;
 }
 
@@ -29,7 +30,7 @@ Function::Function(std::string &name, std::string &return_type) {
  */
 Function::Function(c_str &name, c_str &return_type) {
     this->name = name;
-    this->return_type = return_type;
+    this->setType(return_type);
     this->function_code = nullptr;
 }
 
@@ -96,20 +97,42 @@ void Function::add_codeline(c_str &code) {
  */
 std::string& Function::gen_function_header() {
     std::string new_header = "";
-    new_header = this->name;
+    new_header += this->getType();
+    new_header += " ";
+    new_header += this->name;
     new_header += "(";
  
     for (unsigned int i = 0; i < this->input_params.size() - 1; i++) {
-        new_header += this->input_params[i]->get_definition();
+        new_header += this->input_params[i]->getParamString();
         new_header += ", ";
     }
 
-    new_header += this->input_params[this->input_params.size() - 1]->get_definition();
+    new_header += this->input_params[this->input_params.size() - 1]->getParamString();
     new_header += ")";
 
     this->header = new_header;
 
     return this->header;
+}
+
+void Function::composeDefinition() {
+    std::string definition = this->getType();
+    definition += " " + this->name;
+    definition += "(";
+
+    for (unsigned int i = 0; i < this->input_params.size() - 1; i++) {
+        definition += this->input_params[i]->getParamString();
+        definition += ", ";
+    }
+    definition += this->input_params[this->input_params.size() - 1]->getParamString();
+    definition += ")";
+
+    this->setDefinition(definition);
+}
+
+void Function::composeSource() {
+    std::string code = "NO SOURCE FOR" + this->name;
+    this->setSource(code);
 }
 
 void Function::accept(Visitor &visitor) {

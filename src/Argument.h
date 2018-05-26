@@ -14,6 +14,8 @@
 
 #include "commons/Commons.h"
 #include "commons/C_Code.h"
+#include "commons/Function.h"
+#include "commons/Parameter.h"
 
 /**
  * @brief This function encompases program Arguments.
@@ -30,6 +32,10 @@ class Argument : public Compileable {
         std::string value_name; // The value name for C code interfaces
         std::string type; // The type of the argument parameter
         unsigned int pos; // The nth position of the argument
+
+        Function *parserFunction; // The function that will parse the argument
+
+        void createFunction();
 
     public:
         Argument();
@@ -48,6 +54,9 @@ class Argument : public Compileable {
                  c_str &type,
                  unsigned int pos);
         ~Argument();
+
+        void composeDefinition();
+        void composeSource();
 
         // Setters
         void set_char(char flag_char) { this->flag_char = flag_char; };
@@ -86,7 +95,9 @@ class Argument : public Compileable {
         std::string& get_type() { return this->type; };
         unsigned int get_position() { return this->pos; };
 
-        std::string make_header();
+        Function *getFunction() { return this->parserFunction; };
+
+        std::string *make_header();
         void accept(Visitor &visitor);
 };
 

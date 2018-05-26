@@ -2,7 +2,7 @@
 
 #include "C_Code.h"
 
-class CodeBlock : public Compileable {
+class CodeBlock {
     private:
         uchar depth;
         std::vector<std::string *> code_lines;
@@ -27,9 +27,7 @@ class CodeBlock : public Compileable {
         // Getters
         uchar get_depth() { return this->depth; };
         std::string get_statement_delimiter() { return this->statement_delimiter; };
+        std::vector<std::string *> &getCode() { return this->code_lines; };
+        [[deprecated]]
         std::string *get_code();
-
-        // Visitor pattern
-        void accept(Visitor &visitor);
 };
-

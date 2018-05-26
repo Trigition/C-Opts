@@ -37,19 +37,61 @@ class ArgStruct;
 
 class Visitor;
 
+class TypedInterface {
+    private:
+        std::string type;
+
+    public:
+        TypedInterface(){};
+        ~TypedInterface(){};
+        std::string &getType() { return this->type; };
+        void setType(std::string &type) { this->type = type; };
+        void setType(c_str &type) { this->type = type; };
+};
+
+class Defineable {
+    private:
+        std::string definition;
+
+    public:
+        Defineable(){};
+        virtual ~Defineable(){};
+        virtual void accept(Visitor &visitor) = 0;
+        virtual void composeDefinition() = 0;
+        void setDefinition(std::string &def) { this->definition = def; };
+        void setDefinition(c_str &def) { this->definition = def; };
+
+        std::string &getDefinition() {
+            this->composeDefinition();
+            return this->definition;
+        };
+};
+
 // Begin Definitions
 // Base Class for accepting Visitors
-class Compileable {
+class Compileable : public Defineable {
+    private:
+        std::string source;
+
     public:
+        Compileable(){};
+        virtual ~Compileable(){};
         virtual void accept(Visitor &visitor) = 0;
-        virtual std::string *compose_string() = 0;
+        virtual void composeSource() = 0;
+
+        void setSource(std::string &src) { this->source = src; };
+        void setSource(c_str &src) { this->source = src; };
+        std::string &getSource() {
+            this->composeSource();
+            return this->source;
+        };
 };
 
 // Abstract Visitor Class for Visitor Pattern
 class Visitor {
     public:
-        virtual void dispatch(Parameter *parameter) = 0;
-        virtual void dispatch(CodeBlock *codeblock) = 0;
+        Visitor(){};
+        virtual ~Visitor(){};
         virtual void dispatch(Function *function) = 0;
 
         virtual void dispatch(Program *program) = 0;
