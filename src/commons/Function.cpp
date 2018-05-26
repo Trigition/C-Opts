@@ -89,32 +89,6 @@ void Function::add_codeline(c_str &code) {
     this->function_code->add_line(code);
 }
 
-/**
- * @brief This method generates a function definition
- * @return A string reference to the function's header
- * Note that this will set the Header member in the function
- * instance.
- */
-std::string& Function::gen_function_header() {
-    std::string new_header = "";
-    new_header += this->getType();
-    new_header += " ";
-    new_header += this->name;
-    new_header += "(";
- 
-    for (unsigned int i = 0; i < this->input_params.size() - 1; i++) {
-        new_header += this->input_params[i]->getParamString();
-        new_header += ", ";
-    }
-
-    new_header += this->input_params[this->input_params.size() - 1]->getParamString();
-    new_header += ")";
-
-    this->header = new_header;
-
-    return this->header;
-}
-
 void Function::composeDefinition() {
     std::string definition = this->getType();
     definition += " " + this->name;

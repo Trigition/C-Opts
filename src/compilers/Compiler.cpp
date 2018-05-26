@@ -242,28 +242,14 @@ void Compiler::dispatch(ArgStruct *arg_struct) {
 }
 
 
-void Compiler::flush_header() {
-    for (std::string *str : this->header_buffer) {
-        this->hdr_file_out << *str;
-    }
-    this->header_buffer.clear();
-}
-
-void Compiler::flush_source() {
-    for (std::string *str : this->source_buffer) {
-      this->src_file_out << *str;
-    }
-    this->source_buffer.clear();
-}
-
 void Compiler::writeAllFiles() {
-    for (auto const& [key, header_file] : this->header_map) {
+    for (auto const& pair : this->header_map) {
         std::cout << "weee\n";
-        header_file->writeToFile();
+        pair.second->writeToFile();
     }
 
-    for (auto const& [key, source_file] : this->source_map) {
-        source_file->writeToFile();
+    for (auto const& pair : this->source_map) {
+        pair.second->writeToFile();
     }
 }
 

@@ -10,7 +10,6 @@ class Function : public Compileable, TypedInterface {
     private:
         std::string name;
         std::string return_type;
-        std::string header;
         std::vector<Parameter *> input_params;
         CodeBlock *function_code;
 
@@ -25,11 +24,6 @@ class Function : public Compileable, TypedInterface {
         void set_code_block(CodeBlock &code);
         void add_codeline(std::string &code);
         void add_codeline(c_str &code);
-
-        [[deprecated]]
-        std::string &gen_function_header();
-        [[deprecated]]
-        std::vector<std::string *> &get_code();
 
         virtual void composeDefinition() override;
         virtual void composeSource() override;

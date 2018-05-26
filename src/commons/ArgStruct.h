@@ -26,9 +26,6 @@ class ArgStruct : public Defineable {
         ~ArgStruct();
 
         void add_argument(Argument *arg);
-        [[deprecated]]
-        std::string *create_typedef();
-
         void accept(Visitor &visitor); 
         void composeDefinition();
 };

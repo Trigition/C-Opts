@@ -28,6 +28,4 @@ class CodeBlock {
         uchar get_depth() { return this->depth; };
         std::string get_statement_delimiter() { return this->statement_delimiter; };
         std::vector<std::string *> &getCode() { return this->code_lines; };
-        [[deprecated]]
-        std::string *get_code();
 };

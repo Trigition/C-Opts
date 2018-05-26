@@ -35,11 +35,6 @@ class Compiler : public Visitor {
         Program *program_context; // The current program
         Compileable *currentContext;
 
-
-        // TODO Remove these variables in favor of File Wrapper Classes
-        std::ofstream src_file_out; // The current source file output
-        std::ofstream hdr_file_out; // The current header file output
-
         // Mapping of arguments, actions, and programs to files
         std::vector<ArgFile *> files;
         std::map<Defineable  *, HeaderFile *> header_map;
@@ -73,11 +68,6 @@ class Compiler : public Visitor {
         void dispatch(Argument *argument);
 
         void dispatch(ArgStruct *arg_struct);
-
-        [[deprecated]]
-        void flush_header();
-        [[deprecated]]
-        void flush_source();
 
         void writeAllFiles();
 

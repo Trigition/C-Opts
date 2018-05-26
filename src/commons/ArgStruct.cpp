@@ -24,22 +24,6 @@ void ArgStruct::add_argument(Argument *arg) {
     this->arguments.push_back(arg);
 }
 
-std::string* ArgStruct::create_typedef() {
-    std::string* arg_struct = new std::string("typedef struct {\n");
-    for (Argument *arg : this->arguments) {
-        *arg_struct += "\t";
-        *arg_struct += arg->get_type();
-        *arg_struct += " ";
-        *arg_struct += arg->get_flag_name();
-        *arg_struct += ";\n";
-    }
-    *arg_struct += "} ";
-    *arg_struct += this->name;
-    *arg_struct += "_opts;\n";
-
-    return arg_struct;
-}
-
 void ArgStruct::accept(Visitor &visitor) {
     visitor.dispatch(this);
 }

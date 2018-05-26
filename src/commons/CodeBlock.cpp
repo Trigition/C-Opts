@@ -47,26 +47,3 @@ void CodeBlock::add_line(std::string &line) {
 void CodeBlock::add_line(c_str &line) {
     this->code_lines.push_back(new std::string(line));
 }
-
-/**
- * @brief This method returns all the code lines in the CodeBlock
- * This method will return a single string representing all the code
- * contained within the CodeBlock.
- * TODO Implement formatting
- */
-std::string* CodeBlock::get_code() {
-    std::string *code = new std::string("");
-    *code += "{\n"; //TODO Leave this up to formatting.
-    for (std::string *line : this->code_lines) {
-        // Indent
-        for (uchar j = 0; j < this->depth; j++) {
-            *code += "    "; //TODO Leave this up to formatting.
-        }
-        // Append code
-        *code += *line;
-        *code += this->statement_delimiter;
-    }
-    *code += "}"; //TODO Ensure consistency with formatting
-
-    return code;
-}
