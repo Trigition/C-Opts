@@ -1,6 +1,6 @@
 typedef struct {
-	str test;
-	bool verbose;
+	char* test;
+	CUSTOM verbose;
 } SuperTest_opts;
-str test_arg_parser(char * input)
-bool verbose_arg_parser(char * input)
+char* test_arg_parser(char* arg_str);
+CUSTOM verbose_arg_parser(char* arg_str);

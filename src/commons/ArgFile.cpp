@@ -77,7 +77,7 @@ void HeaderFile::writeToFile() {
     // Flush buffer to file
     for (std::string* definition : buffer) {
         fileout << *definition;
-        fileout << '\n';
+        fileout << ";\n";
     }
 
     // Cleanup

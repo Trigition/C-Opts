@@ -14,8 +14,8 @@
 
 #include "commons/Commons.h"
 #include "commons/C_Code.h"
-#include "commons/Function.h"
 #include "commons/Parameter.h"
+#include "parsers/primitive_parsers.h"
 
 /**
  * @brief This function encompases program Arguments.
@@ -23,14 +23,13 @@
  * e.g Verbosity flags, filenames, input strings, etc are
  * specific Arguments which are passed in from the commandline.
  */
-class Argument : public Compileable {
+class Argument : public Compileable, public TypedInterface {
     private:
         char flag_char; // A shorthand flag e.g '-v' for '--verbose'
         std::string flag_name; // The flag name verbose for '--verbose'
         std::string help_desc; // The argument description for help output
         std::string man_page; // The manpage description for the argument
         std::string value_name; // The value name for C code interfaces
-        std::string type; // The type of the argument parameter
         unsigned int pos; // The nth position of the argument
 
         Function *parserFunction; // The function that will parse the argument
@@ -81,9 +80,6 @@ class Argument : public Compileable {
             this->value_name = value_name;   
         };
 
-        void set_type(std::string &type) { this->type = type; };
-        void set_type(c_str &type) { this->type = type; };
-
         void set_position(unsigned int pos) { this->pos = pos; };
 
         // Getters
@@ -92,7 +88,6 @@ class Argument : public Compileable {
         std::string& get_help_desc() { return this->help_desc; };
         std::string& get_man_page() { return this->man_page; };
         std::string& get_value_name() { return this->value_name; };
-        std::string& get_type() { return this->type; };
         unsigned int get_position() { return this->pos; };
 
         Function *getFunction() { return this->parserFunction; };

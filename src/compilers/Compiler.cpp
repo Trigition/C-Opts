@@ -244,7 +244,6 @@ void Compiler::dispatch(ArgStruct *arg_struct) {
 
 void Compiler::writeAllFiles() {
     for (auto const& pair : this->header_map) {
-        std::cout << "weee\n";
         pair.second->writeToFile();
     }
 

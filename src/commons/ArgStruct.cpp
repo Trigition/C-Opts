@@ -35,6 +35,6 @@ void ArgStruct::composeDefinition() {
         definition += "\t" + arg->getDefinition() + ";\n";
     }
 
-    definition += "} " + this->name + "_opts;";
+    definition += "} " + this->name + "_opts";
     this->setDefinition(definition);
 }

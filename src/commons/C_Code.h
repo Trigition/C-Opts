@@ -40,13 +40,18 @@ class Visitor;
 class TypedInterface {
     private:
         std::string type;
+        static bool isInVector(std::string &type, std::vector<std::string> &vector);
 
     public:
         TypedInterface(){};
         ~TypedInterface(){};
         std::string &getType() { return this->type; };
-        void setType(std::string &type) { this->type = type; };
-        void setType(c_str &type) { this->type = type; };
+        void setType(std::string &type) { this->type = getTypeAlias(type); };
+        void setType(c_str &type) { this->type = getTypeAlias(type); };
+        // TODO At some point have this lookup map be created at
+        // compile time
+        static std::string getTypeAlias(std::string &type);
+        static std::string getTypeAlias(c_str &type);
 };
 
 class Defineable {

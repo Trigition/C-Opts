@@ -31,7 +31,7 @@ ValuedFlag::ValuedFlag(char flag_char,
     this->set_help_desc(help_desc);
     this->set_man_page(man_page);
     this->set_value_name(value_name);
-    this->set_type(type);
+    this->setType(type);
 
     this->set_position(0);
 }
@@ -50,7 +50,7 @@ ValuedFlag::ValuedFlag(char flag_char,
     this->set_help_desc(help_desc);
     this->set_man_page(man_page);
     this->set_value_name(value_name);
-    this->set_type(type);
+    this->setType(type);
 
     this->set_position(0);
 

@@ -105,7 +105,12 @@ void Function::composeDefinition() {
 }
 
 void Function::composeSource() {
-    std::string code = "NO SOURCE FOR" + this->name;
+    std::string code = "";
+    code += this->getDefinition() + " {\n";
+    for (std::string *lineOfCode : this->function_code->getCode()) {
+        code += "    " + *lineOfCode + ";\n";
+    }
+    code += "}\n";
     this->setSource(code);
 }
 

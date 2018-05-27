@@ -16,8 +16,9 @@ Argument::Argument() {
     this->help_desc = "UNSET";
     this->man_page = "UNSET";
     this->value_name = "UNSET";
-    this->type = "UNSET";
     this->pos = -1;
+
+    this->setType("UNSET");
 }
 
 /**
@@ -43,8 +44,9 @@ Argument::Argument(char flag_char,
     this->help_desc = help_desc;
     this->man_page = man_page;
     this->value_name = value_name;
-    this->type = type;
     this->pos = pos;
+
+    this->setType(type);
 }
 
 /** @brief This is the main constructor but allows string
@@ -61,8 +63,9 @@ Argument::Argument(char flag_char,
     this->help_desc = help_desc;
     this->man_page = man_page;
     this->value_name = value_name;
-    this->type = type;
     this->pos = pos;
+
+    this->setType(type);
 }
 
 Argument::~Argument() {
@@ -71,21 +74,17 @@ Argument::~Argument() {
 
 void Argument::createFunction() {
     std::string funcName = this->flag_name + "_arg_parser";
-    Function* parserFunction = new Function(funcName, this->type);
-    parserFunction->add_input_param(new Parameter("char *", "input"));
-
-    // TODO ADD PARSER HERE
+    Function* parserFunction = PrimitiveParsers::getParser(funcName, this->getType());
     this->parserFunction = parserFunction;
 
 }
 
 void Argument::composeDefinition() {
-    std::string def = this->type + " " + this->get_flag_name();
+    std::string def = this->getType() + " " + this->get_flag_name();
     this->setDefinition(def);  
 }
 
 void Argument::composeSource() {
-
 }
 
 /**

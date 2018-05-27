@@ -29,7 +29,7 @@ Flag::Flag(char flag_char,
     this->set_man_page(man_page);
 
     this->set_value_name("");
-    this->set_type("");
+    this->setType("");
     this->set_position(0);
 }
 
@@ -47,7 +47,7 @@ Flag::Flag(char flag_char,
     this->set_man_page(man_page);
 
     this->set_value_name("");
-    this->set_type("");
+    this->setType("");
     this->set_position(0);
 }
 
