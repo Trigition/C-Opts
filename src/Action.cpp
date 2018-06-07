@@ -63,3 +63,11 @@ void Action::add_subaction(Action &subaction) {
 void Action::accept(Visitor &visitor) {
     visitor.dispatch(this);
 }
+
+void Action::composeDefinition() {
+
+}
+
+void Action::composeSource() {
+
+}

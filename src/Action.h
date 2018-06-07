@@ -44,4 +44,7 @@ class Action : public Compileable {
         std::vector<Action*> &get_subactions() { return this->subactions; };
 
         void accept(Visitor &visitor);
+
+        virtual void composeDefinition() override;
+        virtual void composeSource() override;
 };

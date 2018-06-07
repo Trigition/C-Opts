@@ -19,6 +19,7 @@ Argument::Argument() {
     this->pos = -1;
 
     this->setType("UNSET");
+    this->parserFunction == nullptr;
 }
 
 /**
@@ -47,6 +48,7 @@ Argument::Argument(char flag_char,
     this->pos = pos;
 
     this->setType(type);
+    this->parserFunction = nullptr;
 }
 
 /** @brief This is the main constructor but allows string
@@ -66,10 +68,13 @@ Argument::Argument(char flag_char,
     this->pos = pos;
 
     this->setType(type);
+    this->parserFunction = nullptr;
 }
 
 Argument::~Argument() {
-    delete this->parserFunction;
+    if (this->parserFunction != nullptr) {
+        delete this->parserFunction;
+    }
 }
 
 void Argument::createFunction() {
