@@ -13,18 +13,18 @@
 /**
  * @brief This function is the constructor for the Program class
  * @param name A reference to the program name
- * @param new_description The description for the program
- * @param new_man_page The man page for the program
- * @param new_version The program version
+ * @param description The description for the program
+ * @param manPage The man page for the program
+ * @param version The program version
  */
 Program::Program(std::string &name,
-                 std::string &new_description,
-                 std::string &new_man_page,
-                 std::string &new_version) {
+                 std::string &description,
+                 std::string &manPage,
+                 std::string &version) {
     this->name = name;
-    this->description = new_description;
-    this->man_page = new_man_page;
-    this->version = new_version;
+    this->description = description;
+    this->manPage = manPage;
+    this->version = version;
 }
 
 /**
@@ -32,13 +32,13 @@ Program::Program(std::string &name,
  * passing of references to string literals.
  */
 Program::Program(c_str &name,
-                 c_str &new_description,
-                 c_str &new_man_page,
-                 c_str &new_version) {
+                 c_str &description,
+                 c_str &manPage,
+                 c_str &version) {
     this->name = name;
-    this->description = new_description;
-    this->man_page = new_man_page;
-    this->version = new_version;
+    this->description = description;
+    this->manPage = manPage;
+    this->version = version;
 }
 
 /**
@@ -53,15 +53,15 @@ Program::~Program() {
  * Program.
  * @param arg A reference to the argument being added
  */
-void Program::add_global_arg(Argument &arg) {
-    this->global_args.push_back(&arg);
+void Program::addGlobalArg(Argument &arg) {
+    this->globalArgs.push_back(&arg);
 }
 
 /**
  * @brief This method adds an action to the Program.
  * @param action A reference to the action
  */
-void Program::add_action(Action &action) {
+void Program::addAction(Action &action) {
     this->actions.push_back(&action);
 }
 

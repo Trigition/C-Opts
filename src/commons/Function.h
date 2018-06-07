@@ -9,21 +9,21 @@ class Function : public Compileable, TypedInterface {
 
     private:
         std::string name;
-        std::string return_type;
-        std::vector<Parameter *> input_params;
-        CodeBlock *function_code;
+        std::string returnType;
+        std::vector<Parameter *> inputParams;
+        CodeBlock *functionCode;
 
-        void ensure_codeblock_exists();
+        void ensureCodeBlockExists();
 
     public:
-        Function(std::string &name, std::string &return_type);
-        Function(c_str &name, c_str  &return_type);
+        Function(std::string &name, std::string &returnType);
+        Function(c_str &name, c_str  &returnType);
         ~Function();
 
-        void add_input_param(Parameter *param);
-        void set_code_block(CodeBlock &code);
-        void add_codeline(std::string &code);
-        void add_codeline(c_str &code);
+        void addInputParam(Parameter *param);
+        void setCodeBlock(CodeBlock &code);
+        void addCodeline(std::string &code);
+        void addCodeline(c_str &code);
 
         virtual void composeDefinition() override;
         virtual void composeSource() override;

@@ -18,7 +18,7 @@ class ArgFile {
         std::string name;
         std::string localPath;
 
-        void make_directory();
+        void makeDirectory();
     public:
         ArgFile(std::string &name, std::string &dir);
         ArgFile(c_str &name, c_str &dir);

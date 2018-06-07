@@ -24,25 +24,25 @@ class Program : public Compileable {
     private:
         std::string name; // The name of the program
         std::string description; // The description of the program
-        std::string man_page; // The man page description
+        std::string manPage; // The man page description
         std::string version; // The version of the program
-        std::vector<Argument*> global_args; // Global arguments
+        std::vector<Argument*> globalArgs; // Global arguments
         std::vector<Action*> actions; // Main program actions
 
     public:
         Program(std::string &name,
-                std::string &new_description,
-                std::string &new_man_page,
-                std::string &new_version);
+                std::string &description,
+                std::string &manPage,
+                std::string &version);
 
         Program(c_str &name,
                 c_str &description,
-                c_str &man_page,
+                c_str &manPage,
                 c_str &version);
         ~Program();
 
-        void add_global_arg(Argument &arg);
-        void add_action(Action &action);
+        void addGlobalArg(Argument &arg);
+        void addAction(Action &action);
 
         void accept(Visitor &visitor);
         void composeDefinition() {
@@ -54,23 +54,24 @@ class Program : public Compileable {
         }
 
         // Setters
-        void set_description(std::string &desc) { this->description = desc; };
-        void set_description(c_str &desc) {
+        void setDescription(std::string &desc) { this->description = desc; };
+        void setDescription(c_str &desc) {
             this->description = desc;
         };
-        void set_man_page(std::string &man_page) { this->man_page = man_page; };
-        void set_man_page(c_str &man_page) {
-            this->man_page = man_page;
+        void setManPage(std::string &manPage) { this->manPage = manPage; };
+        void setManPage(c_str &manPage) {
+            this->manPage = manPage;
         };
-        void set_version(std::string &version) { this->version = version; };
-        void set_version(c_str &version) {
+        void setVersion(std::string &version) { this->version = version; };
+        void setVersion(c_str &version) {
             this->version = version;
         };
         // Getters
-        std::string &get_name() { return this->name; };
-        std::string &get_description() { return this->description; };
-        std::string &get_man_page() { return this->man_page; };
-        std::string &get_version() { return this->version; };
-        std::vector<Argument*> &get_args() { return this->global_args; };
-        std::vector<Action*> &get_actions() { return this->actions; };
+        std::string &getName() { return this->name; };
+        std::string &getDescription() { return this->description; };
+        std::string &getManPage() { return this->manPage; };
+        std::string &getVersion() { return this->version; };
+        std::vector<Argument*> &getArgs() { return this->globalArgs; };
+        std::vector<Action*> &getActions() { return this->actions; };
+        
 };

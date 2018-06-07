@@ -13,46 +13,46 @@
 
 /**
  * @brief This is the main constructor for ValuedFlags.
- * @param flag_char A single character flag
- * @param flag_name A long-hand flag name
- * @param help_desc The help description
- * @param man_page The man page description
- * @param value_name How the value should be named
+ * @param flagChar A single character flag
+ * @param flagName A long-hand flag name
+ * @param helpDesc The help description
+ * @param manPage The man page description
+ * @param valueName How the value should be named
  * @param type The type for the value
  */
-ValuedFlag::ValuedFlag(char flag_char,
-                       std::string &flag_name,
-                       std::string &help_desc,
-                       std::string &man_page,
-                       std::string &value_name,
+ValuedFlag::ValuedFlag(char flagChar,
+                       std::string &flagName,
+                       std::string &helpDesc,
+                       std::string &manPage,
+                       std::string &valueName,
                        std::string &type) {
-    this->set_char(flag_char);
-    this->set_name(flag_name);
-    this->set_help_desc(help_desc);
-    this->set_man_page(man_page);
-    this->set_value_name(value_name);
+    this->setChar(flagChar);
+    this->setName(flagName);
+    this->setHelpDesc(helpDesc);
+    this->setManPage(manPage);
+    this->setValueName(valueName);
     this->setType(type);
 
-    this->set_position(0);
+    this->setPosition(0);
 }
 
 /**
  * A constructor for ValuedFlags but allows passing of string literals
  */
-ValuedFlag::ValuedFlag(char flag_char,
-                       c_str &flag_name,
-                       c_str &help_desc,
-                       c_str &man_page,
-                       c_str &value_name,
+ValuedFlag::ValuedFlag(char flagChar,
+                       c_str &flagName,
+                       c_str &helpDesc,
+                       c_str &manPage,
+                       c_str &valueName,
                        c_str &type) {
-    this->set_char(flag_char);
-    this->set_name(flag_name);
-    this->set_help_desc(help_desc);
-    this->set_man_page(man_page);
-    this->set_value_name(value_name);
+    this->setChar(flagChar);
+    this->setName(flagName);
+    this->setHelpDesc(helpDesc);
+    this->setManPage(manPage);
+    this->setValueName(valueName);
     this->setType(type);
 
-    this->set_position(0);
+    this->setPosition(0);
 
 }
 

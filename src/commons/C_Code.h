@@ -103,5 +103,5 @@ class Visitor {
         virtual void dispatch(Action *action) = 0;
         virtual void dispatch(Argument *argument) = 0;
 
-        virtual void dispatch(ArgStruct *arg_struct) = 0;
+        virtual void dispatch(ArgStruct *argStruct) = 0;
 };

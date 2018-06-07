@@ -28,8 +28,8 @@ std::string TypedInterface::getTypeAlias(std::string &type) {
 }
 
 std::string TypedInterface::getTypeAlias(c_str &type) {
-    std::string type_str = type;
-    return getTypeAlias(type_str);
+    std::string typeString = type;
+    return getTypeAlias(typeString);
 }
 
 

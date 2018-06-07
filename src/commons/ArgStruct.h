@@ -18,14 +18,14 @@ class ArgStruct : public Defineable {
         std::vector<Argument *> arguments;
         std::string name;
 
-        void load_arguments(std::vector<Argument *>& args);
+        void loadArguments(std::vector<Argument *>& args);
 
     public:
         ArgStruct(Action *context);
         ArgStruct(Program *context);
         ~ArgStruct();
 
-        void add_argument(Argument *arg);
+        void addArgument(Argument *arg);
         void accept(Visitor &visitor); 
         void composeDefinition();
 };

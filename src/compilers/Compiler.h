@@ -23,40 +23,40 @@
 #include "../Argument.h"
 #include "../Action.h"
 
-typedef std::pair<Compileable *, HeaderFile *> header_pair;
-typedef std::pair<Compileable *, SourceFile *> source_pair;
+typedef std::pair<Compileable *, HeaderFile *> headerPair;
+typedef std::pair<Compileable *, SourceFile *> sourcePair;
 
 /**
  * @brief This class compiles the Program argument
  */
 class Compiler : public Visitor {
     private:
-        Action *action_context; // The current top global action tree branch
-        Program *program_context; // The current program
+        Action *actionContext; // The current top global action tree branch
+        Program *programContext; // The current program
         Compileable *currentContext;
 
         // Mapping of arguments, actions, and programs to files
         std::vector<ArgFile *> files;
-        std::map<Defineable  *, HeaderFile *> header_map;
-        std::map<Compileable *, SourceFile *> source_map;
+        std::map<Defineable  *, HeaderFile *> headerMap;
+        std::map<Compileable *, SourceFile *> sourceMap;
 
-        std::string arg_dir; // The base argument directory for file output
-        std::vector<std::string*> header_buffer; // A buffer for header code
-        std::vector<std::string*> source_buffer; // A buffer for source code
-        bool debug_mode;
-        bool verbose_mode;
+        std::string argDirectory; // The base argument directory for file output
+        std::vector<std::string*> headerBuffer; // A buffer for header code
+        std::vector<std::string*> sourceBuffer; // A buffer for source code
+        bool debugMode;
+        bool verboseMode;
 
-        std::map<Program*, Argument*> global_args; // Arguments for a Program
-        std::map<Action*, std::string> current_args; // Arguments for the current Action
-        void create_switch(std::string &name,
+        std::map<Program*, Argument*> globalArgs; // Arguments for a Program
+        std::map<Action*, std::string> currentArgs; // Arguments for the current Action
+        void createSwitch(std::string &name,
                 std::vector<Argument*> &args,
                 std::vector<Action*> &actions);
-        void open_context(Action *action);
-        void open_context(Program *program);
+        void openContext(Action *action);
+        void openContext(Program *program);
 
     public:
-        Compiler(std::string &arg_dir);
-        Compiler(c_str &arg_dir);
+        Compiler(std::string &argDirectory);
+        Compiler(c_str &argDirectory);
         ~Compiler();
 
         void dispatch(Parameter *parameter);
@@ -67,10 +67,10 @@ class Compiler : public Visitor {
         void dispatch(Action *action);
         void dispatch(Argument *argument);
 
-        void dispatch(ArgStruct *arg_struct);
+        void dispatch(ArgStruct *argStruct);
 
         void writeAllFiles();
 
-        void debug_log(std::string mesg);
-        void debug_log(c_str &mesg);
+        void debugLog(std::string mesg);
+        void debugLog(c_str &mesg);
 };

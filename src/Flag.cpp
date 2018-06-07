@@ -13,42 +13,42 @@
 
 /**
  * @brief This is the constructor for flags
- * @param flag_char The single character flag
- * @param flag_name The long flag name
- * @param help_desc The help description for the flag
- * @param man_page The man page for the flag
+ * @param flagChar The single character flag
+ * @param flagName The long flag name
+ * @param helpDesc The help description for the flag
+ * @param manPage The man page for the flag
  */
-Flag::Flag(char flag_char,
-           std::string &flag_name,
-           std::string &help_desc,
-           std::string &man_page) {
+Flag::Flag(char flagChar,
+           std::string &flagName,
+           std::string &helpDesc,
+           std::string &manPage) {
 
-    this->set_char(flag_char);
-    this->set_name(flag_name);
-    this->set_help_desc(help_desc);
-    this->set_man_page(man_page);
+    this->setChar(flagChar);
+    this->setName(flagName);
+    this->setHelpDesc(helpDesc);
+    this->setManPage(manPage);
 
-    this->set_value_name("");
+    this->setValueName("");
     this->setType("");
-    this->set_position(0);
+    this->setPosition(0);
 }
 
 /**
  * @brief This is the constructor for flags but using C string literals
  */
-Flag::Flag(char flag_char,
-           const char* const &flag_name,
-           const char* const &help_desc,
-           const char* const &man_page) {
+Flag::Flag(char flagChar,
+           const char* const &flagName,
+           const char* const &helpDesc,
+           const char* const &manPage) {
 
-    this->set_char(flag_char);
-    this->set_name(flag_name);
-    this->set_help_desc(help_desc);
-    this->set_man_page(man_page);
+    this->setChar(flagChar);
+    this->setName(flagName);
+    this->setHelpDesc(helpDesc);
+    this->setManPage(manPage);
 
-    this->set_value_name("");
+    this->setValueName("");
     this->setType("");
-    this->set_position(0);
+    this->setPosition(0);
 }
 
 Flag::~Flag() {

@@ -13,11 +13,11 @@ TEST_CASE("1: Generation of an Argument") {
         Argument arg(flagChar, flagName, helpDesc, manPage, valueName, type, 1);
 
         SECTION("Ensure Argument values are properly retained and translated") {
-            REQUIRE(arg.get_flag_name() == flagName);
-            REQUIRE(arg.get_help_desc() == helpDesc);
-            REQUIRE(arg.get_man_page() == manPage);
-            REQUIRE(arg.get_value_name() == valueName);
-            REQUIRE(arg.get_position() == 1);
+            REQUIRE(arg.getFlagName() == flagName);
+            REQUIRE(arg.getHelpDesc() == helpDesc);
+            REQUIRE(arg.getManPage() == manPage);
+            REQUIRE(arg.getValueName() == valueName);
+            REQUIRE(arg.getPosition() == 1);
 
             REQUIRE(arg.getType() == TypedInterface::getTypeAlias(type));
         }

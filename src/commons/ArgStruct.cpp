@@ -1,26 +1,26 @@
 #include "ArgStruct.h"
 
 ArgStruct::ArgStruct(Action *action) {
-    this->load_arguments(action->get_arguments());
-    this->name = action->get_name();
+    this->loadArguments(action->getArguments());
+    this->name = action->getName();
 }
 
 ArgStruct::ArgStruct(Program *program) {
-    this->load_arguments(program->get_args());
-    this->name = program->get_name();
+    this->loadArguments(program->getArgs());
+    this->name = program->getName();
 }
 
 ArgStruct::~ArgStruct() {
     
 }
 
-void ArgStruct::load_arguments(std::vector<Argument *>& args) {
+void ArgStruct::loadArguments(std::vector<Argument *>& args) {
     for (Argument *arg : args) {
-        this->add_argument(arg);
+        this->addArgument(arg);
     }
 }
 
-void ArgStruct::add_argument(Argument *arg) {
+void ArgStruct::addArgument(Argument *arg) {
     this->arguments.push_back(arg);
 }
 

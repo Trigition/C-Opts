@@ -5,27 +5,27 @@
 class CodeBlock {
     private:
         uchar depth;
-        std::vector<std::string *> code_lines;
-        std::string statement_delimiter;
+        std::vector<std::string *> codeLines;
+        std::string statementDelimiter;
 
     public:
         CodeBlock();
         ~CodeBlock();
 
-        void add_line(std::string &line);
-        void add_line(c_str &line);
+        void addLine(std::string &line);
+        void addLine(c_str &line);
 
         // Setters
-        void set_depth(uchar depth) { this->depth = depth; };
-        void set_statement_delimiter(std::string &delim) {
-            this->statement_delimiter = delim;
+        void setDepth(uchar depth) { this->depth = depth; };
+        void setStatementDelimiter(std::string &delim) {
+            this->statementDelimiter = delim;
         };
-        void set_statement_delimiter(c_str &delim) {
-            this->statement_delimiter = delim;
+        void set_statementDelimiter(c_str &delim) {
+            this->statementDelimiter = delim;
         }
 
         // Getters
-        uchar get_depth() { return this->depth; };
-        std::string get_statement_delimiter() { return this->statement_delimiter; };
-        std::vector<std::string *> &getCode() { return this->code_lines; };
+        uchar getDepth() { return this->depth; };
+        std::string getStatementDelimiter() { return this->statementDelimiter; };
+        std::vector<std::string *> &getCode() { return this->codeLines; };
 };

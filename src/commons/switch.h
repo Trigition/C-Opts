@@ -14,7 +14,7 @@
 class SwitchStatement : public Compileable {
     private:
         std::vector<std::string *> values;
-        std::map<std::string, CodeBlock *> statement_map;
+        std::map<std::string, CodeBlock *> statementMap;
     public:
         SwitchStatement();
         ~SwitchStatement();

@@ -13,13 +13,13 @@
 
 /**
  * @brief This function is the main constructor for the Action class
- * @param action_name The name for the action
- * @param action_desc The description for the action
+ * @param actionName The name for the action
+ * @param actionDesc The description for the action
  * @return An Action instance
  */
-Action::Action(std::string &action_name, std::string &action_desc) {
-    this->action_name = action_name;
-    this->action_desc = action_desc;
+Action::Action(std::string &actionName, std::string &actionDesc) {
+    this->actionName = actionName;
+    this->actionDesc = actionDesc;
 }
 
 /**
@@ -29,9 +29,9 @@ Action::Action(std::string &action_name, std::string &action_desc) {
  * destructor will also free any subactions.
  */
 Action::~Action() {
-    //delete this->action_name;
-    //delete this->action_desc;
-    for (Argument *a : this->action_arguments) {
+    //delete this->actionName;
+    //delete this->actionDesc;
+    for (Argument *a : this->actionArguments) {
         delete a;
     }
 
@@ -44,15 +44,15 @@ Action::~Action() {
  * @brief This function adds an argument to an Action.
  * @param argument A reference to the argument to be added.
  */
-void Action::add_argument(Argument &argument) {
-    this->action_arguments.push_back(&argument);
+void Action::addArgument(Argument &argument) {
+    this->actionArguments.push_back(&argument);
 }
 
 /**
  * @brief This function adds an action to be a subaction.
  * @param subaction A reference to the subaction.
  */
-void Action::add_subaction(Action &subaction) {
+void Action::addSubaction(Action &subaction) {
     this->subactions.push_back(&subaction);
 }
 

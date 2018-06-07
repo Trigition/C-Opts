@@ -14,24 +14,24 @@
 /**
  * @brief This is the main constructor for Functions
  * @param name The name of the function
- * @param return_type The type of the function
+ * @param returnType The type of the function
  */
-Function::Function(std::string &name, std::string &return_type) {
+Function::Function(std::string &name, std::string &returnType) {
     this->name = name;
-    //this->return_type = return_type;
-    this->setType(return_type);
-    this->function_code = nullptr;
+    //this->returnType = returnType;
+    this->setType(returnType);
+    this->functionCode = nullptr;
 }
 
 /**
  * @brief This is the main constructor for Function
  * @param name The name of the function
- * @param return_type The type of the function
+ * @param returnType The type of the function
  */
-Function::Function(c_str &name, c_str &return_type) {
+Function::Function(c_str &name, c_str &returnType) {
     this->name = name;
-    this->setType(return_type);
-    this->function_code = nullptr;
+    this->setType(returnType);
+    this->functionCode = nullptr;
 }
 
 /**
@@ -40,12 +40,12 @@ Function::Function(c_str &name, c_str &return_type) {
  * associated with the Function.
  */
 Function::~Function() {
-    for (Parameter *p : this->input_params) {
+    for (Parameter *p : this->inputParams) {
         delete p;
     }
 
-    if (this->function_code != nullptr) {
-        delete this->function_code;
+    if (this->functionCode != nullptr) {
+        delete this->functionCode;
     }
 }
 
@@ -53,10 +53,10 @@ Function::~Function() {
  * @brief This function ensures that a Function will
  * have a codeblock.
  */
-void Function::ensure_codeblock_exists() {
-    if (this->function_code == nullptr) {
-        this->function_code = new CodeBlock();
-        this->function_code->set_depth(1);
+void Function::ensureCodeBlockExists() {
+    if (this->functionCode == nullptr) {
+        this->functionCode = new CodeBlock();
+        this->functionCode->setDepth(1);
     }
 }
 
@@ -65,8 +65,8 @@ void Function::ensure_codeblock_exists() {
  * Function.
  * @param A reference to the new Parameter
  */
-void Function::add_input_param(Parameter *param) {
-    this->input_params.push_back(param);
+void Function::addInputParam(Parameter *param) {
+    this->inputParams.push_back(param);
 }
 
 /**
@@ -74,9 +74,9 @@ void Function::add_input_param(Parameter *param) {
  * Function's CodeBlock.
  * @param code The new line of code
  */
-void Function::add_codeline(std::string &code) {
-    this->ensure_codeblock_exists();
-    this->function_code->add_line(code);
+void Function::addCodeline(std::string &code) {
+    this->ensureCodeBlockExists();
+    this->functionCode->addLine(code);
 }
 
 /**
@@ -84,9 +84,9 @@ void Function::add_codeline(std::string &code) {
  * Function's CodeBlock.
  * @param code The new line of code
  */
-void Function::add_codeline(c_str &code) {
-    this->ensure_codeblock_exists();
-    this->function_code->add_line(code);
+void Function::addCodeline(c_str &code) {
+    this->ensureCodeBlockExists();
+    this->functionCode->addLine(code);
 }
 
 void Function::composeDefinition() {
@@ -94,11 +94,11 @@ void Function::composeDefinition() {
     definition += " " + this->name;
     definition += "(";
 
-    for (unsigned int i = 0; i < this->input_params.size() - 1; i++) {
-        definition += this->input_params[i]->getParamString();
+    for (unsigned int i = 0; i < this->inputParams.size() - 1; i++) {
+        definition += this->inputParams[i]->getParamString();
         definition += ", ";
     }
-    definition += this->input_params[this->input_params.size() - 1]->getParamString();
+    definition += this->inputParams[this->inputParams.size() - 1]->getParamString();
     definition += ")";
 
     this->setDefinition(definition);
@@ -107,7 +107,7 @@ void Function::composeDefinition() {
 void Function::composeSource() {
     std::string code = "";
     code += this->getDefinition() + " {\n";
-    for (std::string *lineOfCode : this->function_code->getCode()) {
+    for (std::string *lineOfCode : this->functionCode->getCode()) {
         code += "    " + *lineOfCode + ";\n";
     }
     code += "}\n";

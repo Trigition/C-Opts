@@ -9,7 +9,7 @@ ArgFile::ArgFile(std::string &name, std::string &dir) {
         this->directory = dir;
     }
 
-    this->make_directory();
+    this->makeDirectory();
     this->localPath = name;
 }
 
@@ -22,11 +22,11 @@ ArgFile::ArgFile(c_str &name, c_str &dir) {
         this->directory = dir;
     }
 
-    this->make_directory();
+    this->makeDirectory();
     this->localPath = name;
 }
 
-void ArgFile::make_directory() {
+void ArgFile::makeDirectory() {
     std::string command = "mkdir -p " + this->directory;
     int err = system(command.c_str());
     if (err == -1) {

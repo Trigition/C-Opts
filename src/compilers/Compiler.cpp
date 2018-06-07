@@ -13,32 +13,32 @@
 
 /**
  * @brief This is the main constructor for the Compiler class
- * @param arg_dir The base directory to place source files in
+ * @param argDirectory The base directory to place source files in
  */
-Compiler::Compiler(std::string &arg_dir) {
-    this->action_context = nullptr;
-    this->arg_dir = arg_dir;
-#ifdef DEBUG_MODE
-    this->debug_mode = false;
+Compiler::Compiler(std::string &argDirectory) {
+    this->actionContext = nullptr;
+    this->argDirectory = argDirectory;
+#ifdef debugMode
+    this->debugMode = false;
 #else
-    this->debug_mode = true;
+    this->debugMode = true;
 #endif
-    this->verbose_mode = false;
+    this->verboseMode = false;
 }
 
 /**
  * @brief This is the main constructor for the Compiler class
- * @param arg_dir The base directory to place source files in
+ * @param argDirectory The base directory to place source files in
  */
-Compiler::Compiler(c_str &arg_dir) {
-    this->action_context = nullptr;
-    this->arg_dir = arg_dir;
-#ifdef DEBUG_MODE
-    this->debug_mode = false;
+Compiler::Compiler(c_str &argDirectory) {
+    this->actionContext = nullptr;
+    this->argDirectory = argDirectory;
+#ifdef debugMode
+    this->debugMode = false;
 #else
-    this->debug_mode = true;
+    this->debugMode = true;
 #endif
-    this->verbose_mode = false;
+    this->verboseMode = false;
 }
 
 /**
@@ -70,8 +70,8 @@ void Compiler::dispatch(CodeBlock *codeblock) {
 void Compiler::dispatch(Function *function) {
     // Compile function
     // Place code and declarations into current context
-    HeaderFile *headerFile = this->header_map[this->currentContext];
-    SourceFile *sourceFile = this->source_map[this->currentContext];
+    HeaderFile *headerFile = this->headerMap[this->currentContext];
+    SourceFile *sourceFile = this->sourceMap[this->currentContext];
 
     headerFile->addContent(function);
     sourceFile->addContent(function);
@@ -84,21 +84,21 @@ void Compiler::dispatch(Function *function) {
  * is specifying an Action or an Argument in the current Action or Program
  * context.
  */
-void Compiler::create_switch(
+void Compiler::createSwitch(
         std::string &name,
         std::vector<Argument*> &args,
         std::vector<Action*> &actions) {
     //TODO Generate switch statement
     //TODO Arguments are placed before next action
-    std::string switch_return_type = "int";
-    Function *switcher = new Function(name, switch_return_type);
-    switcher->add_input_param(new Parameter("int", "argc"));
-    switcher->add_input_param(new Parameter("char **", "arg_str"));
+    std::string switchReturnType = "int";
+    Function *switcher = new Function(name, switchReturnType);
+    switcher->addInputParam(new Parameter("int", "argc"));
+    switcher->addInputParam(new Parameter("char **", "arg_str"));
 
     // Add switch for current action arguments
 
 
-    switcher->add_codeline("return 0");
+    switcher->addCodeline("return 0");
 }
 
 /**
@@ -109,27 +109,27 @@ void Compiler::create_switch(
  * Note that the Action may be a subaction and not necessarily a direct
  * main action under a Program.
  */
-void Compiler::open_context(Action *action) {
+void Compiler::openContext(Action *action) {
     // Set context 
-    Action *prev_action = this->action_context;
-    this->action_context = action;
+    Action *previousAction = this->actionContext;
+    this->actionContext = action;
     this->currentContext = action;
 
     // Initialize source and header files
-    std::string header_path = action->get_name();
-    std::string source_path = action->get_name();
-    HeaderFile *header = new HeaderFile(header_path, this->arg_dir);
-    SourceFile *source = new SourceFile(source_path, this->arg_dir);
+    std::string headerPath = action->getName();
+    std::string sourcePath = action->getName();
+    HeaderFile *header = new HeaderFile(headerPath, this->argDirectory);
+    SourceFile *source = new SourceFile(sourcePath, this->argDirectory);
     source->addDependency(header);
 
     // Add dependencies
-    if (prev_action != nullptr) {
-        this->header_map[prev_action]->addDependency(header);
+    if (previousAction != nullptr) {
+        this->headerMap[previousAction]->addDependency(header);
     }
 
     // Add mapping from current action to files
-    this->header_map.insert(header_pair(action, header));
-    this->source_map.insert(source_pair(action, source));
+    this->headerMap.insert(headerPair(action, header));
+    this->sourceMap.insert(sourcePair(action, source));
 
     // Add files to list for bookkeeping
     this->files.push_back(header);
@@ -148,28 +148,28 @@ void Compiler::open_context(Action *action) {
  * @TODO Allow C-Opts to have a 'dry run' to see where the directories will
  * be made.
  */
-void Compiler::open_context(Program *program) {
+void Compiler::openContext(Program *program) {
     // Set Context
-    this->program_context = program;
+    this->programContext = program;
     this->currentContext = program;
 
     // Construct Program I/O src directory
-    std::string command = "mkdir -p " + this->arg_dir;
+    std::string command = "mkdir -p " + this->argDirectory;
     int err = system(command.c_str());
     if (err == -1) {
         std::cerr << "Unable to create parser source directory\nAborting...\n";
         exit(1);
     }
     // Create files for program context
-    std::string header_path = program->get_name();
-    std::string source_path = program->get_name();
-    HeaderFile *header = new HeaderFile(header_path, this->arg_dir);
-    SourceFile *source = new SourceFile(source_path, this->arg_dir);
+    std::string headerPath = program->getName();
+    std::string sourcePath = program->getName();
+    HeaderFile *header = new HeaderFile(headerPath, this->argDirectory);
+    SourceFile *source = new SourceFile(sourcePath, this->argDirectory);
     source->addDependency(header);
 
     // Keep track of files
-    this->header_map.insert(header_pair(program, header));
-    this->source_map.insert(source_pair(program, source));
+    this->headerMap.insert(headerPair(program, header));
+    this->sourceMap.insert(sourcePair(program, source));
 
     // Bookkeep files
     this->files.push_back(header);
@@ -178,19 +178,19 @@ void Compiler::open_context(Program *program) {
 
 void Compiler::dispatch(Program *program) {
     // === Start of new program ===
-    this->open_context(program);
+    this->openContext(program);
 
     // Create a struct holding global argument values
-    ArgStruct program_struct(program);
-    program_struct.accept(*this);
+    ArgStruct programStruct(program);
+    programStruct.accept(*this);
 
     // Create switch for program args and actions
     // Generate parsers for each argument and action
-    for (Argument *arg : program->get_args()) {
+    for (Argument *arg : program->getArgs()) {
         arg->accept(*this);
     }
 
-    for (Action *action : program->get_actions()) {
+    for (Action *action : program->getActions()) {
         // All top program actions get their own namespace
         action->accept(*this);
     }
@@ -201,65 +201,65 @@ void Compiler::dispatch(Program *program) {
 
 void Compiler::dispatch(Action *action) {
     // Visiting new action
-    this->action_context = action;
+    this->actionContext = action;
     // Generate Struct holding action argument values
-    ArgStruct action_opts(action);
-    action_opts.accept(*this);
+    ArgStruct actionOpts(action);
+    actionOpts.accept(*this);
 
     // Compile opts and subactions
-    for (Argument *arg : action->get_arguments()) {
-        this->debug_log("Visiting "        +
-                        action->get_name() +
+    for (Argument *arg : action->getArguments()) {
+        this->debugLog("Visiting "        +
+                        action->getName() +
                         "'s argument"      +
-                        arg->get_flag_name());
+                        arg->getFlagName());
 
         arg->accept(*this);
         // Check to see if there are any name collions
-        if (this->current_args[action] == arg->get_flag_name()) {
+        if (this->currentArgs[action] == arg->getFlagName()) {
             // Collision
-            std::cerr << "Duplicate flag: " << arg->get_flag_name() << "!\n";
+            std::cerr << "Duplicate flag: " << arg->getFlagName() << "!\n";
         }
     }
 
-    for (Action *subaction : action->get_subactions()) {
-        this->debug_log("Visiting "         +
-                        action->get_name()  +
+    for (Action *subaction : action->getSubactions()) {
+        this->debugLog("Visiting "         +
+                        action->getName()  +
                         "'s subaction: "    +
-                        subaction->get_name());
+                        subaction->getName());
         subaction->accept(*this);
     }
 }
 
 void Compiler::dispatch(Argument *argument) {
-    this->debug_log("Compiling argument: " + argument->get_flag_name());
+    this->debugLog("Compiling argument: " + argument->getFlagName());
     // Compile parser function for argument
     argument->getFunction()->accept(*this);
 }
 
-void Compiler::dispatch(ArgStruct *arg_struct) {
-    HeaderFile *header = this->header_map[this->currentContext];
-    header->addContent(arg_struct);
+void Compiler::dispatch(ArgStruct *argStruct) {
+    HeaderFile *header = this->headerMap[this->currentContext];
+    header->addContent(argStruct);
 }
 
 
 void Compiler::writeAllFiles() {
-    for (auto const& pair : this->header_map) {
+    for (auto const& pair : this->headerMap) {
         pair.second->writeToFile();
     }
 
-    for (auto const& pair : this->source_map) {
+    for (auto const& pair : this->sourceMap) {
         pair.second->writeToFile();
     }
 }
 
-void Compiler::debug_log(std::string mesg) {
-#ifdef DEBUG_MODE
+void Compiler::debugLog(std::string mesg) {
+#ifdef debugMode
     std::cerr << mesg << "\n";
 #endif
 }
 
-void Compiler::debug_log(const char * const &mesg) {
-#ifdef DEBUG_MODE
+void Compiler::debugLog(const char * const &mesg) {
+#ifdef debugMode
     std::cerr << mesg << "\n";
 #endif
 }

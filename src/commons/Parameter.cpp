@@ -14,11 +14,11 @@
 /**
  * @brief This is the constructor for the Parameter class
  * @param type The type of the input parameter
- * @param var_name The variable name of the parameter
+ * @param varName The variable name of the parameter
  */
-Parameter::Parameter(std::string &type, std::string &var_name) {
+Parameter::Parameter(std::string &type, std::string &varName) {
     this->setType(type);
-    this->var_name = var_name;
+    this->varName = varName;
 
     this->setParamString();
 }
@@ -26,11 +26,11 @@ Parameter::Parameter(std::string &type, std::string &var_name) {
 /**
  * @brief This is the constructor for the Parameter class
  * @param type The type of the input parameter
- * @param var_name The variable name of the parameter
+ * @param varName The variable name of the parameter
  */
-Parameter::Parameter(c_str &type, c_str &var_name) {
+Parameter::Parameter(c_str &type, c_str &varName) {
     this->setType(type);
-    this->var_name = var_name;
+    this->varName = varName;
 
     this->setParamString();
 }
@@ -43,7 +43,7 @@ Parameter::~Parameter() {
 }
 
 void Parameter::setParamString() {
-    this->paramString = this->getType() + " " +  this->get_var_name();
+    this->paramString = this->getType() + " " +  this->getVarName();
 }
 
 /**
@@ -51,7 +51,7 @@ void Parameter::setParamString() {
  * @param compar A reference to another parameter instance
  * @return Returns true if both parameters are the same type.
  */
-bool Parameter::is_same_type(Parameter &compar) {
+bool Parameter::isSameType(Parameter &compar) {
     return this->getType() == compar.getType();
 }
 
@@ -60,16 +60,16 @@ bool Parameter::is_same_type(Parameter &compar) {
  * @param compar A reference to another parameter instance
  * @return Returns true if both parameters have the same name.
  */
-bool Parameter::is_same_name(Parameter &compar) {
-    return this->var_name == compar.get_var_name();
+bool Parameter::isSameName(Parameter &compar) {
+    return this->varName == compar.getVarName();
 }
 
-void Parameter::set_var_name(std::string &var_name) {
-    this->var_name = var_name;
+void Parameter::setVarName(std::string &varName) {
+    this->varName = varName;
     this->setParamString();
 }
 
-void Parameter::set_var_name(c_str &var_name) {
-    this->var_name = var_name;
+void Parameter::setVarName(c_str &varName) {
+    this->varName = varName;
     this->setParamString();
 }

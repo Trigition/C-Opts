@@ -16,7 +16,7 @@
  */
 CodeBlock::CodeBlock() {
     this->depth = 0;
-    this->statement_delimiter = "";
+    this->statementDelimiter = "";
 }
 
 /**
@@ -24,7 +24,7 @@ CodeBlock::CodeBlock() {
  * This destructor will also free any code lines associated with it
  */
 CodeBlock::~CodeBlock() {
-    for (std::string *s : this->code_lines) {
+    for (std::string *s : this->codeLines) {
         delete s;
     }
 }
@@ -34,8 +34,8 @@ CodeBlock::~CodeBlock() {
  * @param line A reference to the string representing Code to be
  * inserted.
  */
-void CodeBlock::add_line(std::string &line) {
-    this->code_lines.push_back(new std::string(line.c_str()));
+void CodeBlock::addLine(std::string &line) {
+    this->codeLines.push_back(new std::string(line.c_str()));
 }
 
 /**
@@ -44,6 +44,6 @@ void CodeBlock::add_line(std::string &line) {
  * inserted.
  */
 
-void CodeBlock::add_line(c_str &line) {
-    this->code_lines.push_back(new std::string(line));
+void CodeBlock::addLine(c_str &line) {
+    this->codeLines.push_back(new std::string(line));
 }

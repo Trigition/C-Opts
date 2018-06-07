@@ -25,23 +25,23 @@
  */
 class Action : public Compileable {
     private:
-        std::string action_name;
-        std::string action_desc;
-        std::vector<Argument *> action_arguments;
+        std::string actionName;
+        std::string actionDesc;
+        std::vector<Argument *> actionArguments;
         std::vector<Action *> subactions;
     public:
-        Action(std::string &action_name, std::string &action_desc);
-        Action(const char &action_name, const char &action_desc);
+        Action(std::string &actionName, std::string &actionDesc);
+        Action(const char &actionName, const char &actionDesc);
         ~Action();
 
-        void add_argument(Argument &argument);
-        void add_subaction(Action &subaction);
+        void addArgument(Argument &argument);
+        void addSubaction(Action &subaction);
 
         // Getters
-        std::string &get_name() { return this->action_name; };
-        std::string &get_desc() { return this->action_desc; };
-        std::vector<Argument*> &get_arguments() { return this->action_arguments; };
-        std::vector<Action*> &get_subactions() { return this->subactions; };
+        std::string &getName() { return this->actionName; };
+        std::string &getDesc() { return this->actionDesc; };
+        std::vector<Argument*> &getArguments() { return this->actionArguments; };
+        std::vector<Action*> &getSubactions() { return this->subactions; };
 
         void accept(Visitor &visitor);
 
